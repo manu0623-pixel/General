@@ -1,0 +1,3385 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Desvelo JS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sticky top bar with progress + clock; mission rail on the left, lesson column on the right; the editors are the hero. Dark-first (it's a night session). */
+:root {
+  --bg: #0e1120;
+  --surface: #161a2d;
+  --surface-2: #1e2339;
+  --line: #2b3152;
+  --fg: #ebe8dc;
+  --muted: #9ba1bf;
+  --accent: #f7df1e;
+  --accent-ink: #17150a;
+  --accent-text: #f7df1e;
+  --info: #93b4ff;
+  --ok: #5ad6a6;
+  --bad: #ff8379;
+  --warn: #ffb35c;
+  --code-bg: #0a0d19;
+  --page: #ffffff;
+  --t-kw: #c7a6ff; --t-str: #a6e58f; --t-num: #ffb86b; --t-com: #6f7799; --t-fn: #7fc8ff; --t-lit: #ff9ac1; --t-cls: #ffd479;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 10px;
+  --top-h: 56px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f3f4fa; --surface: #ffffff; --surface-2: #eaedf6; --line: #d4d8e8; --fg: #171a2b; --muted: #596080;
+    --accent: #f7df1e; --accent-ink: #17150a; --accent-text: #806500; --info: #3b5cc2; --ok: #11805b; --bad: #c43333; --warn: #a35a00;
+    --code-bg: #f8f8fc; --page: #ffffff;
+    --t-kw: #6d3fd0; --t-str: #2b7a2b; --t-num: #b05500; --t-com: #878ea8; --t-fn: #1c69b6; --t-lit: #b5306c; --t-cls: #8a6100;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f3f4fa; --surface: #ffffff; --surface-2: #eaedf6; --line: #d4d8e8; --fg: #171a2b; --muted: #596080;
+  --accent: #f7df1e; --accent-ink: #17150a; --accent-text: #806500; --info: #3b5cc2; --ok: #11805b; --bad: #c43333; --warn: #a35a00;
+  --code-bg: #f8f8fc; --page: #ffffff;
+  --t-kw: #6d3fd0; --t-str: #2b7a2b; --t-num: #b05500; --t-com: #878ea8; --t-fn: #1c69b6; --t-lit: #b5306c; --t-cls: #8a6100;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-text-size-adjust: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code, kbd, pre, textarea { font-family: var(--font-mono); }
+html:not(.has-ai) .ai-only { display: none !important; }
+
+/* ---------- top bar ---------- */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; white-space: nowrap; }
+.mark { width: 28px; height: 28px; border-radius: 6px; background: var(--accent); position: relative; overflow: hidden; flex: none; }
+.mark::before { content: ""; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: var(--accent-ink); left: 5px; top: 7px; }
+.mark::after { content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); left: 10px; top: 3px; }
+.progress { flex: 1 1 180px; display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 380px; }
+.bar { flex: 1; height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .5s ease; }
+.prog-text, .xp, .clock { font-family: var(--font-mono); font-size: .8rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prog-text { color: var(--muted); }
+.stats { display: flex; align-items: center; gap: 8px; }
+.xp { background: var(--accent); color: var(--accent-ink); padding: 2px 8px; border-radius: 99px; font-weight: 600; }
+.level { font-size: .85rem; color: var(--muted); white-space: nowrap; }
+.clock { display: flex; align-items: center; gap: 8px; color: var(--muted); margin-left: auto; }
+.top-btn { font: inherit; font-size: .82rem; font-weight: 700; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; white-space: nowrap; min-height: 34px; font-variant-numeric: tabular-nums; }
+.top-btn:hover { border-color: var(--muted); }
+.top-btn.on { border-color: var(--accent); color: var(--accent-text); }
+.top-btn.tutor { border-color: var(--info); color: var(--info); }
+@media (max-width: 680px) {
+  .topbar { padding: 8px 16px; gap: 8px 10px; }
+  .progress { order: 9; flex-basis: 100%; max-width: none; }
+  .level, .clock-label { display: none; }
+}
+
+/* ---------- layout ---------- */
+.app { display: grid; grid-template-columns: 252px minmax(0, 1fr); max-width: 1260px; margin: 0 auto; }
+.rail { position: sticky; top: calc(var(--top-h) + env(safe-area-inset-top, 0px)); align-self: start; max-height: calc(100vh - var(--top-h)); overflow-y: auto; padding: 20px 12px 40px 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
+.rail-label { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 14px 10px 6px; }
+.nav-item { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 8px; text-decoration: none; color: var(--muted); font-size: .92rem; line-height: 1.3; }
+.nav-item:hover { background: var(--surface-2); color: var(--fg); }
+.nav-item[aria-current="page"] { background: var(--surface-2); color: var(--fg); font-weight: 700; }
+.nav-num { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-family: var(--font-mono); font-size: .75rem; border: 1px solid var(--line); font-weight: 600; }
+.nav-item.done .nav-num { background: var(--ok); color: var(--bg); border-color: transparent; }
+.nav-item[aria-current="page"] .nav-num { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.nav-count { font-family: var(--font-mono); font-size: .72rem; font-variant-numeric: tabular-nums; }
+main { min-width: 0; padding: 32px 36px 96px; }
+.main-inner { max-width: 820px; display: flex; flex-direction: column; gap: 20px; }
+@media (max-width: 900px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; max-height: none; flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 10px 16px; gap: 6px; }
+  .rail-label, .nav-item .nav-title.mission, .nav-count { display: none; }
+  .nav-item { grid-template-columns: auto; flex: none; padding: 4px; }
+  .nav-item.text { grid-template-columns: auto auto; padding: 4px 10px 4px 4px; }
+  main { padding: 22px 16px 96px; }
+}
+
+/* ---------- type ---------- */
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.1rem, 5vw, 3.1rem); line-height: 1.04; letter-spacing: -0.025em; margin: 0; text-wrap: balance; }
+h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em; margin: 22px 0 0; text-wrap: balance; display: flex; align-items: baseline; gap: 12px; }
+h2.sec small { font-family: var(--font-mono); font-size: .72rem; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.eyebrow { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.chip { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--accent); color: var(--accent-text); }
+.goal { color: var(--muted); font-size: 1.1rem; max-width: 60ch; margin: 0; }
+.m-head { display: flex; flex-direction: column; gap: 10px; padding-bottom: 6px; }
+.prose { max-width: 68ch; }
+.prose p { margin: 0 0 .75em; }
+.prose p:last-child, .prose ul:last-child { margin-bottom: 0; }
+.prose ul, .prose ol { padding-left: 1.25em; margin: 0 0 .75em; }
+.prose li { margin: .25em 0; }
+.prose code, .tip code, .why code, .test code, .hints code, .ai-body code, .msg code, .err-h code, .map code { font-size: .87em; background: var(--surface-2); padding: .06em .36em; border-radius: 4px; overflow-wrap: anywhere; }
+.tip { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface); max-width: 72ch; font-size: .96rem; }
+.tip p { margin: 0; }
+kbd { font-size: .74rem; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; color: var(--muted); white-space: nowrap; }
+
+/* ---------- code ---------- */
+.code-ro { margin: 0; background: var(--code-bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; font-size: 13.5px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; color: var(--fg); }
+.t-kw { color: var(--t-kw); } .t-str { color: var(--t-str); } .t-num { color: var(--t-num); } .t-com { color: var(--t-com); font-style: italic; } .t-fn { color: var(--t-fn); } .t-lit { color: var(--t-lit); } .t-cls { color: var(--t-cls); }
+.editor { position: relative; background: var(--code-bg); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+.editor:focus-within { border-color: color-mix(in srgb, var(--accent) 70%, var(--line)); }
+.editor-hl, .editor-ta { margin: 0; padding: 14px 16px; border: 0; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; tab-size: 2; letter-spacing: 0; white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; font-variant-ligatures: none; }
+.editor-hl { position: absolute; inset: 0; pointer-events: none; overflow: hidden; color: var(--fg); }
+.editor-ta { position: relative; display: block; width: 100%; min-height: 4.4em; resize: none; overflow: hidden; background: transparent; color: transparent; -webkit-text-fill-color: transparent; caret-color: var(--accent); outline: none; }
+.editor-ta::selection { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+@media (pointer: coarse) { .editor-hl, .editor-ta { font-size: 16px; } }
+.console { font-family: var(--font-mono); font-size: 13px; line-height: 1.55; background: var(--code-bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; max-height: 300px; overflow: auto; }
+.console::before { content: "Consola"; display: block; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.ln { white-space: pre-wrap; overflow-wrap: anywhere; padding: 1px 0; }
+.ln.warn { color: var(--warn); }
+.ln.error { color: var(--bad); }
+.ln.note { color: var(--muted); font-style: italic; }
+.err-h { display: block; color: var(--fg); font-family: var(--font-body); font-size: .9rem; margin-top: 2px; }
+
+/* ---------- buttons ---------- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { font: inherit; font-size: .9rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; min-height: 40px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg); cursor: pointer; text-decoration: none; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.ghost { background: transparent; }
+.btn.ai { background: transparent; border-color: color-mix(in srgb, var(--info) 55%, var(--line)); color: var(--info); }
+.btn.warn { border-color: var(--warn); color: var(--warn); }
+.btn:disabled { opacity: .55; cursor: progress; }
+.btn .k { font-family: var(--font-mono); font-size: .7rem; font-weight: 400; opacity: .7; }
+.spacer { flex: 1; }
+
+/* ---------- example ---------- */
+.example { display: flex; flex-direction: column; gap: 10px; }
+.ex-label { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.label { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.dom-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.dom-col { min-width: 0; display: flex; flex-direction: column; }
+.dom-col .code-ro { margin-bottom: 12px; }
+@media (max-width: 760px) { .dom-split { grid-template-columns: minmax(0, 1fr); } }
+.frame-host iframe { display: block; width: 100%; height: 260px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--page); }
+.frame-note { font-size: .8rem; color: var(--muted); margin: 6px 0 0; }
+
+/* ---------- quiz ---------- */
+.quiz { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.quiz .q { margin: 0; font-weight: 700; font-size: 1.05rem; }
+.opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 560px) { .opts { grid-template-columns: minmax(0, 1fr); } }
+.opt { text-align: left; display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg); cursor: pointer; font: inherit; min-width: 0; }
+.opt:hover { border-color: var(--muted); }
+.opt-k { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); padding-top: 3px; flex: none; }
+.opt-v { font-family: var(--font-mono); font-size: .9rem; white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
+.opts.prose-opts .opt-v { font-family: var(--font-body); font-size: .95rem; }
+.answered .opt { cursor: default; }
+.answered .opt:not(.correct):not(.wrong) { opacity: .6; }
+.opt.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--surface-2)); }
+.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 13%, var(--surface-2)); }
+.why { font-size: .96rem; }
+.why p { margin: 0; }
+.verdict { font-weight: 700; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+
+/* ---------- challenge ---------- */
+.challenge { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--surface); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.challenge.solved { border-color: color-mix(in srgb, var(--ok) 65%, var(--line)); }
+.ch-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.challenge h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; margin: 0; line-height: 1.2; text-wrap: balance; }
+.status { font-family: var(--font-mono); font-size: .68rem; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.solved .status { color: var(--bg); background: var(--ok); border-color: transparent; }
+details.pre summary { cursor: pointer; font-size: .9rem; color: var(--muted); margin-bottom: 8px; }
+.tests-wrap { display: flex; flex-direction: column; gap: 8px; }
+.tests-head { display: flex; justify-content: space-between; align-items: baseline; }
+.tests-count { font-family: var(--font-mono); font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tests { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.test { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; font-size: .93rem; }
+.test .ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; font-weight: 700; border: 1px solid var(--line); color: var(--muted); margin-top: 2px; font-family: var(--font-mono); }
+.test.pass .ic { background: var(--ok); color: var(--bg); border-color: transparent; }
+.test.fail .ic { background: var(--bad); color: var(--bg); border-color: transparent; }
+.test .detail { display: block; font-family: var(--font-mono); font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; white-space: pre-wrap; }
+.test .detail.hint { font-family: var(--font-body); font-size: .88rem; color: var(--fg); }
+.hints { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; font-size: .95rem; }
+.ai-box { border: 1px dashed color-mix(in srgb, var(--info) 70%, var(--line)); border-radius: 12px; padding: 12px 16px; background: color-mix(in srgb, var(--info) 7%, transparent); display: flex; flex-direction: column; gap: 6px; }
+.ai-box .who { font-family: var(--font-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--info); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ai-box .who button { font: inherit; background: none; border: 0; color: var(--info); cursor: pointer; text-decoration: underline; padding: 0; }
+.ai-body { font-size: .96rem; overflow-wrap: anywhere; }
+.ai-body p { margin: 0 0 .6em; }
+.ai-body p:last-child { margin-bottom: 0; }
+.ai-body ul, .ai-body ol { margin: 0 0 .6em; padding-left: 1.2em; }
+.ai-body pre, .msg pre { margin: .4em 0 .6em; font-size: 12.5px; }
+.solution { display: flex; flex-direction: column; gap: 8px; }
+.next { display: flex; justify-content: flex-end; padding-top: 12px; }
+.next .btn { font-size: 1rem; padding: 10px 18px; }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.012); } 100% { transform: scale(1); } }
+.challenge.pop { animation: pop .45s ease-out; }
+
+/* ---------- home ---------- */
+.hero { display: flex; flex-direction: column; gap: 14px; padding-top: 6px; }
+.hero h1 { font-size: clamp(2.8rem, 8vw, 4.8rem); }
+.hero h1 em { font-style: normal; color: var(--accent-text); }
+.lead { font-size: 1.18rem; max-width: 56ch; color: var(--muted); margin: 0; }
+.hero .toolbar { margin-top: 6px; }
+.night { display: flex; flex-direction: column; gap: 8px; }
+.strip { display: flex; gap: 3px; height: 46px; }
+.seg { flex: var(--w) 1 0; min-width: 0; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); display: grid; place-items: center; font-family: var(--font-mono); font-size: .75rem; color: var(--muted); text-decoration: none; position: relative; overflow: hidden; }
+.seg.core { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); color: var(--fg); }
+.seg .fill { position: absolute; inset: auto 0 0 0; height: var(--p); background: color-mix(in srgb, var(--ok) 40%, transparent); }
+.seg span { position: relative; }
+.seg.done { background: color-mix(in srgb, var(--ok) 30%, var(--surface-2)); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; border: 1px solid var(--line); background: var(--surface-2); }
+.legend i.core { border-color: var(--accent); }
+.legend i.done { background: color-mix(in srgb, var(--ok) 50%, var(--surface-2)); }
+.method { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 10px; counter-reset: paso; }
+.method li { counter-increment: paso; padding: 14px 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.method li::before { content: counter(paso, decimal-leading-zero); font-family: var(--font-mono); font-size: .75rem; color: var(--accent-text); }
+.method strong { font-family: var(--font-display); font-size: 1.12rem; }
+.method span { font-size: .93rem; color: var(--muted); }
+.map { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); gap: 10px; }
+.map a { display: flex; flex-direction: column; gap: 6px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; background: var(--surface); }
+.map a:hover { border-color: var(--muted); }
+.map .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+.map strong { font-family: var(--font-display); font-size: 1.1rem; line-height: 1.2; }
+.map .mini { height: 4px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.map .mini span { display: block; height: 100%; background: var(--ok); }
+.foot { font-size: .88rem; color: var(--muted); }
+
+/* ---------- cheats ---------- */
+.cheats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 14px; }
+.cheat { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cheat h3 { font-family: var(--font-display); margin: 0; font-size: 1.08rem; }
+.cheat .code-ro { font-size: 12.5px; flex: 1; }
+.links { display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.links a { color: var(--info); }
+
+/* ---------- tutor drawer ---------- */
+.scrim { position: fixed; inset: 0; background: rgb(5 7 15 / .45); z-index: 39; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%); background: var(--surface); border-left: 1px solid var(--line); z-index: 40; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-shadow: -18px 0 40px rgb(0 0 0 / .28); }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.drawer-head h2 { font-family: var(--font-display); margin: 0; font-size: 1.25rem; }
+.drawer-head p { margin: 0; font-size: .8rem; color: var(--muted); }
+.chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 92%; padding: 10px 14px; border-radius: 14px; font-size: .95rem; overflow-wrap: anywhere; }
+.msg p { margin: 0 0 .55em; }
+.msg p:last-child { margin-bottom: 0; }
+.msg ul, .msg ol { margin: 0 0 .55em; padding-left: 1.2em; }
+.msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 4px; }
+.msg.user code { background: rgb(0 0 0 / .1); }
+.msg.bot { align-self: flex-start; background: var(--surface-2); border-bottom-left-radius: 4px; }
+.msg.err { color: var(--bad); }
+.suggest { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 10px; }
+.suggest button { font: inherit; font-size: .82rem; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; text-align: left; }
+.suggest button:hover { border-color: var(--info); }
+.chat-form { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); align-items: flex-end; }
+.chat-form textarea { flex: 1; min-width: 0; min-height: 44px; max-height: 140px; resize: vertical; font-family: var(--font-body); font-size: 16px; line-height: 1.4; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+
+/* ---------- toasts ---------- */
+.toasts { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 60; pointer-events: none; width: max-content; max-width: calc(100vw - 32px); }
+.toast { display: flex; align-items: center; gap: 10px; background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 14px; font-weight: 700; font-size: .92rem; box-shadow: 0 10px 28px rgb(0 0 0 / .3); animation: toast-in .25s ease-out; }
+.toast b { background: var(--accent); color: var(--accent-ink); padding: 1px 8px; border-radius: 99px; font-family: var(--font-mono); font-size: .8rem; white-space: nowrap; }
+@keyframes toast-in { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+.offscreen { position: absolute; left: -10000px; top: 0; width: 420px; height: 300px; overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="#inicio"><span class="mark" aria-hidden="true"></span>Desvelo JS</a>
+  <div class="progress" title="Predicciones y desafíos completados">
+    <div class="bar"><span id="bar-fill"></span></div>
+    <span class="prog-text" id="prog-text">0/0</span>
+  </div>
+  <div class="stats"><span class="xp" id="xp">0 XP</span><span class="level" id="level">Curioso</span></div>
+  <div class="clock"><span class="clock-label">Sesión</span><span id="session">0:00</span>
+    <button class="top-btn" id="sprint" type="button" title="Bloques de 25 minutos de foco y 5 de pausa">Sprint 25</button>
+    <button class="top-btn tutor ai-only" id="tutor-btn" type="button">Tutor</button>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="rail" id="nav" aria-label="Misiones"></nav>
+  <main id="main"><div class="main-inner" id="view"></div></main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="tutor" hidden aria-label="Tutor">
+  <div class="drawer-head">
+    <div><h2>Tutor</h2><p id="tutor-ctx">Claude, con el contexto de tu misión</p></div>
+    <button class="btn ghost" id="tutor-close" type="button">Cerrar</button>
+  </div>
+  <div class="chat" id="chat">
+    <div class="msg bot"><p>Preguntame lo que quieras: un concepto que no te cerró, por qué falla tu código, o pedime un ejercicio extra de lo que estás viendo.</p></div>
+  </div>
+  <div class="suggest" id="suggest"></div>
+  <form class="chat-form" id="chat-form">
+    <textarea id="chat-input" rows="1" placeholder="Escribí tu pregunta…" aria-label="Pregunta para el tutor"></textarea>
+    <button class="btn primary" id="chat-send" type="submit">Enviar</button>
+    <button class="btn warn" id="chat-stop" type="button" hidden>Detener</button>
+  </form>
+</aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="offscreen" id="offscreen" aria-hidden="true"></div>
+
+<!-- =====================================================================
+     CONTENIDO DEL CURSO
+     ===================================================================== -->
+<template id="contenido">
+
+<!-- ============================ MISIÓN 1 ============================ -->
+<section class="mission" data-id="m1" data-core data-mins="20" data-title="Valores y variables" data-goal="Guardar datos con nombre, conocer los tipos básicos y mostrar resultados en la consola.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Todo programa trabaja con <strong>valores</strong>: números, textos, verdadero o falso. Para reutilizarlos les ponés un nombre con una <strong>variable</strong>.</p>
+<ul>
+<li><code>const</code>: el valor no se reasigna. Usala por defecto.</li>
+<li><code>let</code>: cuando el valor va a cambiar (un contador, un total).</li>
+<li><code>var</code>: la forma vieja. La vas a ver en código antiguo; no la uses.</li>
+</ul>
+<p>Tipos básicos: <code>number</code> (<code>42</code>, <code>3.14</code>), <code>string</code> (<code>"hola"</code>), <code>boolean</code> (<code>true</code>/<code>false</code>), <code>undefined</code> (todavía sin valor) y <code>null</code> (vacío a propósito). <code>typeof</code> te dice el tipo de un valor y <code>console.log</code> lo muestra en la consola.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const nombre = "Ada";
+let edad = 36;
+edad = edad + 1;      // let se puede reasignar
+console.log(nombre, edad);
+console.log(typeof nombre, typeof edad, typeof true);
+
+// Sacale las barras a la línea de abajo y ejecutá: ¿qué pasa?
+// nombre = "Grace";
+</script></div>
+<div class="b-text">
+<p>Los <strong>template literals</strong> usan comillas invertidas (<code>`</code>) y te dejan meter cualquier expresión dentro de un texto con <code>${...}</code>. Los operadores matemáticos son los de siempre, más <code>%</code> (resto de la división) y <code>**</code> (potencia).</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const producto = "café";
+const precio = 2.5;
+const cantidad = 3;
+console.log(`Pediste ${cantidad} ${producto}s: $${precio * cantidad}`);
+
+console.log(10 / 3, 10 % 3, 2 ** 10);
+console.log("5" + 3, "5" - 3, Number("5") + 3);
+</script></div>
+<div class="b-tip"><p><strong>Cómo leer un error:</strong> cuando algo falla, la consola muestra la línea y una explicación en castellano. Leela antes de tocar nada: casi siempre dice exactamente qué pasó.</p></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q1-1" data-answer="1">
+<script type="text/plain" class="code">
+console.log(typeof null);
+</script>
+<script type="text/plain" class="opt">null</script>
+<script type="text/plain" class="opt">object</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>Es un error histórico de JavaScript que nunca se corrigió para no romper la web. <code>null</code> es su propio tipo, pero <code>typeof</code> dice <code>"object"</code>. Ahora ya lo sabés.</p></div>
+</div>
+<div class="b-quiz" data-id="q1-2" data-answer="1">
+<script type="text/plain" class="code">
+console.log("5" + 3, "5" - 3);
+</script>
+<script type="text/plain" class="opt">8 2</script>
+<script type="text/plain" class="opt">53 2</script>
+<script type="text/plain" class="opt">53 NaN</script>
+<script type="text/plain" class="opt">8 53</script>
+<div class="why"><p>Con un string, <code>+</code> concatena: <code>"5" + 3</code> da <code>"53"</code>. En cambio <code>-</code> solo sirve con números, así que JS convierte <code>"5"</code> en <code>5</code> y da <code>2</code>. Por eso conviene convertir explícitamente con <code>Number()</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q1-3" data-answer="1">
+<script type="text/plain" class="code">
+let x = 1;
+x += 2;
+x *= 3;
+console.log(x);
+</script>
+<script type="text/plain" class="opt">6</script>
+<script type="text/plain" class="opt">9</script>
+<script type="text/plain" class="opt">7</script>
+<script type="text/plain" class="opt">3</script>
+<div class="why"><p><code>x += 2</code> es <code>x = x + 2</code> (queda 3) y <code>x *= 3</code> es <code>x = x * 3</code> (queda 9).</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c1-1" data-title="Ticket de compra">
+<div class="prompt"><p>Ya tenés <code>const precio = 1200</code>. Declará <code>cantidad</code> con el valor <code>3</code>, calculá <code>total</code> (precio por cantidad) y mostrá en consola exactamente <code>Total: $3600</code> usando un template literal. No escribas 3600 a mano: que lo calcule JS.</p></div>
+<script type="text/plain" class="starter">
+const precio = 1200;
+// declará cantidad y total
+
+// mostrá el resultado con console.log
+</script>
+<script type="text/plain" class="tests">
+cantidad vale 3 :: cantidad ==> 3
+total vale 3600 :: total ==> 3600
+La consola muestra "Total: $3600" :: log ==> "Total: $3600"
+Usás un template literal con ${} :: src ==> `[^`]*\$\{
+No escribiste 3600 a mano :: !src ==> 3600
+</script>
+<div class="hint"><code>const cantidad = 3;</code></div>
+<div class="hint">El total es <code>precio * cantidad</code>. Guardalo en <code>const total</code>.</div>
+<div class="hint">El primer <code>$</code> es texto común y el <code>${...}</code> inserta el valor: <code>`Total: $${total}`</code>.</div>
+<script type="text/plain" class="solution">
+const precio = 1200;
+const cantidad = 3;
+const total = precio * cantidad;
+console.log(`Total: $${total}`);
+</script>
+</div>
+<div class="b-challenge" data-id="c1-2" data-title="Texto a número">
+<div class="prompt"><p>Lo que escribe una persona en un formulario siempre llega como texto. Tenés <code>const entrada = "42"</code>. Creá <code>numero</code> con su valor numérico (usá <code>Number()</code>), <code>doble</code> con el doble de ese número, y <code>esNumero</code> con el resultado de <code>typeof numero === "number"</code>.</p></div>
+<script type="text/plain" class="starter">
+const entrada = "42";
+// creá numero, doble y esNumero
+</script>
+<script type="text/plain" class="tests">
+numero es el número 42 :: numero ==> 42
+numero es de tipo number :: typeof numero ==> "number"
+doble vale 84 :: doble ==> 84
+esNumero vale true :: esNumero ==> true
+Usaste Number() :: src ==> Number\(
+</script>
+<div class="hint"><code>const numero = Number(entrada);</code></div>
+<div class="hint">Si hacés <code>entrada * 2</code> funciona de casualidad, pero <code>entrada + entrada</code> daría <code>"4242"</code>. Convertí primero.</div>
+<script type="text/plain" class="solution">
+const entrada = "42";
+const numero = Number(entrada);
+const doble = numero * 2;
+const esNumero = typeof numero === "number";
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 2 ============================ -->
+<section class="mission" data-id="m2" data-core data-mins="25" data-title="Funciones" data-goal="Empaquetar lógica reutilizable: parámetros, return, funciones flecha y funciones como valores.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Una <strong>función</strong> es un bloque de código con nombre que ejecutás cuando quieras. Recibe datos (<strong>parámetros</strong>), hace su trabajo y entrega un resultado con <code>return</code>. Sin <code>return</code>, devuelve <code>undefined</code>.</p>
+<p>Vas a ver dos sintaxis todo el tiempo: la clásica con <code>function</code> y la <strong>función flecha</strong> <code>(a, b) =&gt; ...</code>. Si la flecha tiene una sola expresión sin llaves, la devuelve sola.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+function areaRectangulo(base, altura) {
+  return base * altura;
+}
+
+const a = areaRectangulo(3, 4);
+console.log(a);
+console.log(areaRectangulo(10, 2));
+
+// Función flecha: misma idea, sintaxis corta
+const cuadrado = (n) => n * n;
+console.log(cuadrado(7));
+
+// Parámetro con valor por defecto
+const saludar = (nombre = "desconocido") => `Hola, ${nombre}`;
+console.log(saludar("Lu"), "|", saludar());
+</script></div>
+<div class="b-text">
+<p><strong><code>console.log</code> no es <code>return</code>.</strong> <code>console.log</code> muestra algo en pantalla; <code>return</code> le entrega el valor a quien llamó a la función. Los desafíos verifican lo que tu función <em>devuelve</em>.</p>
+<p>Además, las funciones son valores: se guardan en variables y se pasan como argumento a otras funciones. Esto es la base de casi todo el JavaScript moderno.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+function conLog(x) { console.log(x * 2); }
+function conReturn(x) { return x * 2; }
+
+const r1 = conLog(5);     // imprime 10, pero devuelve undefined
+const r2 = conReturn(5);  // no imprime nada, devuelve 10
+console.log("r1:", r1, "| r2:", r2);
+
+// Una función que recibe otra función
+const aplicar = (fn, valor) => fn(valor);
+console.log(aplicar(conReturn, 21));
+console.log(aplicar((t) => t.toUpperCase(), "grito"));
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q2-1" data-answer="2">
+<script type="text/plain" class="code">
+function f(x) {
+  x * 2;
+}
+console.log(f(4));
+</script>
+<script type="text/plain" class="opt">8</script>
+<script type="text/plain" class="opt">4</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>Falta <code>return</code>. La función calcula <code>x * 2</code> y tira el resultado; sin <code>return</code> devuelve <code>undefined</code>. Es el error número uno de quien empieza.</p></div>
+</div>
+<div class="b-quiz" data-id="q2-2" data-answer="0">
+<script type="text/plain" class="code">
+const sumar = (a, b = 10) => a + b;
+console.log(sumar(1), sumar(1, 2));
+</script>
+<script type="text/plain" class="opt">11 3</script>
+<script type="text/plain" class="opt">NaN 3</script>
+<script type="text/plain" class="opt">1 3</script>
+<script type="text/plain" class="opt">11 12</script>
+<div class="why"><p>Si no pasás <code>b</code>, vale <code>10</code> por defecto: <code>1 + 10 = 11</code>. Si lo pasás, se usa el tuyo: <code>1 + 2 = 3</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q2-3" data-answer="1">
+<script type="text/plain" class="code">
+const doble = (n) => { n * 2 };
+console.log(doble(5));
+</script>
+<script type="text/plain" class="opt">10</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">{ n * 2 }</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>Con llaves <code>{}</code> la flecha es un bloque y necesita <code>return</code>. Sin llaves, <code>(n) =&gt; n * 2</code> devuelve el resultado automáticamente.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c2-1" data-title="Celsius a Fahrenheit">
+<div class="prompt"><p>Escribí <code>aFahrenheit(c)</code> que <strong>devuelva</strong> la temperatura convertida: <code>c * 9 / 5 + 32</code>.</p></div>
+<script type="text/plain" class="starter">
+function aFahrenheit(c) {
+  // devolvé el resultado
+}
+</script>
+<script type="text/plain" class="tests">
+aFahrenheit(0) devuelve 32 :: aFahrenheit(0) ==> 32
+aFahrenheit(100) devuelve 212 :: aFahrenheit(100) ==> 212
+aFahrenheit(-40) devuelve -40 :: aFahrenheit(-40) ==> -40
+aFahrenheit(25) devuelve 77 :: aFahrenheit(25) ==> 77
+</script>
+<div class="hint">Adentro de la función solo necesitás una línea que empiece con <code>return</code>.</div>
+<script type="text/plain" class="solution">
+function aFahrenheit(c) {
+  return c * 9 / 5 + 32;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c2-2" data-title="Presentación con valor por defecto">
+<div class="prompt"><p>Escribí la <strong>función flecha</strong> <code>presentar(nombre, edad)</code> que devuelva <code>"Soy Ana y tengo 30 años"</code>. Si no te pasan la edad, que use <code>18</code>.</p></div>
+<script type="text/plain" class="starter">
+const presentar = // completá acá
+</script>
+<script type="text/plain" class="tests">
+presentar("Ana", 30) :: presentar("Ana", 30) ==> "Soy Ana y tengo 30 años"
+presentar("Leo") usa 18 por defecto :: presentar("Leo") ==> "Soy Leo y tengo 18 años"
+Es una función flecha :: src ==> =>
+</script>
+<div class="hint">La forma es <code>const presentar = (nombre, edad = 18) =&gt; ...</code></div>
+<div class="hint">Del lado derecho de la flecha poné un template literal con <code>${nombre}</code> y <code>${edad}</code>.</div>
+<script type="text/plain" class="solution">
+const presentar = (nombre, edad = 18) => `Soy ${nombre} y tengo ${edad} años`;
+</script>
+</div>
+<div class="b-challenge" data-id="c2-3" data-title="Dos veces">
+<div class="prompt"><p>Escribí <code>dosVeces(fn, x)</code>, que aplique la función <code>fn</code> dos veces seguidas sobre <code>x</code> y devuelva el resultado. Por ejemplo, <code>dosVeces(n =&gt; n + 3, 1)</code> da <code>7</code>.</p></div>
+<script type="text/plain" class="starter">
+function dosVeces(fn, x) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+dosVeces(n => n + 3, 1) devuelve 7 :: dosVeces(n => n + 3, 1) ==> 7
+dosVeces(s => s + "!", "hola") devuelve "hola!!" :: dosVeces(s => s + "!", "hola") ==> "hola!!"
+dosVeces(n => n * n, 3) devuelve 81 :: dosVeces(n => n * n, 3) ==> 81
+</script>
+<div class="hint"><code>fn(x)</code> aplica la función una vez. ¿Qué pasa si le pasás ese resultado otra vez a <code>fn</code>?</div>
+<script type="text/plain" class="solution">
+const dosVeces = (fn, x) => fn(fn(x));
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 3 ============================ -->
+<section class="mission" data-id="m3" data-core data-mins="25" data-title="Decisiones" data-goal="Hacer que el código elija caminos: comparaciones, if/else, operador ternario y valores truthy/falsy.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Para comparar usá <code>===</code> (mismo valor <em>y</em> mismo tipo) y <code>!==</code>. Existe <code>==</code>, que convierte tipos antes de comparar y da sorpresas: evitalo. También tenés <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>.</p>
+<p>Para combinar condiciones: <code>&amp;&amp;</code> (y), <code>||</code> (o), <code>!</code> (no). Con <code>if / else if / else</code> elegís un camino, y el <strong>ternario</strong> <code>condicion ? a : b</code> es un if corto que devuelve un valor.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+function clasificar(nota) {
+  if (nota >= 9) {
+    return "Excelente";
+  } else if (nota >= 6) {
+    return "Aprobado";
+  } else {
+    return "A recuperar";
+  }
+}
+console.log(clasificar(9.5), clasificar(7), clasificar(3));
+
+const edad = 20;
+const mensaje = edad >= 18 ? "Puede votar" : "Todavía no";
+console.log(mensaje);
+
+console.log(5 === 5, 5 === "5", 5 == "5");
+console.log(true && false, true || false, !true);
+</script></div>
+<div class="b-text">
+<p><strong>Truthy y falsy.</strong> En un <code>if</code>, cualquier valor se convierte a booleano. Son <em>falsy</em>: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code> y <code>NaN</code>. Todo lo demás es <em>truthy</em>, incluso <code>"0"</code>, <code>[]</code> y <code>{}</code>.</p>
+<p><code>??</code> da un valor por defecto solo si lo de la izquierda es <code>null</code> o <code>undefined</code>. <code>||</code> lo da ante <em>cualquier</em> falsy, incluido el <code>0</code>.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+console.log(Boolean(0), Boolean(""), Boolean("0"));
+console.log(Boolean([]), Boolean(null), Boolean("hola"));
+
+const cantidad = 0;
+console.log(cantidad || 10);  // 0 es falsy → usa 10
+console.log(cantidad ?? 10);  // 0 no es null/undefined → queda 0
+
+const usuario = "";
+if (!usuario) {
+  console.log("Falta el nombre de usuario");
+}
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q3-1" data-answer="1">
+<script type="text/plain" class="code">
+console.log(0 == "", 0 === "");
+</script>
+<script type="text/plain" class="opt">true true</script>
+<script type="text/plain" class="opt">true false</script>
+<script type="text/plain" class="opt">false false</script>
+<script type="text/plain" class="opt">false true</script>
+<div class="why"><p><code>==</code> convierte <code>""</code> a número (<code>0</code>) y dice que son iguales. <code>===</code> ve que uno es número y el otro string: distintos. Por eso se usa siempre <code>===</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q3-2" data-answer="0">
+<script type="text/plain" class="code">
+const x = "0";
+if (x) {
+  console.log("sí");
+} else {
+  console.log("no");
+}
+</script>
+<script type="text/plain" class="opt">sí</script>
+<script type="text/plain" class="opt">no</script>
+<script type="text/plain" class="opt">Error</script>
+<script type="text/plain" class="opt">undefined</script>
+<div class="why"><p><code>"0"</code> es un string con un carácter, y todo string no vacío es truthy. Solo <code>""</code> es falsy.</p></div>
+</div>
+<div class="b-quiz" data-id="q3-3" data-answer="2">
+<script type="text/plain" class="code">
+console.log(0 || "def", 0 ?? "def", null ?? "def");
+</script>
+<script type="text/plain" class="opt">0 0 def</script>
+<script type="text/plain" class="opt">def def def</script>
+<script type="text/plain" class="opt">def 0 def</script>
+<script type="text/plain" class="opt">0 def null</script>
+<div class="why"><p><code>||</code> descarta cualquier falsy (el <code>0</code> también). <code>??</code> solo descarta <code>null</code> y <code>undefined</code>, así que conserva el <code>0</code>.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c3-1" data-title="¿Par o impar?">
+<div class="prompt"><p>Escribí <code>esPar(n)</code> que devuelva <code>true</code> si <code>n</code> es par y <code>false</code> si no. Pista de herramienta: <code>%</code> te da el resto de una división.</p></div>
+<script type="text/plain" class="starter">
+function esPar(n) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+esPar(4) es true :: esPar(4) ==> true
+esPar(7) es false :: esPar(7) ==> false
+esPar(0) es true :: esPar(0) ==> true
+esPar(-2) es true :: esPar(-2) ==> true
+</script>
+<div class="hint">Un número es par si el resto de dividirlo por 2 es 0.</div>
+<div class="hint">Una comparación ya es un booleano: podés hacer <code>return n % 2 === 0;</code> sin <code>if</code>.</div>
+<script type="text/plain" class="solution">
+const esPar = (n) => n % 2 === 0;
+</script>
+</div>
+<div class="b-challenge" data-id="c3-2" data-title="FizzBuzz (un número)">
+<div class="prompt"><p>El clásico de las entrevistas. Escribí <code>fizzBuzz(n)</code> que devuelva:</p>
+<ul><li><code>"FizzBuzz"</code> si <code>n</code> es divisible por 3 y por 5,</li><li><code>"Fizz"</code> si es divisible solo por 3,</li><li><code>"Buzz"</code> si es divisible solo por 5,</li><li>el mismo número <code>n</code> en cualquier otro caso.</li></ul></div>
+<script type="text/plain" class="starter">
+function fizzBuzz(n) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+fizzBuzz(15) da "FizzBuzz" :: fizzBuzz(15) ==> "FizzBuzz"
+fizzBuzz(9) da "Fizz" :: fizzBuzz(9) ==> "Fizz"
+fizzBuzz(10) da "Buzz" :: fizzBuzz(10) ==> "Buzz"
+fizzBuzz(7) devuelve el número 7 :: fizzBuzz(7) ==> 7
+fizzBuzz(30) da "FizzBuzz" :: fizzBuzz(30) ==> "FizzBuzz"
+</script>
+<div class="hint">"Divisible por 3" se escribe <code>n % 3 === 0</code>.</div>
+<div class="hint">El orden importa: si preguntás primero por 3, el 15 devuelve "Fizz" y nunca llega a "FizzBuzz". Preguntá primero el caso más específico.</div>
+<script type="text/plain" class="solution">
+function fizzBuzz(n) {
+  if (n % 15 === 0) return "FizzBuzz";
+  if (n % 3 === 0) return "Fizz";
+  if (n % 5 === 0) return "Buzz";
+  return n;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c3-3" data-title="Precio de la entrada">
+<div class="prompt"><p>Un cine cobra así. Escribí <code>precioEntrada(edad, esEstudiante)</code>:</p>
+<ul><li>Menores de 12: <code>0</code> (gratis).</li><li>65 o más: <code>500</code>.</li><li>Si no, estudiantes: <code>700</code>.</li><li>Todos los demás: <code>1000</code>.</li></ul></div>
+<script type="text/plain" class="starter">
+function precioEntrada(edad, esEstudiante) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Niño de 8 entra gratis :: precioEntrada(8, false) ==> 0
+Niño estudiante de 8 también gratis :: precioEntrada(8, true) ==> 0
+Jubilado de 70 paga 500 :: precioEntrada(70, false) ==> 500
+Jubilado estudiante de 65 paga 500 :: precioEntrada(65, true) ==> 500
+Estudiante de 20 paga 700 :: precioEntrada(20, true) ==> 700
+Adulto de 20 paga 1000 :: precioEntrada(20, false) ==> 1000
+Con 12 años ya paga 1000 :: precioEntrada(12, false) ==> 1000
+</script>
+<div class="hint">Usá <code>return</code> temprano: cada <code>if</code> que se cumple devuelve y corta la función. Así no necesitás <code>else</code>.</div>
+<div class="hint">Mirá el orden de las reglas: la edad pesa más que ser estudiante.</div>
+<script type="text/plain" class="solution">
+function precioEntrada(edad, esEstudiante) {
+  if (edad < 12) return 0;
+  if (edad >= 65) return 500;
+  if (esEstudiante) return 700;
+  return 1000;
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 4 ============================ -->
+<section class="mission" data-id="m4" data-core data-mins="25" data-title="Bucles" data-goal="Repetir trabajo con for, while y for...of, y dominar el patrón acumulador.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Un <strong>bucle</strong> repite código. <code>for</code> clásico cuando sabés cuántas vueltas das; <code>while</code> cuando repetís hasta que algo se cumpla; <code>for...of</code> para recorrer los elementos de una lista o las letras de un texto.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+for (let i = 1; i <= 5; i++) {
+  console.log("Vuelta", i);
+}
+
+let n = 1;
+while (n < 100) {
+  n = n * 2;
+}
+console.log("Primera potencia de 2 que llega a 100:", n);
+
+for (const letra of "JS!") {
+  console.log(letra);
+}
+</script></div>
+<div class="b-text">
+<p><strong>Patrón acumulador:</strong> arrancás con un valor inicial (<code>0</code>, <code>""</code>, <code>[]</code>) y lo actualizás en cada vuelta. <code>break</code> corta el bucle; <code>continue</code> salta a la vuelta siguiente.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+let suma = 0;
+for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) continue;   // saltea los pares
+  suma += i;
+}
+console.log("Suma de impares hasta 10:", suma);
+
+const numeros = [4, 8, 15, 16, 23, 42];
+for (const x of numeros) {
+  if (x > 20) {
+    console.log("Primer número mayor a 20:", x);
+    break;
+  }
+}
+</script></div>
+<div class="b-tip"><p><strong>Bucle infinito:</strong> si la condición nunca se vuelve falsa, el bucle no termina. Acá el código se corta solo a los 5 segundos, así que podés experimentar tranquilo.</p></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q4-1" data-answer="1">
+<script type="text/plain" class="code">
+let s = "";
+for (let i = 0; i < 3; i++) {
+  s += i;
+}
+console.log(s);
+</script>
+<script type="text/plain" class="opt">3</script>
+<script type="text/plain" class="opt">012</script>
+<script type="text/plain" class="opt">0123</script>
+<script type="text/plain" class="opt">6</script>
+<div class="why"><p><code>s</code> es un string, así que <code>+=</code> concatena: <code>"" + 0 + 1 + 2</code> da <code>"012"</code>. El bucle se detiene antes de 3 porque la condición es <code>i &lt; 3</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q4-2" data-answer="2">
+<script type="text/plain" class="code">
+let i = 10;
+while (i > 0) {
+  i -= 3;
+}
+console.log(i);
+</script>
+<script type="text/plain" class="opt">0</script>
+<script type="text/plain" class="opt">1</script>
+<script type="text/plain" class="opt">-2</script>
+<script type="text/plain" class="opt">-3</script>
+<div class="why"><p>10 → 7 → 4 → 1 → -2. Con <code>1</code> la condición <code>i &gt; 0</code> todavía se cumple, así que resta una vez más.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c4-1" data-title="Sumar hasta N">
+<div class="prompt"><p>Escribí <code>sumarHasta(n)</code> que devuelva <code>1 + 2 + ... + n</code> usando un bucle. Para <code>n = 0</code> debe dar <code>0</code>.</p></div>
+<script type="text/plain" class="starter">
+function sumarHasta(n) {
+  let suma = 0;
+  // recorré de 1 a n y acumulá
+
+  return suma;
+}
+</script>
+<script type="text/plain" class="tests">
+sumarHasta(1) :: sumarHasta(1) ==> 1
+sumarHasta(5) :: sumarHasta(5) ==> 15
+sumarHasta(100) :: sumarHasta(100) ==> 5050
+sumarHasta(0) :: sumarHasta(0) ==> 0
+Usás un bucle :: src ==> \b(for|while)\b
+</script>
+<div class="hint"><code>for (let i = 1; i &lt;= n; i++) { ... }</code></div>
+<div class="hint">Adentro del bucle: <code>suma += i;</code></div>
+<script type="text/plain" class="solution">
+function sumarHasta(n) {
+  let suma = 0;
+  for (let i = 1; i <= n; i++) {
+    suma += i;
+  }
+  return suma;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c4-2" data-title="Contar vocales">
+<div class="prompt"><p>Escribí <code>contarVocales(texto)</code> que devuelva cuántas vocales (a, e, i, o, u) tiene el texto, contando también las mayúsculas.</p></div>
+<script type="text/plain" class="starter">
+function contarVocales(texto) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+"hola" tiene 2 :: contarVocales("hola") ==> 2
+"JavaScript" tiene 3 :: contarVocales("JavaScript") ==> 3
+Cuenta mayúsculas: "AEIOU" tiene 5 :: contarVocales("AEIOU") ==> 5
+"xyz" tiene 0 :: contarVocales("xyz") ==> 0
+</script>
+<div class="hint">Recorré las letras con <code>for (const letra of texto)</code> y usá un contador.</div>
+<div class="hint"><code>"aeiou".includes(letra)</code> te dice si una letra es vocal. Para las mayúsculas, pasá todo a minúsculas con <code>.toLowerCase()</code>.</div>
+<script type="text/plain" class="solution">
+function contarVocales(texto) {
+  let cuenta = 0;
+  for (const letra of texto.toLowerCase()) {
+    if ("aeiou".includes(letra)) cuenta++;
+  }
+  return cuenta;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c4-3" data-title="FizzBuzz completo">
+<div class="prompt"><p>Ahora con un bucle: mostrá con <code>console.log</code> los números del 1 al 15, uno por línea, pero reemplazando los múltiplos de 3 por <code>Fizz</code>, los de 5 por <code>Buzz</code> y los de ambos por <code>FizzBuzz</code>. Solo eso en la consola.</p></div>
+<script type="text/plain" class="starter">
+for (let i = 1; i <= 15; i++) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+La consola muestra la secuencia exacta del 1 al 15 :: logs ==> ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
+</script>
+<div class="hint">Es lo mismo que el desafío 3.2, pero en lugar de <code>return</code> hacés <code>console.log</code> en cada vuelta.</div>
+<div class="hint">Usá <code>if / else if / else</code> para que cada vuelta imprima una sola línea.</div>
+<script type="text/plain" class="solution">
+for (let i = 1; i <= 15; i++) {
+  if (i % 15 === 0) console.log("FizzBuzz");
+  else if (i % 3 === 0) console.log("Fizz");
+  else if (i % 5 === 0) console.log("Buzz");
+  else console.log(i);
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 5 ============================ -->
+<section class="mission" data-id="m5" data-core data-mins="20" data-title="Arrays" data-goal="Trabajar con listas: índices, agregar y sacar elementos, copiar y desestructurar.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Un <strong>array</strong> es una lista ordenada. Los índices arrancan en <code>0</code>, y <code>length</code> dice cuántos elementos hay. Los métodos básicos: <code>push</code> (agrega al final), <code>pop</code> (saca el último), <code>shift</code> (saca el primero), <code>includes</code>, <code>indexOf</code>, <code>slice</code> (copia una parte) y <code>join</code> (une en un texto).</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const frutas = ["manzana", "banana", "kiwi"];
+console.log(frutas[0], frutas.length);
+console.log(frutas[frutas.length - 1]);   // el último
+
+frutas.push("uva");
+const sacada = frutas.shift();
+console.log(frutas, "| saqué:", sacada);
+
+console.log(frutas.includes("kiwi"), frutas.indexOf("uva"));
+console.log(frutas.slice(0, 2));
+console.log(frutas.join(" + "));
+console.log("a-b-c".split("-"));
+</script></div>
+<div class="b-text">
+<p><strong>Copiar no es lo mismo que referenciar.</strong> Asignar un array a otra variable <em>no lo copia</em>: las dos variables apuntan a la misma lista. Para copiar usá el spread <code>[...arr]</code>. El spread también sirve para unir arrays, y la <strong>desestructuración</strong> saca elementos a variables en una línea.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const a = [1, 2, 3];
+const b = a;          // misma lista
+const c = [...a];     // copia
+b.push(4);
+console.log(a, c);
+
+const todos = [...a, ...[10, 20]];
+console.log(todos);
+
+const [primero, segundo, ...resto] = todos;
+console.log(primero, segundo, resto);
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q5-1" data-answer="1">
+<script type="text/plain" class="code">
+const lista = [10, 20, 30];
+console.log(lista[3], lista.length);
+</script>
+<script type="text/plain" class="opt">30 3</script>
+<script type="text/plain" class="opt">undefined 3</script>
+<script type="text/plain" class="opt">Error</script>
+<script type="text/plain" class="opt">undefined 4</script>
+<div class="why"><p>Los índices van de 0 a <code>length - 1</code>. <code>lista[3]</code> no existe, y JS no tira error: devuelve <code>undefined</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q5-2" data-answer="1">
+<script type="text/plain" class="code">
+const x = [1, 2];
+const y = x;
+y.push(3);
+console.log(x.length);
+</script>
+<script type="text/plain" class="opt">2</script>
+<script type="text/plain" class="opt">3</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">Error: x es const</script>
+<div class="why"><p><code>x</code> e <code>y</code> son la misma lista. Y <code>const</code> impide <em>reasignar</em> la variable, no modificar el contenido del array.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c5-1" data-title="El máximo, a mano">
+<div class="prompt"><p>Escribí <code>maximo(nums)</code> que devuelva el número más grande del array, recorriéndolo con un bucle (sin <code>Math.max</code>).</p></div>
+<script type="text/plain" class="starter">
+function maximo(nums) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+maximo([3, 9, 2]) da 9 :: maximo([3, 9, 2]) ==> 9
+Funciona con negativos :: maximo([-5, -1, -9]) ==> -1
+Un solo elemento :: maximo([7]) ==> 7
+Sin usar Math.max :: !src ==> Math\.max
+</script>
+<div class="hint">Guardá "el mayor visto hasta ahora" en una variable y actualizala cuando encuentres uno más grande.</div>
+<div class="hint">No arranques en <code>0</code>: con todos negativos fallaría. Arrancá con <code>nums[0]</code>.</div>
+<script type="text/plain" class="solution">
+function maximo(nums) {
+  let mayor = nums[0];
+  for (const n of nums) {
+    if (n > mayor) mayor = n;
+  }
+  return mayor;
+}
+// En la vida real: Math.max(...nums)
+</script>
+</div>
+<div class="b-challenge" data-id="c5-2" data-title="Sin duplicados">
+<div class="prompt"><p>Escribí <code>sinDuplicados(arr)</code> que devuelva un array <strong>nuevo</strong> sin elementos repetidos, conservando el orden en que aparecen. No modifiques el array original.</p></div>
+<script type="text/plain" class="starter">
+function sinDuplicados(arr) {
+  const resultado = [];
+
+  return resultado;
+}
+</script>
+<script type="text/plain" class="tests">
+[1, 2, 2, 3, 1] → [1, 2, 3] :: sinDuplicados([1, 2, 2, 3, 1]) ==> [1, 2, 3]
+Funciona con strings :: sinDuplicados(["a", "b", "a"]) ==> ["a", "b"]
+Array vacío :: sinDuplicados([]) ==> []
+No modifica el original :: (() => { const o = [1, 1]; sinDuplicados(o); return o.length === 2; })()
+</script>
+<div class="hint">Recorré <code>arr</code> y agregá cada elemento a <code>resultado</code> solo si todavía no está.</div>
+<div class="hint"><code>resultado.includes(x)</code> te dice si ya lo agregaste.</div>
+<script type="text/plain" class="solution">
+function sinDuplicados(arr) {
+  const resultado = [];
+  for (const x of arr) {
+    if (!resultado.includes(x)) resultado.push(x);
+  }
+  return resultado;
+}
+// Atajo: return [...new Set(arr)];
+</script>
+</div>
+<div class="b-challenge" data-id="c5-3" data-title="Rotar">
+<div class="prompt"><p>Escribí <code>rotar(arr)</code> que devuelva un array nuevo con el último elemento movido al principio: <code>[1, 2, 3]</code> → <code>[3, 1, 2]</code>. Tiene que funcionar con arrays vacíos y no modificar el original.</p></div>
+<script type="text/plain" class="starter">
+function rotar(arr) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+rotar([1, 2, 3]) da [3, 1, 2] :: rotar([1, 2, 3]) ==> [3, 1, 2]
+rotar(["a"]) da ["a"] :: rotar(["a"]) ==> ["a"]
+rotar([]) da [] :: rotar([]) ==> []
+No modifica el original :: (() => { const o = [1, 2, 3]; rotar(o); return o.join() === "1,2,3"; })()
+</script>
+<div class="hint"><code>arr.slice(-1)</code> te da un array con el último elemento; <code>arr.slice(0, -1)</code>, todos menos el último.</div>
+<div class="hint">Unilos con spread: <code>[...a, ...b]</code>.</div>
+<script type="text/plain" class="solution">
+function rotar(arr) {
+  return [...arr.slice(-1), ...arr.slice(0, -1)];
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 6 ============================ -->
+<section class="mission" data-id="m6" data-core data-mins="25" data-title="Objetos" data-goal="Agrupar datos relacionados, leerlos y modificarlos, y usar desestructuración, spread y JSON.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Un <strong>objeto</strong> agrupa datos relacionados en pares <em>clave: valor</em>. Accedés con punto (<code>persona.nombre</code>) o con corchetes (<code>persona["nombre"]</code>), que sirve cuando la clave está guardada en una variable. Si un valor es una función, se llama <strong>método</strong>, y adentro <code>this</code> es el propio objeto.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const persona = {
+  nombre: "Ada",
+  edad: 36,
+  lenguajes: ["JS", "Python"],
+  saludar() {
+    return `Hola, soy ${this.nombre}`;
+  },
+};
+
+console.log(persona.nombre, persona["edad"]);
+console.log(persona.lenguajes[0]);
+console.log(persona.saludar());
+
+persona.ciudad = "Londres";   // agregar
+persona.edad++;               // modificar
+delete persona.lenguajes;     // borrar
+console.log(persona);
+</script></div>
+<div class="b-text">
+<p><strong>Desestructurar y spread</strong> son atajos que vas a ver en todo código moderno. <code>Object.keys</code> y <code>Object.entries</code> te dejan recorrer un objeto, y <code>JSON</code> lo convierte a texto (para guardarlo o mandarlo por internet) y de vuelta.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const auto = { marca: "Fiat", modelo: "600", anio: 1965 };
+
+const { marca, anio } = auto;
+console.log(marca, anio);
+
+const actualizado = { ...auto, anio: 1970 };  // copia con un cambio
+console.log(actualizado, auto.anio);
+
+console.log(Object.keys(auto));
+for (const [clave, valor] of Object.entries(auto)) {
+  console.log(`${clave} = ${valor}`);
+}
+
+const json = JSON.stringify(auto);
+console.log(json, JSON.parse(json).modelo);
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q6-1" data-answer="2">
+<script type="text/plain" class="code">
+const a = { x: 1 };
+const b = { x: 1 };
+console.log(a === b, a.x === b.x);
+</script>
+<script type="text/plain" class="opt">true true</script>
+<script type="text/plain" class="opt">true false</script>
+<script type="text/plain" class="opt">false true</script>
+<script type="text/plain" class="opt">false false</script>
+<div class="why"><p>Los objetos se comparan por <em>referencia</em>: <code>a</code> y <code>b</code> son dos objetos distintos aunque tengan el mismo contenido. Los valores de adentro (<code>1</code> y <code>1</code>) sí son iguales.</p></div>
+</div>
+<div class="b-quiz" data-id="q6-2" data-answer="0">
+<script type="text/plain" class="code">
+const user = { nombre: "Lu" };
+const clave = "nombre";
+console.log(user.clave, user[clave]);
+</script>
+<script type="text/plain" class="opt">undefined Lu</script>
+<script type="text/plain" class="opt">Lu Lu</script>
+<script type="text/plain" class="opt">nombre Lu</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p><code>user.clave</code> busca una propiedad que se llama literalmente "clave" (no existe). <code>user[clave]</code> usa el <em>valor</em> de la variable, o sea <code>user["nombre"]</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q6-3" data-answer="3">
+<script type="text/plain" class="code">
+const base = { a: 1, b: 2 };
+const nuevo = { ...base, b: 3, c: 4 };
+console.log(nuevo);
+</script>
+<script type="text/plain" class="opt">{ a: 1, b: 2, c: 4 }</script>
+<script type="text/plain" class="opt">{ b: 3, c: 4 }</script>
+<script type="text/plain" class="opt">{ a: 1, b: 2, b: 3, c: 4 }</script>
+<script type="text/plain" class="opt">{ a: 1, b: 3, c: 4 }</script>
+<div class="why"><p>El spread copia <code>a</code> y <code>b</code>; después <code>b: 3</code> pisa el valor anterior y <code>c</code> se agrega. Un objeto no puede tener dos claves iguales.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c6-1" data-title="Ficha de libro">
+<div class="prompt"><p>Escribí <code>crearLibro(titulo, autor, paginas)</code> que devuelva un objeto con esas tres propiedades más <code>esLargo</code>: <code>true</code> si tiene más de 300 páginas.</p></div>
+<script type="text/plain" class="starter">
+function crearLibro(titulo, autor, paginas) {
+  return {
+    // completá
+  };
+}
+</script>
+<script type="text/plain" class="tests">
+Crea el objeto completo :: crearLibro("Rayuela", "Cortázar", 600) ==> {"titulo":"Rayuela","autor":"Cortázar","paginas":600,"esLargo":true}
+Con 96 páginas no es largo :: crearLibro("El Principito", "Saint-Exupéry", 96).esLargo ==> false
+Justo 300 no es largo :: crearLibro("X", "Y", 300).esLargo ==> false
+</script>
+<div class="hint">Atajo: si la variable se llama igual que la clave, alcanza con escribirla una vez: <code>{ titulo, autor }</code> es <code>{ titulo: titulo, autor: autor }</code>.</div>
+<div class="hint"><code>esLargo: paginas &gt; 300</code></div>
+<script type="text/plain" class="solution">
+function crearLibro(titulo, autor, paginas) {
+  return { titulo, autor, paginas, esLargo: paginas > 300 };
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c6-2" data-title="Dar vuelta un objeto">
+<div class="prompt"><p>Escribí <code>invertirObjeto(obj)</code> que devuelva un objeto nuevo con claves y valores intercambiados: <code>{ a: "x", b: "y" }</code> → <code>{ x: "a", y: "b" }</code>.</p></div>
+<script type="text/plain" class="starter">
+function invertirObjeto(obj) {
+  const resultado = {};
+
+  return resultado;
+}
+</script>
+<script type="text/plain" class="tests">
+{ a: "x", b: "y" } da { x: "a", y: "b" } :: invertirObjeto({ a: "x", b: "y" }) ==> {"x":"a","y":"b"}
+Objeto vacío :: invertirObjeto({}) ==> {}
+Los números se vuelven claves :: invertirObjeto({ uno: 1, dos: 2 }) ==> {"1":"uno","2":"dos"}
+</script>
+<div class="hint">Recorré con <code>for (const [clave, valor] of Object.entries(obj))</code>.</div>
+<div class="hint">Para crear una clave a partir de una variable usá corchetes: <code>resultado[valor] = clave;</code></div>
+<script type="text/plain" class="solution">
+function invertirObjeto(obj) {
+  const resultado = {};
+  for (const [clave, valor] of Object.entries(obj)) {
+    resultado[valor] = clave;
+  }
+  return resultado;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c6-3" data-title="Cumpleaños sin mutar">
+<div class="prompt"><p>Escribí <code>cumplirAnios(persona)</code> que devuelva un objeto <strong>nuevo</strong> con todos los datos de <code>persona</code> y la <code>edad</code> aumentada en 1. El objeto original no se tiene que modificar (esto es clave en React y en código moderno).</p></div>
+<script type="text/plain" class="starter">
+function cumplirAnios(persona) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Devuelve la edad + 1 :: cumplirAnios({ nombre: "Lu", edad: 30 }).edad ==> 31
+Conserva el resto de los datos :: cumplirAnios({ nombre: "Lu", edad: 30 }) ==> {"nombre":"Lu","edad":31}
+No modifica el original :: (() => { const p = { nombre: "Lu", edad: 30 }; cumplirAnios(p); return p.edad === 30; })()
+Devuelve un objeto nuevo :: (() => { const p = { nombre: "Lu", edad: 30 }; return cumplirAnios(p) !== p; })()
+</script>
+<div class="hint">Si hacés <code>persona.edad++</code> modificás el original. Creá uno nuevo con spread.</div>
+<div class="hint"><code>return { ...persona, edad: persona.edad + 1 };</code></div>
+<script type="text/plain" class="solution">
+const cumplirAnios = (persona) => ({ ...persona, edad: persona.edad + 1 });
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 7 ============================ -->
+<section class="mission" data-id="m7" data-core data-mins="30" data-title="Métodos de array" data-goal="Reemplazar bucles por map, filter, find y reduce, y encadenarlos como una receta.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Estos métodos reciben una función y la aplican a cada elemento. Son lo que más vas a usar en JavaScript real:</p>
+<ul>
+<li><code>map</code>: transforma cada elemento (devuelve un array del mismo largo).</li>
+<li><code>filter</code>: se queda con los que cumplen la condición.</li>
+<li><code>find</code>: devuelve el primero que cumple (o <code>undefined</code>).</li>
+<li><code>reduce</code>: combina todo en un solo valor (una suma, un objeto...).</li>
+<li><code>some</code> / <code>every</code>: ¿alguno cumple? / ¿todos cumplen?</li>
+</ul>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const precios = [100, 250, 40, 980];
+
+const conIva = precios.map(p => Math.round(p * 1.21));
+const caros = precios.filter(p => p > 200);
+const primeroBarato = precios.find(p => p < 50);
+const total = precios.reduce((acum, p) => acum + p, 0);
+
+console.log(conIva);
+console.log(caros, primeroBarato, total);
+console.log(precios.some(p => p > 900), precios.every(p => p > 50));
+</script></div>
+<div class="b-text">
+<p><strong>Encadenar:</strong> como <code>map</code> y <code>filter</code> devuelven arrays nuevos, se pueden encadenar y se leen como una receta paso a paso. Ojo con <code>sort</code>: ordena <em>modificando</em> el array y, por defecto, compara como texto. Para números pasale <code>(a, b) =&gt; a - b</code>.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const alumnos = [
+  { nombre: "Ana", nota: 8 },
+  { nombre: "Beto", nota: 4 },
+  { nombre: "Caro", nota: 10 },
+  { nombre: "Dani", nota: 6 },
+];
+
+const aprobados = alumnos
+  .filter(a => a.nota >= 6)
+  .map(a => a.nombre.toUpperCase());
+console.log(aprobados);
+
+const promedio = alumnos.reduce((suma, a) => suma + a.nota, 0) / alumnos.length;
+console.log("Promedio:", promedio);
+
+console.log([10, 1, 5, 100].sort());                // ¡ojo!
+console.log([10, 1, 5, 100].sort((a, b) => a - b));
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q7-1" data-answer="0">
+<script type="text/plain" class="code">
+console.log([1, 2, 3].map(n => n * 2).filter(n => n > 2));
+</script>
+<script type="text/plain" class="opt">[ 4, 6 ]</script>
+<script type="text/plain" class="opt">[ 2, 4, 6 ]</script>
+<script type="text/plain" class="opt">[ 3 ]</script>
+<script type="text/plain" class="opt">[ 6 ]</script>
+<div class="why"><p>Primero <code>map</code> da <code>[2, 4, 6]</code>, después <code>filter</code> se queda con los mayores a 2: <code>[4, 6]</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q7-2" data-answer="1">
+<script type="text/plain" class="code">
+console.log([10, 9, 1].sort());
+</script>
+<script type="text/plain" class="opt">[ 1, 9, 10 ]</script>
+<script type="text/plain" class="opt">[ 1, 10, 9 ]</script>
+<script type="text/plain" class="opt">[ 10, 9, 1 ]</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>Sin función, <code>sort</code> compara como texto: <code>"10"</code> va antes que <code>"9"</code> porque <code>"1"</code> va antes que <code>"9"</code>. Siempre pasale <code>(a, b) =&gt; a - b</code> para números.</p></div>
+</div>
+<div class="b-quiz" data-id="q7-3" data-answer="1">
+<script type="text/plain" class="code">
+const r = [5, 8, 12].find(n => n > 6);
+console.log(r);
+</script>
+<script type="text/plain" class="opt">[ 8, 12 ]</script>
+<script type="text/plain" class="opt">8</script>
+<script type="text/plain" class="opt">true</script>
+<script type="text/plain" class="opt">1</script>
+<div class="why"><p><code>find</code> devuelve el primer <em>elemento</em> que cumple, no un array (eso es <code>filter</code>) ni su posición (eso es <code>findIndex</code>).</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c7-1" data-title="Mayores en mayúsculas">
+<div class="prompt"><p>Escribí <code>nombresMayus(personas)</code>. Recibe un array de objetos <code>{ nombre, edad }</code> y devuelve los nombres en MAYÚSCULAS de quienes tienen 18 años o más. Usá <code>filter</code> y <code>map</code>.</p></div>
+<script type="text/plain" class="starter">
+function nombresMayus(personas) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Filtra mayores y pasa a mayúsculas :: nombresMayus([{ nombre: "ana", edad: 20 }, { nombre: "beto", edad: 15 }, { nombre: "caro", edad: 18 }]) ==> ["ANA", "CARO"]
+Lista vacía da [] :: nombresMayus([]) ==> []
+Usás filter y map :: src ==> \.filter\([\s\S]*\.map\(|\.map\([\s\S]*\.filter\(
+</script>
+<div class="hint">Primero <code>personas.filter(p =&gt; p.edad &gt;= 18)</code>.</div>
+<div class="hint">Encadená <code>.map(p =&gt; p.nombre.toUpperCase())</code> y devolvé el resultado.</div>
+<script type="text/plain" class="solution">
+const nombresMayus = (personas) =>
+  personas
+    .filter(p => p.edad >= 18)
+    .map(p => p.nombre.toUpperCase());
+</script>
+</div>
+<div class="b-challenge" data-id="c7-2" data-title="Total del carrito">
+<div class="prompt"><p>Escribí <code>totalCarrito(items)</code>. Cada item es <code>{ precio, cantidad }</code>. Devolvé la suma de <code>precio * cantidad</code> de todos, usando <code>reduce</code>. Un carrito vacío da <code>0</code>.</p></div>
+<script type="text/plain" class="starter">
+function totalCarrito(items) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Carrito con 2 productos da 250 :: totalCarrito([{ precio: 100, cantidad: 2 }, { precio: 50, cantidad: 1 }]) ==> 250
+Carrito vacío da 0 :: totalCarrito([]) ==> 0
+Usás reduce :: src ==> \.reduce\(
+</script>
+<div class="hint"><code>items.reduce((total, item) =&gt; ..., 0)</code>: el <code>0</code> es el valor inicial.</div>
+<div class="hint">En cada paso devolvé <code>total + item.precio * item.cantidad</code>.</div>
+<script type="text/plain" class="solution">
+const totalCarrito = (items) =>
+  items.reduce((total, item) => total + item.precio * item.cantidad, 0);
+</script>
+</div>
+<div class="b-challenge" data-id="c7-3" data-title="Contar palabras">
+<div class="prompt"><p>Escribí <code>contarPalabras(texto)</code> que devuelva un objeto con cuántas veces aparece cada palabra, ignorando mayúsculas: <code>"hola mundo hola"</code> → <code>{ hola: 2, mundo: 1 }</code>. Las palabras están separadas por un espacio.</p></div>
+<script type="text/plain" class="starter">
+function contarPalabras(texto) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+"hola mundo hola" :: contarPalabras("hola mundo hola") ==> {"hola":2,"mundo":1}
+Ignora mayúsculas :: contarPalabras("JS js Js") ==> {"js":3}
+"a b c" :: contarPalabras("a b c") ==> {"a":1,"b":1,"c":1}
+</script>
+<div class="hint"><code>texto.toLowerCase().split(" ")</code> te da el array de palabras.</div>
+<div class="hint">Con <code>reduce</code> y valor inicial <code>{}</code>: en cada palabra hacé <code>conteo[palabra] = (conteo[palabra] || 0) + 1</code> y devolvé <code>conteo</code>. (Un bucle <code>for...of</code> también vale.)</div>
+<script type="text/plain" class="solution">
+function contarPalabras(texto) {
+  return texto
+    .toLowerCase()
+    .split(" ")
+    .reduce((conteo, palabra) => {
+      conteo[palabra] = (conteo[palabra] || 0) + 1;
+      return conteo;
+    }, {});
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c7-4" data-title="Los más baratos">
+<div class="prompt"><p>Escribí <code>masBaratos(productos, n)</code>. Recibe objetos <code>{ nombre, precio }</code> y devuelve los <strong>nombres</strong> de los <code>n</code> más baratos, del más barato al más caro. Sin modificar el array original (recordá que <code>sort</code> modifica).</p></div>
+<script type="text/plain" class="starter">
+function masBaratos(productos, n) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Los 2 más baratos :: masBaratos([{ nombre: "Mate", precio: 900 }, { nombre: "Yerba", precio: 2900 }, { nombre: "Bombilla", precio: 600 }], 2) ==> ["Bombilla", "Mate"]
+Pedir 1 :: masBaratos([{ nombre: "A", precio: 5 }, { nombre: "B", precio: 1 }], 1) ==> ["B"]
+No modifica el array original :: (() => { const p = [{ nombre: "A", precio: 5 }, { nombre: "B", precio: 1 }]; masBaratos(p, 1); return p[0].nombre === "A"; })()
+</script>
+<div class="hint">Copiá primero: <code>[...productos]</code>. Después <code>.sort((a, b) =&gt; a.precio - b.precio)</code>.</div>
+<div class="hint">Terminá con <code>.slice(0, n)</code> y <code>.map(p =&gt; p.nombre)</code>.</div>
+<script type="text/plain" class="solution">
+function masBaratos(productos, n) {
+  return [...productos]
+    .sort((a, b) => a.precio - b.precio)
+    .slice(0, n)
+    .map(p => p.nombre);
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 8 ============================ -->
+<section class="mission" data-id="m8" data-mins="20" data-title="Scope y closures" data-goal="Entender dónde vive cada variable y cómo una función recuerda el lugar donde nació.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>El <strong>scope</strong> es dónde existe una variable. <code>let</code> y <code>const</code> viven solo dentro del bloque <code>{ }</code> donde se declaran. Una función puede leer variables de afuera, pero las de adentro no se ven desde afuera.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+const global = "afuera";
+
+function prueba() {
+  const local = "adentro";
+  console.log(global, local);   // ve las dos
+}
+prueba();
+
+if (true) {
+  const bloque = "solo dentro del if";
+  console.log(bloque);
+}
+
+// Sacale las barras y ejecutá:
+// console.log(local);
+</script></div>
+<div class="b-text">
+<p>Un <strong>closure</strong> pasa cuando una función <em>recuerda</em> las variables del lugar donde fue creada, aun después de que ese lugar terminó de ejecutarse. Sirve para tener estado privado y para crear funciones a medida.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+function crearContador() {
+  let cuenta = 0;               // nadie de afuera puede tocarla
+  return function () {
+    cuenta++;
+    return cuenta;
+  };
+}
+
+const contadorA = crearContador();
+const contadorB = crearContador();
+console.log(contadorA(), contadorA(), contadorA());
+console.log(contadorB());       // cada uno tiene su propia cuenta
+
+const multiplicarPor = (factor) => (n) => n * factor;
+const triple = multiplicarPor(3);
+console.log(triple(5));
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q8-1" data-answer="0">
+<script type="text/plain" class="code">
+let x = 1;
+function cambiar() {
+  let x = 2;
+}
+cambiar();
+console.log(x);
+</script>
+<script type="text/plain" class="opt">1</script>
+<script type="text/plain" class="opt">2</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>El <code>let x</code> de adentro es <em>otra</em> variable que solo existe en la función. La de afuera queda intacta. Si hubieras escrito <code>x = 2</code> sin <code>let</code>, sí la cambiabas.</p></div>
+</div>
+<div class="b-quiz" data-id="q8-2" data-answer="1">
+<script type="text/plain" class="code">
+const fns = [];
+for (var i = 0; i < 3; i++) {
+  fns.push(() => i);
+}
+console.log(fns[0](), fns[2]());
+</script>
+<script type="text/plain" class="opt">0 2</script>
+<script type="text/plain" class="opt">3 3</script>
+<script type="text/plain" class="opt">2 2</script>
+<script type="text/plain" class="opt">undefined undefined</script>
+<div class="why"><p>Con <code>var</code> hay una sola <code>i</code> compartida, que al final vale 3, y las tres funciones la recuerdan a ella. Cambiá <code>var</code> por <code>let</code> y da <code>0 2</code>: <code>let</code> crea una <code>i</code> nueva en cada vuelta. Otra razón para no usar <code>var</code>.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c8-1" data-title="Contador con paso">
+<div class="prompt"><p>Escribí <code>crearContador(paso)</code> que devuelva una función. Cada vez que la llamás, suma <code>paso</code> a un total interno y devuelve el total nuevo. Cada contador creado tiene que ser independiente.</p></div>
+<script type="text/plain" class="starter">
+function crearContador(paso) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Suma de a 5: dos llamadas dan 10 :: (() => { const c = crearContador(5); c(); return c(); })() ==> 10
+Paso 1: tres llamadas dan 3 :: (() => { const c = crearContador(1); c(); c(); return c(); })() ==> 3
+Los contadores son independientes :: (() => { const a = crearContador(1); const b = crearContador(10); a(); a(); return [a(), b()]; })() ==> [3, 10]
+</script>
+<div class="hint">Declará <code>let valor = 0</code> adentro de <code>crearContador</code> y devolvé una función flecha que lo modifique.</div>
+<div class="hint"><code>return () =&gt; { valor += paso; return valor; };</code></div>
+<script type="text/plain" class="solution">
+function crearContador(paso) {
+  let valor = 0;
+  return () => {
+    valor += paso;
+    return valor;
+  };
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c8-2" data-title="Una sola vez">
+<div class="prompt"><p>Escribí <code>unaVez(fn)</code>, que devuelva una función nueva que ejecute <code>fn</code> solo la primera vez que la llamen (pasándole los argumentos). Las llamadas siguientes no ejecutan nada y devuelven el resultado de la primera.</p></div>
+<script type="text/plain" class="starter">
+function unaVez(fn) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Ejecuta fn solo la primera vez :: (() => { let n = 0; const f = unaVez(() => ++n); f(); f(); f(); return n; })() ==> 1
+Devuelve siempre el primer resultado :: (() => { let n = 0; const f = unaVez(() => ++n * 10); f(); return f(); })() ==> 10
+Pasa los argumentos :: (() => { const f = unaVez((a, b) => a + b); return f(2, 3); })() ==> 5
+</script>
+<div class="hint">Necesitás dos variables privadas: una para saber si ya se llamó y otra para guardar el resultado.</div>
+<div class="hint">Para pasar todos los argumentos: <code>(...args) =&gt; fn(...args)</code>.</div>
+<script type="text/plain" class="solution">
+function unaVez(fn) {
+  let llamada = false;
+  let resultado;
+  return (...args) => {
+    if (!llamada) {
+      llamada = true;
+      resultado = fn(...args);
+    }
+    return resultado;
+  };
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c8-3" data-title="Memoria (memoize)">
+<div class="prompt"><p>Escribí <code>memorizar(fn)</code>. Devuelve una función que recibe un argumento: la primera vez que ve ese argumento calcula <code>fn(arg)</code> y lo guarda; si se lo vuelven a pasar, devuelve lo guardado sin llamar a <code>fn</code>. Es una técnica real de optimización.</p></div>
+<script type="text/plain" class="starter">
+function memorizar(fn) {
+  const cache = {};
+
+}
+</script>
+<script type="text/plain" class="tests">
+Devuelve el resultado correcto :: (() => { const doble = memorizar(n => n * 2); return doble(21); })() ==> 42
+No recalcula con el mismo argumento :: (() => { let llamadas = 0; const f = memorizar(n => { llamadas++; return n + 1; }); f(5); f(5); f(5); return llamadas; })() ==> 1
+Calcula cada argumento nuevo :: (() => { let llamadas = 0; const f = memorizar(n => { llamadas++; return n; }); f(1); f(2); f(1); return llamadas; })() ==> 2
+</script>
+<div class="hint">Usá el objeto <code>cache</code> como diccionario: la clave es el argumento.</div>
+<div class="hint"><code>if (!(n in cache)) cache[n] = fn(n);</code> y después <code>return cache[n];</code></div>
+<script type="text/plain" class="solution">
+function memorizar(fn) {
+  const cache = {};
+  return (n) => {
+    if (!(n in cache)) {
+      cache[n] = fn(n);
+    }
+    return cache[n];
+  };
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 9 ============================ -->
+<section class="mission" data-id="m9" data-mins="20" data-title="Clases" data-goal="Crear moldes de objetos con class, constructor, métodos, getters y herencia.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>Una <strong>clase</strong> es un molde para crear muchos objetos con los mismos datos y comportamientos. El <code>constructor</code> se ejecuta cuando hacés <code>new</code>, y <code>this</code> es el objeto que se está creando. Un <code>get</code> es un método que se lee como propiedad. Con <code>extends</code> una clase hereda de otra, y <code>super(...)</code> llama al constructor del padre.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+class Cuenta {
+  constructor(titular, saldo = 0) {
+    this.titular = titular;
+    this.saldo = saldo;
+  }
+  depositar(monto) {
+    this.saldo += monto;
+    return this.saldo;
+  }
+  get resumen() {
+    return `${this.titular}: $${this.saldo}`;
+  }
+}
+
+const c = new Cuenta("Lu", 100);
+c.depositar(50);
+console.log(c.resumen, c instanceof Cuenta);
+
+class CuentaAhorro extends Cuenta {
+  constructor(titular, saldo, tasa) {
+    super(titular, saldo);
+    this.tasa = tasa;
+  }
+  aplicarInteres() {
+    return this.depositar(this.saldo * this.tasa);
+  }
+}
+
+const ahorro = new CuentaAhorro("Mati", 1000, 0.05);
+ahorro.aplicarInteres();
+console.log(ahorro.resumen);
+console.log(ahorro);
+</script></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q9-1" data-answer="1">
+<script type="text/plain" class="code">
+class Perro {
+  constructor(nombre) { this.nombre = nombre; }
+  hablar() { return `${this.nombre} dice guau`; }
+}
+const p = new Perro("Toby");
+console.log(p.hablar(), typeof Perro);
+</script>
+<script type="text/plain" class="opt">Toby dice guau class</script>
+<script type="text/plain" class="opt">Toby dice guau function</script>
+<script type="text/plain" class="opt">Toby dice guau object</script>
+<script type="text/plain" class="opt">Error</script>
+<div class="why"><p>Por dentro, una clase es una función especial. <code>class</code> es una sintaxis más cómoda sobre el sistema de prototipos que JavaScript tuvo siempre.</p></div>
+</div>
+<div class="b-quiz" data-id="q9-2" data-answer="1">
+<script type="text/plain" class="code">
+class Rect {
+  constructor(a, b) { this.a = a; this.b = b; }
+  get area() { return this.a * this.b; }
+}
+const r = new Rect(2, 5);
+r.a = 4;
+console.log(r.area);
+</script>
+<script type="text/plain" class="opt">10</script>
+<script type="text/plain" class="opt">20</script>
+<script type="text/plain" class="opt">undefined</script>
+<script type="text/plain" class="opt">[Function: area]</script>
+<div class="why"><p>Un getter se calcula cada vez que lo leés, con los valores actuales. Como <code>a</code> ahora vale 4: <code>4 * 5 = 20</code>. Y se lee sin paréntesis.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c9-1" data-title="Clase Rectangulo">
+<div class="prompt"><p>Creá la clase <code>Rectangulo</code> con <code>constructor(ancho, alto)</code> que los guarde en <code>this</code>, y tres métodos: <code>area()</code>, <code>perimetro()</code> y <code>esCuadrado()</code>.</p></div>
+<script type="text/plain" class="starter">
+class Rectangulo {
+  constructor(ancho, alto) {
+
+  }
+}
+</script>
+<script type="text/plain" class="tests">
+Guarda ancho y alto :: (() => { const r = new Rectangulo(2, 7); return [r.ancho, r.alto]; })() ==> [2, 7]
+area() de 3x4 da 12 :: new Rectangulo(3, 4).area() ==> 12
+perimetro() de 3x4 da 14 :: new Rectangulo(3, 4).perimetro() ==> 14
+esCuadrado() con 3x4 da false :: new Rectangulo(3, 4).esCuadrado() ==> false
+esCuadrado() con 5x5 da true :: new Rectangulo(5, 5).esCuadrado() ==> true
+</script>
+<div class="hint">En el constructor: <code>this.ancho = ancho;</code> y lo mismo con <code>alto</code>.</div>
+<div class="hint">Los métodos van adentro de la clase, sin la palabra <code>function</code>: <code>area() { return this.ancho * this.alto; }</code></div>
+<script type="text/plain" class="solution">
+class Rectangulo {
+  constructor(ancho, alto) {
+    this.ancho = ancho;
+    this.alto = alto;
+  }
+  area() {
+    return this.ancho * this.alto;
+  }
+  perimetro() {
+    return 2 * (this.ancho + this.alto);
+  }
+  esCuadrado() {
+    return this.ancho === this.alto;
+  }
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c9-2" data-title="Una pila">
+<div class="prompt"><p>Una <strong>pila</strong> es como una pila de platos: el último que ponés es el primero que sacás. Creá la clase <code>Pila</code> con:</p>
+<ul><li><code>apilar(x)</code>: agrega arriba.</li><li><code>desapilar()</code>: saca y devuelve el de arriba (o <code>undefined</code> si está vacía).</li><li><code>verTope()</code>: devuelve el de arriba sin sacarlo.</li><li><code>tamanio</code>: un <strong>getter</strong> con la cantidad de elementos.</li><li><code>estaVacia()</code>: <code>true</code> si no hay nada.</li></ul></div>
+<script type="text/plain" class="starter">
+class Pila {
+  constructor() {
+    this.items = [];
+  }
+}
+</script>
+<script type="text/plain" class="tests">
+Arranca vacía :: new Pila().estaVacia() ==> true
+apilar y verTope :: (() => { const p = new Pila(); p.apilar(1); p.apilar(2); return p.verTope(); })() ==> 2
+desapilar devuelve el último :: (() => { const p = new Pila(); p.apilar("a"); p.apilar("b"); return [p.desapilar(), p.desapilar()]; })() ==> ["b", "a"]
+tamanio es un getter :: (() => { const p = new Pila(); p.apilar(1); p.apilar(1); return p.tamanio; })() ==> 2
+desapilar en una pila vacía da undefined :: new Pila().desapilar() === undefined
+</script>
+<div class="hint">Usá el array <code>this.items</code>: <code>push</code> para apilar y <code>pop</code> para desapilar.</div>
+<div class="hint">El getter: <code>get tamanio() { return this.items.length; }</code></div>
+<script type="text/plain" class="solution">
+class Pila {
+  constructor() {
+    this.items = [];
+  }
+  apilar(x) {
+    this.items.push(x);
+  }
+  desapilar() {
+    return this.items.pop();
+  }
+  verTope() {
+    return this.items[this.items.length - 1];
+  }
+  get tamanio() {
+    return this.items.length;
+  }
+  estaVacia() {
+    return this.items.length === 0;
+  }
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c9-3" data-title="Herencia: Animal y Gato">
+<div class="prompt"><p>Creá <code>Animal</code> con <code>constructor(nombre)</code> y un método <code>hablar()</code> que devuelva <code>"Rex hace un sonido"</code>. Después creá <code>Gato</code>, que <strong>extiende</strong> <code>Animal</code> y redefine <code>hablar()</code> para devolver <code>"Michi dice miau"</code>.</p></div>
+<script type="text/plain" class="starter">
+class Animal {
+
+}
+
+// class Gato ...
+</script>
+<script type="text/plain" class="tests">
+Animal hace un sonido :: new Animal("Rex").hablar() ==> "Rex hace un sonido"
+Gato dice miau :: new Gato("Michi").hablar() ==> "Michi dice miau"
+Un Gato también es un Animal :: new Gato("Michi") instanceof Animal
+Gato usa extends :: src ==> class\s+Gato\s+extends\s+Animal
+</script>
+<div class="hint"><code>Gato</code> no necesita constructor propio: si no lo escribís, usa el de <code>Animal</code>.</div>
+<div class="hint"><code>class Gato extends Animal { hablar() { return `${this.nombre} dice miau`; } }</code></div>
+<script type="text/plain" class="solution">
+class Animal {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+  hablar() {
+    return `${this.nombre} hace un sonido`;
+  }
+}
+
+class Gato extends Animal {
+  hablar() {
+    return `${this.nombre} dice miau`;
+  }
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 10 ============================ -->
+<section class="mission" data-id="m10" data-mins="30" data-title="Asincronía" data-goal="Manejar tareas que tardan: setTimeout, promesas, async/await, errores y trabajo en paralelo.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>JavaScript hace una cosa a la vez, pero no se queda esperando: las tareas lentas (pedir datos a un servidor, un temporizador) se programan para <em>después</em>, y mientras tanto el resto del código sigue. <code>setTimeout(fn, ms)</code> ejecuta <code>fn</code> más tarde, recién cuando el código actual terminó.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+console.log("1. Antes");
+setTimeout(() => console.log("3. El timer (0 ms)"), 0);
+console.log("2. Después");
+</script></div>
+<div class="b-text">
+<p>Una <strong>Promise</strong> representa un valor que va a llegar (o fallar). Con <code>async/await</code> escribís código asíncrono como si fuera paso a paso: <code>await</code> espera la promesa y te da su valor. Los errores se atrapan con <code>try / catch</code>, y <code>Promise.all</code> espera varias promesas a la vez.</p>
+</div>
+<div class="b-example"><script type="text/plain" class="js">
+function pedirUsuario(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (id > 0) resolve({ id, nombre: "Usuario " + id });
+      else reject(new Error("ID inválido"));
+    }, 300);
+  });
+}
+
+async function main() {
+  console.log("Pidiendo...");
+  const u = await pedirUsuario(7);
+  console.log("Llegó:", u);
+
+  try {
+    await pedirUsuario(-1);
+  } catch (error) {
+    console.log("Falló:", error.message);
+  }
+
+  const varios = await Promise.all([pedirUsuario(1), pedirUsuario(2)]);
+  console.log(varios.map(u => u.nombre));
+}
+
+main();
+</script></div>
+<div class="b-tip"><p><strong>En la vida real</strong> esto es <code>const res = await fetch(url); const datos = await res.json();</code>. Es exactamente el mismo patrón: una función que devuelve una promesa.</p></div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q10-1" data-answer="2">
+<p class="q">¿En qué orden aparecen las letras?</p>
+<script type="text/plain" class="code">
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
+</script>
+<script type="text/plain" class="opt">A
+B
+C
+D</script>
+<script type="text/plain" class="opt">A
+D
+B
+C</script>
+<script type="text/plain" class="opt">A
+D
+C
+B</script>
+<script type="text/plain" class="opt">A
+C
+D
+B</script>
+<div class="why"><p>Primero corre todo el código sincrónico (A, D). Después las promesas resueltas (C), que tienen prioridad. Al final los timers (B), aunque sean de 0 ms.</p></div>
+</div>
+<div class="b-quiz" data-id="q10-2" data-answer="0">
+<script type="text/plain" class="code">
+async function f() {
+  return 42;
+}
+console.log(f() instanceof Promise);
+f().then(v => console.log(v));
+</script>
+<script type="text/plain" class="opt">true
+42</script>
+<script type="text/plain" class="opt">false
+42</script>
+<script type="text/plain" class="opt">42
+42</script>
+<script type="text/plain" class="opt">true
+undefined</script>
+<div class="why"><p>Una función <code>async</code> siempre devuelve una promesa, aunque hagas <code>return 42</code>. Para obtener el 42 necesitás <code>await</code> o <code>.then</code>.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c10-1" data-title="Esperar y devolver">
+<div class="prompt"><p>Escribí <code>esperarYDevolver(valor, ms)</code> que devuelva una <code>Promise</code> que se resuelva con <code>valor</code> después de <code>ms</code> milisegundos.</p></div>
+<script type="text/plain" class="starter">
+function esperarYDevolver(valor, ms) {
+  return new Promise((resolve) => {
+    // usá setTimeout
+  });
+}
+</script>
+<script type="text/plain" class="tests">
+Devuelve una Promise :: esperarYDevolver(1, 10) instanceof Promise
+Se resuelve con el valor :: esperarYDevolver("ok", 50) ==> "ok"
+Espera el tiempo pedido :: (async () => { const t = Date.now(); await esperarYDevolver(1, 120); return Date.now() - t >= 100; })()
+</script>
+<div class="hint">Adentro: <code>setTimeout(() =&gt; resolve(valor), ms);</code></div>
+<script type="text/plain" class="solution">
+function esperarYDevolver(valor, ms) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(valor), ms);
+  });
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c10-2" data-title="Total de un pedido">
+<div class="prompt"><p>Tenés cargada una "API" falsa, <code>obtenerPrecio(producto)</code>, que devuelve una promesa con el precio (tarda 40 ms). Escribí <code>async function totalPedido(productos)</code> que reciba un array de nombres y devuelva la suma de sus precios.</p></div>
+<script type="text/plain" class="pre">
+const __precios = { pan: 800, leche: 1200, cafe: 3500, yerba: 2900 };
+function obtenerPrecio(producto) {
+  return new Promise((resolve, reject) => setTimeout(() => {
+    if (producto in __precios) resolve(__precios[producto]);
+    else reject(new Error("No existe el producto: " + producto));
+  }, 40));
+}
+</script>
+<script type="text/plain" class="starter">
+async function totalPedido(productos) {
+  let total = 0;
+
+  return total;
+}
+</script>
+<script type="text/plain" class="tests">
+pan + leche = 2000 :: totalPedido(["pan", "leche"]) ==> 2000
+Pedido vacío = 0 :: totalPedido([]) ==> 0
+cafe + cafe + yerba = 9900 :: totalPedido(["cafe", "cafe", "yerba"]) ==> 9900
+Usás await :: src ==> \bawait\b
+</script>
+<div class="hint">Recorré con <code>for (const p of productos)</code>.</div>
+<div class="hint"><code>total += await obtenerPrecio(p);</code> (sin <code>await</code> estarías sumando promesas, no números).</div>
+<script type="text/plain" class="solution">
+async function totalPedido(productos) {
+  let total = 0;
+  for (const p of productos) {
+    total += await obtenerPrecio(p);
+  }
+  return total;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c10-3" data-title="Precio a prueba de errores">
+<div class="prompt"><p>Si pedís un producto que no existe, <code>obtenerPrecio</code> falla. Escribí <code>async function precioSeguro(producto)</code> que devuelva el precio, o <code>null</code> si hubo un error. Usá <code>try / catch</code>.</p></div>
+<script type="text/plain" class="pre">
+const __precios = { pan: 800, leche: 1200, cafe: 3500, yerba: 2900 };
+function obtenerPrecio(producto) {
+  return new Promise((resolve, reject) => setTimeout(() => {
+    if (producto in __precios) resolve(__precios[producto]);
+    else reject(new Error("No existe el producto: " + producto));
+  }, 40));
+}
+</script>
+<script type="text/plain" class="starter">
+async function precioSeguro(producto) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Producto existente devuelve su precio :: precioSeguro("pan") ==> 800
+Producto inexistente devuelve null :: precioSeguro("caviar") ==> null
+Usás try/catch :: src ==> \btry\b[\s\S]*\bcatch\b
+</script>
+<div class="hint"><code>try { return await obtenerPrecio(producto); } catch (error) { ... }</code></div>
+<div class="hint">En el <code>catch</code>, <code>return null;</code></div>
+<script type="text/plain" class="solution">
+async function precioSeguro(producto) {
+  try {
+    return await obtenerPrecio(producto);
+  } catch (error) {
+    return null;
+  }
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c10-4" data-title="Todo a la vez">
+<div class="prompt"><p>Pedir los precios de a uno es lento: 5 productos son 200 ms. Escribí <code>async function preciosEnParalelo(productos)</code> que devuelva el array de precios (en el mismo orden) pidiéndolos <strong>todos a la vez</strong> con <code>Promise.all</code>.</p></div>
+<script type="text/plain" class="pre">
+const __precios = { pan: 800, leche: 1200, cafe: 3500, yerba: 2900 };
+function obtenerPrecio(producto) {
+  return new Promise((resolve, reject) => setTimeout(() => {
+    if (producto in __precios) resolve(__precios[producto]);
+    else reject(new Error("No existe el producto: " + producto));
+  }, 40));
+}
+</script>
+<script type="text/plain" class="starter">
+async function preciosEnParalelo(productos) {
+
+}
+</script>
+<script type="text/plain" class="tests">
+Devuelve los precios en orden :: preciosEnParalelo(["yerba", "pan", "cafe"]) ==> [2900, 800, 3500]
+Pide todo a la vez (5 productos en menos de 100 ms) :: (async () => { const t = Date.now(); await preciosEnParalelo(["pan", "pan", "pan", "pan", "pan"]); return Date.now() - t < 100; })()
+</script>
+<div class="hint"><code>productos.map(p =&gt; obtenerPrecio(p))</code> te da un array de promesas que arrancan todas juntas.</div>
+<div class="hint"><code>return Promise.all(promesas);</code></div>
+<script type="text/plain" class="solution">
+async function preciosEnParalelo(productos) {
+  return Promise.all(productos.map(p => obtenerPrecio(p)));
+}
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 11 ============================ -->
+<section class="mission" data-id="m11" data-core data-mins="30" data-title="El DOM" data-goal="Controlar una página web desde JavaScript: encontrar elementos, cambiarlos y reaccionar a eventos.">
+<h2 class="b-h">Concepto</h2>
+<div class="b-text">
+<p>En el navegador, JavaScript controla la página a través del <strong>DOM</strong>: un árbol de objetos que representa el HTML. Siempre son los mismos tres pasos:</p>
+<ol>
+<li><strong>Encontrar</strong> elementos: <code>document.querySelector("#id")</code> (el primero que coincide) o <code>querySelectorAll(".clase")</code> (todos).</li>
+<li><strong>Cambiarlos</strong>: <code>textContent</code>, <code>classList</code>, <code>style</code>, <code>hidden</code>.</li>
+<li><strong>Reaccionar</strong> a eventos: <code>addEventListener("click", fn)</code>.</li>
+</ol>
+<p>Acá cada ejemplo tiene una vista previa real. Ejecutalo y después hacé clic en la página.</p>
+</div>
+<div class="b-example">
+<script type="text/plain" class="html">
+<h1 id="titulo">Hola</h1>
+<button id="btn">Sumar clic</button>
+<p class="nota">Clics: 0</p>
+</script>
+<script type="text/plain" class="js">
+const titulo = document.querySelector("#titulo");
+const boton = document.querySelector("#btn");
+const nota = document.querySelector(".nota");
+let clics = 0;
+
+titulo.textContent = "¡Hola desde JS!";
+titulo.style.color = "tomato";
+
+boton.addEventListener("click", () => {
+  clics++;
+  nota.textContent = `Clics: ${clics}`;
+  console.log("clic número", clics);
+});
+</script>
+</div>
+<div class="b-text">
+<p><strong>Crear elementos:</strong> <code>document.createElement("li")</code> crea un nodo nuevo; lo configurás y lo agregás a la página con <code>append</code>. Así se construyen listas a partir de datos, que es lo que hace cualquier app.</p>
+</div>
+<div class="b-example">
+<script type="text/plain" class="html">
+<input id="entrada" placeholder="Nueva tarea">
+<button id="agregar">Agregar</button>
+<ul id="lista"></ul>
+</script>
+<script type="text/plain" class="js">
+const entrada = document.querySelector("#entrada");
+const lista = document.querySelector("#lista");
+
+function agregarTarea(texto) {
+  const li = document.createElement("li");
+  li.textContent = texto;
+  li.addEventListener("click", () => li.classList.toggle("hecha"));
+  lista.append(li);
+}
+
+["Aprender variables", "Entender map", "Dominar el DOM"].forEach(agregarTarea);
+
+document.querySelector("#agregar").addEventListener("click", () => {
+  if (entrada.value.trim() === "") return;
+  agregarTarea(entrada.value);
+  entrada.value = "";
+});
+</script>
+</div>
+
+<h2 class="b-h">Predecí</h2>
+<div class="b-quiz" data-id="q11-1" data-answer="1" data-noverify data-prose>
+<p class="q">Hay tres elementos con <code>class="item"</code>. ¿Qué devuelve <code>document.querySelector(".item")</code>?</p>
+<script type="text/plain" class="opt">Un array con los tres</script>
+<script type="text/plain" class="opt">El primero de los tres</script>
+<script type="text/plain" class="opt">El último de los tres</script>
+<script type="text/plain" class="opt">null, porque hay más de uno</script>
+<div class="why"><p><code>querySelector</code> devuelve siempre el primero que coincide (o <code>null</code> si no hay ninguno). Para todos usá <code>querySelectorAll</code>, que devuelve una lista que se recorre con <code>for...of</code>.</p></div>
+</div>
+<div class="b-quiz" data-id="q11-2" data-answer="1" data-noverify data-prose>
+<p class="q">Tenés <code>&lt;p id="m"&gt;&lt;/p&gt;</code> y ejecutás <code>m.textContent = "&lt;b&gt;Hola&lt;/b&gt;"</code>. ¿Qué se ve en la página?</p>
+<script type="text/plain" class="opt">Hola, en negrita</script>
+<script type="text/plain" class="opt">El texto <b>Hola</b> literal, con las etiquetas</script>
+<script type="text/plain" class="opt">Nada</script>
+<script type="text/plain" class="opt">Un error</script>
+<div class="why"><p><code>textContent</code> trata todo como texto y no interpreta HTML. Eso es más seguro: evita que alguien inyecte código en tu página. <code>innerHTML</code> sí interpreta etiquetas; usalo solo con contenido tuyo.</p></div>
+</div>
+
+<h2 class="b-h">Desafíos</h2>
+<div class="b-challenge" data-id="c11-1" data-title="Contador con botones">
+<div class="prompt"><p>Hacé que el botón <code>+</code> sume 1 y el botón <code>−</code> reste 1 al número que se muestra en <code>#valor</code>.</p></div>
+<script type="text/plain" class="html">
+<button id="menos">−</button>
+<span id="valor">0</span>
+<button id="mas">+</button>
+</script>
+<script type="text/plain" class="starter">
+const valor = document.querySelector("#valor");
+let cuenta = 0;
+
+// Escuchá el clic de #mas y de #menos
+</script>
+<script type="text/plain" class="tests">
+Dos clics en + muestran 2 :: (() => { document.querySelector("#mas").click(); document.querySelector("#mas").click(); return document.querySelector("#valor").textContent.trim(); })() ==> "2"
+Un clic en − baja a 1 :: (() => { document.querySelector("#menos").click(); return document.querySelector("#valor").textContent.trim(); })() ==> "1"
+</script>
+<div class="hint"><code>document.querySelector("#mas").addEventListener("click", () =&gt; { ... });</code></div>
+<div class="hint">Adentro: <code>cuenta++;</code> y <code>valor.textContent = cuenta;</code></div>
+<script type="text/plain" class="solution">
+const valor = document.querySelector("#valor");
+let cuenta = 0;
+
+document.querySelector("#mas").addEventListener("click", () => {
+  cuenta++;
+  valor.textContent = cuenta;
+});
+
+document.querySelector("#menos").addEventListener("click", () => {
+  cuenta--;
+  valor.textContent = cuenta;
+});
+</script>
+</div>
+<div class="b-challenge" data-id="c11-2" data-title="Lista desde datos">
+<div class="prompt"><p>Recorré el array <code>frutas</code> y, por cada una, creá un <code>&lt;li&gt;</code> con su nombre y agregalo a <code>#lista</code>.</p></div>
+<script type="text/plain" class="html">
+<h3>Frutas</h3>
+<ul id="lista"></ul>
+</script>
+<script type="text/plain" class="starter">
+const frutas = ["Manzana", "Pera", "Uva"];
+const lista = document.querySelector("#lista");
+
+// Creá un <li> por fruta y agregalo a la lista
+</script>
+<script type="text/plain" class="tests">
+Hay 3 elementos li :: document.querySelectorAll("#lista li").length ==> 3
+Con los textos correctos :: [...document.querySelectorAll("#lista li")].map(li => li.textContent.trim()) ==> ["Manzana", "Pera", "Uva"]
+Usás createElement :: src ==> createElement
+</script>
+<div class="hint"><code>for (const fruta of frutas) { const li = document.createElement("li"); ... }</code></div>
+<div class="hint"><code>li.textContent = fruta;</code> y <code>lista.append(li);</code></div>
+<script type="text/plain" class="solution">
+const frutas = ["Manzana", "Pera", "Uva"];
+const lista = document.querySelector("#lista");
+
+for (const fruta of frutas) {
+  const li = document.createElement("li");
+  li.textContent = fruta;
+  lista.append(li);
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c11-3" data-title="Buscador en vivo">
+<div class="prompt"><p>Mientras la persona escribe en <code>#buscar</code>, mostrá solo los países que contienen ese texto (sin importar mayúsculas) y ocultá el resto con <code>li.hidden = true</code>. Con el campo vacío se ven todos.</p></div>
+<script type="text/plain" class="html">
+<input id="buscar" placeholder="Buscar país...">
+<ul id="paises">
+  <li>Argentina</li>
+  <li>Brasil</li>
+  <li>Chile</li>
+  <li>Uruguay</li>
+  <li>Paraguay</li>
+  <li>Perú</li>
+  <li>México</li>
+</ul>
+</script>
+<script type="text/plain" class="starter">
+const buscar = document.querySelector("#buscar");
+const items = document.querySelectorAll("#paises li");
+
+buscar.addEventListener("input", () => {
+  const texto = buscar.value.toLowerCase();
+  // mostrá u ocultá cada item
+});
+</script>
+<script type="text/plain" class="tests">
+Escribir "ar" deja 2 visibles :: (() => { const b = document.querySelector("#buscar"); b.value = "ar"; b.dispatchEvent(new Event("input")); return [...document.querySelectorAll("#paises li")].filter(__visible).length; })() ==> 2
+Sin texto se ven los 7 :: (() => { const b = document.querySelector("#buscar"); b.value = ""; b.dispatchEvent(new Event("input")); return [...document.querySelectorAll("#paises li")].filter(__visible).length; })() ==> 7
+Ignora mayúsculas: "IL" deja 2 :: (() => { const b = document.querySelector("#buscar"); b.value = "IL"; b.dispatchEvent(new Event("input")); return [...document.querySelectorAll("#paises li")].filter(__visible).length; })() ==> 2
+</script>
+<div class="hint">Adentro del evento: <code>for (const li of items) { ... }</code></div>
+<div class="hint"><code>li.hidden = !li.textContent.toLowerCase().includes(texto);</code></div>
+<script type="text/plain" class="solution">
+const buscar = document.querySelector("#buscar");
+const items = document.querySelectorAll("#paises li");
+
+buscar.addEventListener("input", () => {
+  const texto = buscar.value.toLowerCase();
+  for (const li of items) {
+    li.hidden = !li.textContent.toLowerCase().includes(texto);
+  }
+});
+</script>
+</div>
+</section>
+
+<!-- ============================ MISIÓN 12 ============================ -->
+<section class="mission" data-id="m12" data-mins="30" data-title="Jefe final" data-goal="Combinar todo lo de la noche en dos problemas reales: uno de datos y una mini app.">
+<h2 class="b-h">El último tramo</h2>
+<div class="b-text">
+<p>Acá no hay concepto nuevo: combinás todo lo que viste. Partí cada problema en funciones chicas, probá seguido y leé qué prueba falla. Si llegaste hasta acá, ya escribís JavaScript de verdad.</p>
+</div>
+<div class="b-challenge" data-id="c12-1" data-title="Analizador de gastos">
+<div class="prompt"><p>Cada gasto es <code>{ fecha: "2026-10-03", categoria: "comida", monto: 3100 }</code>. Escribí cuatro funciones:</p>
+<ul>
+<li><code>totalPorCategoria(gastos)</code>: objeto con el total de cada categoría, por ejemplo <code>{ comida: 9100, ocio: 5600 }</code>.</li>
+<li><code>categoriaMayor(gastos)</code>: el nombre de la categoría con más gasto total.</li>
+<li><code>delMes(gastos, mes)</code>: los gastos cuya fecha empieza con <code>mes</code> (como <code>"2026-10"</code>), ordenados de mayor a menor monto, sin modificar el array original.</li>
+<li><code>resumen(gastos)</code>: un texto como <code>"6 gastos · Total: $16500 · Mayor: comida"</code>.</li>
+</ul>
+<p>Las pruebas usan los datos de <code>__G</code>, que ya está cargado (abrilo abajo).</p></div>
+<script type="text/plain" class="pre">
+const __G = [
+  { fecha: "2026-09-28", categoria: "comida", monto: 4200 },
+  { fecha: "2026-10-01", categoria: "transporte", monto: 900 },
+  { fecha: "2026-10-03", categoria: "comida", monto: 3100 },
+  { fecha: "2026-10-05", categoria: "ocio", monto: 5600 },
+  { fecha: "2026-10-09", categoria: "comida", monto: 1800 },
+  { fecha: "2026-10-10", categoria: "transporte", monto: 900 },
+];
+</script>
+<script type="text/plain" class="starter">
+function totalPorCategoria(gastos) {
+
+}
+
+function categoriaMayor(gastos) {
+
+}
+
+function delMes(gastos, mes) {
+
+}
+
+function resumen(gastos) {
+
+}
+
+console.log(totalPorCategoria(__G));
+</script>
+<script type="text/plain" class="tests">
+totalPorCategoria suma bien :: totalPorCategoria(__G) ==> {"comida":9100,"transporte":1800,"ocio":5600}
+totalPorCategoria([]) da {} :: totalPorCategoria([]) ==> {}
+categoriaMayor de __G es "comida" :: categoriaMayor(__G) ==> "comida"
+categoriaMayor con otros datos :: categoriaMayor([{ fecha: "2026-10-01", categoria: "ocio", monto: 10 }, { fecha: "2026-10-02", categoria: "comida", monto: 5 }]) ==> "ocio"
+delMes filtra y ordena de mayor a menor :: delMes(__G, "2026-10").map(g => g.monto) ==> [5600, 3100, 1800, 900, 900]
+delMes no modifica el original :: (() => { const antes = JSON.stringify(__G); delMes(__G, "2026-10"); return JSON.stringify(__G) === antes; })()
+resumen arma el texto :: resumen(__G) ==> "6 gastos · Total: $16500 · Mayor: comida"
+</script>
+<div class="hint"><code>totalPorCategoria</code> es como contar palabras: <code>totales[g.categoria] = (totales[g.categoria] || 0) + g.monto</code>.</div>
+<div class="hint"><code>categoriaMayor</code> puede reutilizar <code>totalPorCategoria</code> y recorrer <code>Object.entries</code> buscando el máximo.</div>
+<div class="hint"><code>delMes</code>: <code>filter</code> con <code>g.fecha.startsWith(mes)</code> ya crea un array nuevo, así que después podés usar <code>sort</code> sin tocar el original.</div>
+<script type="text/plain" class="solution">
+function totalPorCategoria(gastos) {
+  const totales = {};
+  for (const g of gastos) {
+    totales[g.categoria] = (totales[g.categoria] || 0) + g.monto;
+  }
+  return totales;
+}
+
+function categoriaMayor(gastos) {
+  const totales = totalPorCategoria(gastos);
+  let mayor = null;
+  for (const [categoria, total] of Object.entries(totales)) {
+    if (mayor === null || total > totales[mayor]) mayor = categoria;
+  }
+  return mayor;
+}
+
+function delMes(gastos, mes) {
+  return gastos
+    .filter(g => g.fecha.startsWith(mes))
+    .sort((a, b) => b.monto - a.monto);
+}
+
+function resumen(gastos) {
+  const total = gastos.reduce((suma, g) => suma + g.monto, 0);
+  return `${gastos.length} gastos · Total: $${total} · Mayor: ${categoriaMayor(gastos)}`;
+}
+</script>
+</div>
+<div class="b-challenge" data-id="c12-2" data-title="Lista de tareas">
+<div class="prompt"><p>Tu primera app. Hacé que funcione:</p>
+<ol>
+<li>Al enviar el formulario (evento <code>"submit"</code>), agregá un <code>&lt;li&gt;</code> con el texto y vaciá el campo. Ignorá textos vacíos o con solo espacios.</li>
+<li>Un clic en una tarea alterna la clase <code>hecha</code> (la tacha).</li>
+<li><code>#pendientes</code> siempre muestra cuántas tareas no están hechas.</li>
+</ol></div>
+<script type="text/plain" class="html">
+<form id="form">
+  <input id="nueva" placeholder="¿Qué tenés que hacer?" autocomplete="off">
+  <button>Agregar</button>
+</form>
+<p>Pendientes: <strong id="pendientes">0</strong></p>
+<ul id="tareas"></ul>
+</script>
+<script type="text/plain" class="starter">
+const form = document.querySelector("#form");
+const input = document.querySelector("#nueva");
+const lista = document.querySelector("#tareas");
+const pendientes = document.querySelector("#pendientes");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // evita que la página se recargue
+  // leé el texto, creá el <li> y agregalo
+});
+</script>
+<script type="text/plain" class="tests">
+Agregar dos tareas :: (() => { const f = document.querySelector("#form"), i = document.querySelector("#nueva"); i.value = "Estudiar"; f.requestSubmit(); i.value = "Dormir"; f.requestSubmit(); return document.querySelectorAll("#tareas li").length; })() ==> 2
+El campo queda vacío :: document.querySelector("#nueva").value ==> ""
+Ignora tareas vacías :: (() => { const f = document.querySelector("#form"), i = document.querySelector("#nueva"); i.value = "   "; f.requestSubmit(); return document.querySelectorAll("#tareas li").length; })() ==> 2
+Pendientes muestra 2 :: document.querySelector("#pendientes").textContent.trim() ==> "2"
+Un clic marca la tarea como hecha :: (() => { const li = document.querySelector("#tareas li"); li.click(); return li.classList.contains("hecha"); })() ==> true
+Pendientes baja a 1 :: document.querySelector("#pendientes").textContent.trim() ==> "1"
+</script>
+<div class="hint">Para ignorar vacíos: <code>const texto = input.value.trim(); if (texto === "") return;</code></div>
+<div class="hint">Al crear cada <code>li</code>, agregale su propio <code>addEventListener("click", ...)</code> con <code>li.classList.toggle("hecha")</code>.</div>
+<div class="hint">Escribí una función <code>actualizarPendientes()</code> que cuente <code>lista.querySelectorAll("li:not(.hecha)").length</code>, y llamala después de agregar y después de cada clic.</div>
+<script type="text/plain" class="solution">
+const form = document.querySelector("#form");
+const input = document.querySelector("#nueva");
+const lista = document.querySelector("#tareas");
+const pendientes = document.querySelector("#pendientes");
+
+function actualizarPendientes() {
+  pendientes.textContent = lista.querySelectorAll("li:not(.hecha)").length;
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const texto = input.value.trim();
+  if (texto === "") return;
+
+  const li = document.createElement("li");
+  li.textContent = texto;
+  li.addEventListener("click", () => {
+    li.classList.toggle("hecha");
+    actualizarPendientes();
+  });
+
+  lista.append(li);
+  input.value = "";
+  actualizarPendientes();
+});
+</script>
+</div>
+</section>
+
+<!-- ============================ CHULETA ============================ -->
+<section class="cheatsheet">
+<div class="cs" data-title="Variables y tipos"><script type="text/plain">
+const fijo = 10;           // no se reasigna
+let cambia = 0;            // se reasigna
+typeof "hola";             // "string"
+`Total: ${fijo * 2}`;      // template literal
+Number("42");  String(42);
+10 % 3;  2 ** 8;           // resto, potencia
+</script></div>
+<div class="cs" data-title="Funciones"><script type="text/plain">
+function sumar(a, b) {
+  return a + b;
+}
+const restar = (a, b) => a - b;
+const saludar = (n = "vos") => `Hola, ${n}`;
+const aplicar = (fn, x) => fn(x);
+</script></div>
+<div class="cs" data-title="Decisiones"><script type="text/plain">
+if (x > 10) { ... } else if (x > 5) { ... } else { ... }
+const tipo = edad >= 18 ? "adulto" : "menor";
+a === b   a !== b   &&   ||   !
+valor ?? "por defecto"    // solo null/undefined
+// falsy: false 0 "" null undefined NaN
+</script></div>
+<div class="cs" data-title="Bucles"><script type="text/plain">
+for (let i = 0; i < 5; i++) { ... }
+for (const item of lista) { ... }
+for (const [k, v] of Object.entries(obj)) { ... }
+while (condicion) { ... }
+break;  continue;
+</script></div>
+<div class="cs" data-title="Arrays"><script type="text/plain">
+const a = [1, 2, 3];
+a.length;  a[0];  a.at(-1);
+a.push(4);  a.pop();  a.includes(2);
+a.slice(0, 2);  a.join(", ");
+const copia = [...a, 5];
+const [primero, ...resto] = a;
+</script></div>
+<div class="cs" data-title="Métodos de array"><script type="text/plain">
+nums.map(n => n * 2);
+nums.filter(n => n > 2);
+nums.find(n => n > 2);
+nums.reduce((acc, n) => acc + n, 0);
+nums.some(n => n < 0);  nums.every(n => n > 0);
+[...nums].sort((a, b) => a - b);
+</script></div>
+<div class="cs" data-title="Objetos"><script type="text/plain">
+const p = { nombre: "Ada", edad: 36 };
+p.nombre;  p["edad"];  p.ciudad = "Londres";
+const { nombre, edad } = p;
+const copia = { ...p, edad: 37 };
+Object.keys(p);  Object.entries(p);
+JSON.stringify(p);  JSON.parse(texto);
+</script></div>
+<div class="cs" data-title="Closures y clases"><script type="text/plain">
+const crear = () => { let n = 0; return () => ++n; };
+
+class Animal {
+  constructor(nombre) { this.nombre = nombre; }
+  hablar() { return `${this.nombre}...`; }
+  get mayus() { return this.nombre.toUpperCase(); }
+}
+class Gato extends Animal {
+  hablar() { return "miau"; }
+}
+</script></div>
+<div class="cs" data-title="Asincronía"><script type="text/plain">
+setTimeout(() => { ... }, 1000);
+const esperar = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function cargar() {
+  try {
+    const res = await fetch(url);
+    const datos = await res.json();
+    const [a, b] = await Promise.all([f1(), f2()]);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+</script></div>
+<div class="cs" data-title="DOM"><script type="text/plain">
+const el = document.querySelector("#id");
+document.querySelectorAll(".clase");
+el.textContent = "Hola";
+el.classList.add("activo");  el.classList.toggle("hecha");
+el.hidden = true;
+el.addEventListener("click", (e) => { ... });
+form.addEventListener("submit", (e) => e.preventDefault());
+const li = document.createElement("li");
+lista.append(li);
+</script></div>
+<div class="cs" data-title="Strings"><script type="text/plain">
+"Hola".length;  "Hola".toUpperCase();
+"  hola ".trim();  "a,b".split(",");
+"JavaScript".includes("Script");
+"hola".startsWith("ho");  "5".padStart(3, "0");
+"a-b-a".replaceAll("a", "x");
+</script></div>
+</section>
+</template>
+
+<script>
+(() => {
+"use strict";
+
+// ---------------------------------------------------------------- helpers
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "html") el.innerHTML = v;
+    else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) {
+    if (kid == null || kid === false) continue;
+    el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return el;
+}
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const FENCE = "```";
+
+// ---------------------------------------------------------------- storage (per-viewer convenience only)
+const KEY = "desvelo-js-v1";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { store = {}; }
+for (const k of ["done", "quiz", "code", "peek", "hints"]) if (!store[k] || typeof store[k] !== "object") store[k] = {};
+if (typeof store.xp !== "number") store.xp = 0;
+let saveTimer;
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* sin almacenamiento */ } }, 150);
+}
+
+// ---------------------------------------------------------------- content parsing
+function dedent(s) {
+  s = String(s).replace(/^\s*\n/, "").replace(/\s+$/, "");
+  const lines = s.split("\n");
+  const ind = Math.min(...lines.filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length));
+  return Number.isFinite(ind) && ind > 0 ? lines.map((l) => l.slice(ind)).join("\n") : s;
+}
+const txt = (root, sel) => { const el = root.querySelector(sel); return el ? dedent(el.textContent) : null; };
+function parseTests(text) {
+  return text.split("\n").map((l) => l.trim()).filter(Boolean).map((line) => {
+    const i = line.indexOf(" :: ");
+    const name = line.slice(0, i).trim();
+    const rest = line.slice(i + 4).trim();
+    const j = rest.lastIndexOf(" ==> ");
+    const expr = j >= 0 ? rest.slice(0, j).trim() : rest;
+    const right = j >= 0 ? rest.slice(j + 5).trim() : null;
+    if (expr === "src") return { name, kind: "src", re: right };
+    if (expr === "!src") return { name, kind: "nsrc", re: right };
+    if (expr === "log" || expr === "logs") return { name, kind: expr, exp: JSON.parse(right) };
+    if (right !== null) return { name, kind: "eq", expr, exp: JSON.parse(right) };
+    return { name, kind: "ok", expr };
+  });
+}
+const TPL = document.getElementById("contenido").content;
+const MISSIONS = $$(".mission", TPL).map((sec, idx) => {
+  const m = { id: sec.dataset.id, num: idx + 1, title: sec.dataset.title, mins: Number(sec.dataset.mins), goal: sec.dataset.goal, core: sec.hasAttribute("data-core"), blocks: [] };
+  let ex = 0;
+  for (const el of sec.children) {
+    const c = el.classList;
+    if (c.contains("b-h")) m.blocks.push({ type: "heading", text: el.textContent.trim() });
+    else if (c.contains("b-text")) m.blocks.push({ type: "text", html: el.innerHTML });
+    else if (c.contains("b-tip")) m.blocks.push({ type: "tip", html: el.innerHTML });
+    else if (c.contains("b-example")) m.blocks.push({ type: "example", id: m.id + "-e" + (++ex), code: txt(el, ".js") || "", html: txt(el, ".html") });
+    else if (c.contains("b-quiz")) m.blocks.push({
+      type: "quiz", id: el.dataset.id, answer: Number(el.dataset.answer), noverify: el.hasAttribute("data-noverify"), prose: el.hasAttribute("data-prose"),
+      q: el.querySelector(".q") ? el.querySelector(".q").innerHTML : null, code: txt(el, ".code"),
+      options: $$(".opt", el).map((o) => dedent(o.textContent)), why: el.querySelector(".why").innerHTML,
+    });
+    else if (c.contains("b-challenge")) m.blocks.push({
+      type: "challenge", id: el.dataset.id, title: el.dataset.title, prompt: el.querySelector(".prompt").innerHTML,
+      pre: txt(el, ".pre"), html: txt(el, ".html"), starter: txt(el, ".starter") || "",
+      tests: parseTests(txt(el, ".tests") || ""), hints: $$(".hint", el).map((x) => x.innerHTML), solution: txt(el, ".solution") || "",
+    });
+  }
+  return m;
+});
+const CHEATS = $$(".cs", TPL).map((el) => ({ title: el.dataset.title, code: dedent(el.querySelector("script").textContent) }));
+const itemsOf = (m) => m.blocks.filter((b) => b.type === "quiz" || b.type === "challenge");
+const isDone = (b) => (b.type === "quiz" ? store.quiz[b.id] != null : !!store.done[b.id]);
+const ALL_ITEMS = MISSIONS.flatMap(itemsOf);
+
+// ---------------------------------------------------------------- syntax highlighting
+const KW = new Set("const let var function return if else for while do break continue switch case default new class extends super this async await try catch finally throw typeof instanceof in of delete void yield static get set import export from".split(" "));
+const LIT = new Set(["true", "false", "null", "undefined", "NaN", "Infinity"]);
+const TOK = /(\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|$))|(`(?:\\[\s\S]|[^\\`])*`?|"(?:\\.|[^\\"\n])*"?|'(?:\\.|[^\\'\n])*'?)|(\b\d[\d_]*(?:\.\d+)?(?:e[+-]?\d+)?\b)|([A-Za-z_$][\w$]*)(\s*\()?/g;
+function highlight(src) {
+  let out = "", last = 0, m;
+  TOK.lastIndex = 0;
+  while ((m = TOK.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (m[1]) out += '<span class="t-com">' + esc(m[1]) + "</span>";
+    else if (m[2]) out += '<span class="t-str">' + esc(m[2]) + "</span>";
+    else if (m[3]) out += '<span class="t-num">' + esc(m[3]) + "</span>";
+    else {
+      const w = m[4];
+      const cls = KW.has(w) ? "t-kw" : LIT.has(w) ? "t-lit" : m[5] ? "t-fn" : /^[A-Z]/.test(w) ? "t-cls" : "";
+      out += cls ? '<span class="' + cls + '">' + esc(w) + "</span>" : esc(w);
+      if (m[5]) out += esc(m[5]);
+    }
+    last = TOK.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+function highlightHTML(src) {
+  return esc(src).replace(/(&lt;\/?)([a-zA-Z][\w-]*)([\s\S]*?)(\/?&gt;)/g, (_, a, tag, attrs, b) =>
+    '<span class="t-com">' + a + '</span><span class="t-kw">' + tag + "</span>" +
+    attrs.replace(/([\w-]+)(=)("[^"]*")/g, '<span class="t-fn">$1</span>$2<span class="t-str">$3</span>') +
+    '<span class="t-com">' + b + "</span>");
+}
+const codeBlock = (code, lang) => h("pre", { class: "code-ro", html: lang === "html" ? highlightHTML(code) : highlight(code) });
+
+// ---------------------------------------------------------------- tiny markdown (for Claude's answers)
+function mdInline(s) {
+  return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+function mdBlocks(s) {
+  let html = "";
+  for (const para of s.split(/\n{2,}/)) {
+    const lines = para.split("\n").filter((l) => l.trim());
+    if (!lines.length) continue;
+    if (lines.every((l) => /^\s*[-*]\s+/.test(l))) html += "<ul>" + lines.map((l) => "<li>" + mdInline(l.replace(/^\s*[-*]\s+/, "")) + "</li>").join("") + "</ul>";
+    else if (lines.every((l) => /^\s*\d+[.)]\s+/.test(l))) html += "<ol>" + lines.map((l) => "<li>" + mdInline(l.replace(/^\s*\d+[.)]\s+/, "")) + "</li>").join("") + "</ol>";
+    else html += "<p>" + lines.map((l) => mdInline(l.replace(/^#+\s*/, ""))).join("<br>") + "</p>";
+  }
+  return html;
+}
+function md(text) {
+  const parts = text.split(/```[\w-]*\n?([\s\S]*?)(?:```|$)/g);
+  let html = "";
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) html += mdBlocks(parts[i]);
+    else html += '<pre class="code-ro">' + highlight(parts[i].replace(/\n$/, "")) + "</pre>";
+  }
+  return html;
+}
+
+// ---------------------------------------------------------------- code runner (sandboxed)
+// Runs inside a Web Worker (or a sandboxed iframe for DOM lessons). Stringified, so it must be self-contained.
+function desveloRuntime(MODE, RID, SRC) {
+  "use strict";
+  const G = globalThis;
+  const post = MODE === "worker" ? (m) => G.postMessage(m) : (m) => { m.__desvelo = RID; G.parent.postMessage(m, "*"); };
+  const logs = [];
+  const isId = (k) => /^[A-Za-z_$][\w$]*$/.test(k);
+  const q = (s) => "'" + s.replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/\n/g, "\\n") + "'";
+  function fmt(v, d, seen) {
+    d = d || 0; seen = seen || new Set();
+    const t = typeof v;
+    if (t === "string") return d === 0 ? v : q(v);
+    if (t === "number") return Object.is(v, -0) ? "-0" : String(v);
+    if (t === "bigint") return v + "n";
+    if (t === "boolean" || v === undefined || v === null) return String(v);
+    if (t === "symbol") return v.toString();
+    if (t === "function") {
+      const s = Function.prototype.toString.call(v);
+      return /^class\b/.test(s) ? "[class " + (v.name || "anónima") + "]" : "[Function: " + (v.name || "anónima") + "]";
+    }
+    if (v instanceof Error) return d === 0 ? v.name + ": " + v.message : "[" + v.name + ": " + v.message + "]";
+    if (seen.has(v)) return "[Circular]";
+    if (v instanceof Promise) return "Promise { … }";
+    if (typeof Element !== "undefined" && v instanceof Element) {
+      const cls = typeof v.className === "string" && v.className.trim() ? "." + v.className.trim().split(/\s+/).join(".") : "";
+      return "<" + v.tagName.toLowerCase() + (v.id ? "#" + v.id : "") + cls + ">";
+    }
+    if (v instanceof Date) return isNaN(v) ? "Invalid Date" : v.toISOString();
+    if (v instanceof RegExp) return String(v);
+    if (d > 2) return Array.isArray(v) ? "[Array]" : "[Object]";
+    seen.add(v);
+    try {
+      if (Array.isArray(v) || (typeof NodeList !== "undefined" && v instanceof NodeList)) {
+        const items = Array.from(v, (x) => fmt(x, d + 1, seen));
+        const pre = Array.isArray(v) ? "" : "NodeList(" + v.length + ") ";
+        return pre + (items.length ? "[ " + items.join(", ") + " ]" : "[]");
+      }
+      if (v instanceof Map) {
+        const items = Array.from(v, ([k, x]) => fmt(k, d + 1, seen) + " => " + fmt(x, d + 1, seen));
+        return "Map(" + v.size + ") " + (items.length ? "{ " + items.join(", ") + " }" : "{}");
+      }
+      if (v instanceof Set) {
+        const items = Array.from(v, (x) => fmt(x, d + 1, seen));
+        return "Set(" + v.size + ") " + (items.length ? "{ " + items.join(", ") + " }" : "{}");
+      }
+      const proto = Object.getPrototypeOf(v);
+      const ctor = proto && proto.constructor;
+      const name = proto === null ? "[Object: null prototype] " : ctor && ctor !== Object && ctor.name ? ctor.name + " " : "";
+      const items = Object.keys(v).map((k) => (isId(k) ? k : q(k)) + ": " + fmt(v[k], d + 1, seen));
+      return name + (items.length ? "{ " + items.join(", ") + " }" : "{}");
+    } finally { seen.delete(v); }
+  }
+  const errText = (e) => (e && typeof e === "object" && "message" in e) ? (e.name || "Error") + ": " + e.message : "Se lanzó: " + fmt(e, 1);
+  const errLine = (e) => { const m = e && e.stack && String(e.stack).match(/(?:blob:|about:srcdoc)[^\s)]*?:(\d+):\d+/); return m ? Number(m[1]) : null; };
+  const report = (e, prefix) => post({ kind: "error", text: (prefix || "") + errText(e), line: errLine(e) });
+
+  const send = (type) => (...args) => {
+    const text = args.map((a) => fmt(a)).join(" ");
+    if (type === "log") logs.push(text);
+    post({ kind: "log", type, text });
+  };
+  const con = G.console;
+  con.log = send("log"); con.info = send("log"); con.debug = send("log"); con.table = send("log");
+  con.warn = send("warn"); con.error = send("error");
+  con.clear = () => post({ kind: "clear" });
+
+  const st = G.setTimeout.bind(G), ct = G.clearTimeout.bind(G), si = G.setInterval.bind(G), ci = G.clearInterval.bind(G);
+  const timers = new Set(), intervals = new Set();
+  let mainDone = false, sent = false;
+  function check() {
+    if (!mainDone || sent) return;
+    st(() => {
+      if (sent) return;
+      if (MODE !== "worker" || (timers.size === 0 && intervals.size === 0)) { sent = true; post({ kind: "done" }); }
+    }, 0);
+  }
+  G.setTimeout = (fn, ms, ...a) => {
+    const id = st(() => { timers.delete(id); try { if (typeof fn === "function") fn(...a); } catch (e) { report(e); } check(); }, ms);
+    timers.add(id);
+    return id;
+  };
+  G.clearTimeout = (id) => { timers.delete(id); ct(id); check(); };
+  G.setInterval = (fn, ms, ...a) => { const id = si(() => { try { fn(...a); } catch (e) { report(e); } }, ms); intervals.add(id); return id; };
+  G.clearInterval = (id) => { intervals.delete(id); ci(id); check(); };
+
+  G.addEventListener("unhandledrejection", (e) => { e.preventDefault(); report(e.reason, "Promesa rechazada sin catch → "); });
+  G.addEventListener("error", (e) => {
+    if (e.preventDefault) e.preventDefault();
+    const msg = String(e.message || "Error").replace(/^Uncaught /, "");
+    post({ kind: "error", text: msg, line: e.lineno || errLine(e.error) });
+    if (!G.__started) { mainDone = true; check(); }
+  });
+
+  const eq = (a, b) => {
+    if (Object.is(a, b)) return true;
+    if (typeof a === "number" && typeof b === "number") return Math.abs(a - b) < 1e-9;
+    if (!a || !b || typeof a !== "object" || typeof b !== "object") return false;
+    if (Array.isArray(a) !== Array.isArray(b)) return false;
+    const ka = Object.keys(a), kb = Object.keys(b);
+    if (ka.length !== kb.length) return false;
+    return ka.every((k) => Object.prototype.hasOwnProperty.call(b, k) && eq(a[k], b[k]));
+  };
+  G.__eq = eq;
+  G.__src = SRC;
+  const CODE = SRC.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, "");
+  G.__visible = (el) => !!el && !(el.hidden || el.style.display === "none" || el.classList.contains("oculto") || (G.getComputedStyle && G.getComputedStyle(el).display === "none"));
+  G.__runTests = async (T) => {
+    for (let i = 0; i < T.length; i++) {
+      const t = T[i];
+      let r;
+      try {
+        if (t.k === "eq") { const got = await t.f(); r = { pass: eq(got, t.e), got: fmt(got, 1), exp: fmt(t.e, 1) }; }
+        else if (t.k === "ok") r = { pass: !!(await t.f()) };
+        else if (t.k === "log") r = { pass: logs.includes(t.e), exp: t.e };
+        else if (t.k === "logs") r = { pass: eq(logs.slice(), t.e), got: logs.join(" · ") || "(nada)", exp: t.e.join(" · ") };
+        else if (t.k === "src") r = { pass: new RegExp(t.re).test(CODE) };
+        else r = { pass: !new RegExp(t.re).test(CODE) };
+      } catch (e) { r = { pass: false, error: errText(e) }; }
+      r.kind = "test"; r.i = i;
+      post(r);
+    }
+  };
+  G.__start = (main) => {
+    G.__started = true;
+    main().catch((e) => report(e)).finally(() => { mainDone = true; check(); });
+  };
+}
+
+const lit = (v) => JSON.stringify(v).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+function testJs(t) {
+  if (t.kind === "eq") return "{k:\"eq\",f:async()=>(" + t.expr + "\n),e:" + lit(t.exp) + "}";
+  if (t.kind === "ok") return "{k:\"ok\",f:async()=>(" + t.expr + "\n)}";
+  if (t.kind === "log" || t.kind === "logs") return "{k:\"" + t.kind + "\",e:" + lit(t.exp) + "}";
+  return "{k:\"" + t.kind + "\",re:" + lit(t.re) + "}";
+}
+const PROG_HEAD = "\"use strict\";\nasync function __main() {\n";
+function buildProgram(code, pre, tests) {
+  const safe = code.replace(/<\/script/gi, "<\\/script");
+  const body = (pre ? pre + "\n" : "") + safe + "\n;\nawait __runTests([\n" + tests.map(testJs).join(",\n") + "\n]);\n}\n";
+  return { prog: PROG_HEAD + body, before: 2 + (pre ? pre.split("\n").length : 0) };
+}
+const FRAME_CSS = "body{font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:14px;background:#fff;color:#1d2030}button{font:inherit;padding:5px 12px;border-radius:6px;border:1px solid #c5c9da;background:#f1f2f7;color:#1d2030;cursor:pointer}input{font:inherit;padding:5px 10px;border:1px solid #c5c9da;border-radius:6px}form{display:flex;gap:6px;flex-wrap:wrap}ul{padding-left:20px}li{cursor:pointer;padding:2px 0}.hecha{text-decoration:line-through;opacity:.5}.oculto{display:none}h1,h2,h3{margin:.1em 0 .4em;line-height:1.2}";
+
+const engineReady = new Promise((resolve) => {
+  try {
+    const url = URL.createObjectURL(new Blob(["postMessage(1)"], { type: "text/javascript" }));
+    const w = new Worker(url);
+    const t = setTimeout(() => { w.terminate(); resolve("frame"); }, 2500);
+    w.onmessage = () => { clearTimeout(t); w.terminate(); URL.revokeObjectURL(url); resolve("worker"); };
+    w.onerror = (e) => { e.preventDefault(); clearTimeout(t); resolve("frame"); };
+  } catch (e) { resolve("frame"); }
+});
+const frameHandlers = new Map();
+window.addEventListener("message", (e) => {
+  const d = e.data;
+  if (!d || typeof d !== "object" || typeof d.__desvelo !== "string") return;
+  const hnd = frameHandlers.get(d.__desvelo);
+  if (hnd && e.source === hnd.win) hnd.fn(d);
+});
+let ridSeq = 0;
+const TIMEOUT = 5000;
+
+function runCode({ code, pre = null, tests = [], html = null, host = null, onEvent = null }) {
+  return engineReady.then((engine) => new Promise((resolve) => {
+    const mode = html != null ? "frame" : engine;
+    const rid = "r" + (++ridSeq) + Math.random().toString(36).slice(2, 8);
+    const userLines = code.split("\n").length;
+    const { prog, before } = buildProgram(code, pre, tests);
+    const runtimeCall = "(" + desveloRuntime.toString() + ")(" + lit(mode) + "," + lit(rid) + "," + lit(code) + ");";
+    const results = new Array(tests.length).fill(null);
+    let finished = false, gotError = false, logs = 0, offset = 0, cleanup = () => {}, timer;
+    const fixLine = (n) => { const l = n - offset; return n && l >= 1 && l <= userLines ? l : null; };
+    const handle = (m) => {
+      if (m.kind === "done") { finish(false); return; }
+      if (m.kind === "log") logs++;
+      if (m.kind === "test") { results[m.i] = m; return; }
+      if (m.kind === "error") { gotError = true; m.line = fixLine(m.line); }
+      if (onEvent) onEvent(m);
+    };
+    function finish(timedOut) {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      if (mode !== "frame" || !html || timedOut) cleanup();
+      resolve({ results: results.map((r, i) => r || { i, pass: false, missing: true }), timedOut, gotError, logs });
+    }
+    if (mode === "worker") {
+      const src = prog + runtimeCall + "\n__start(__main);\n";
+      offset = before;
+      const url = URL.createObjectURL(new Blob([src], { type: "text/javascript" }));
+      const w = new Worker(url);
+      w.onmessage = (e) => handle(e.data);
+      w.onerror = (e) => {
+        e.preventDefault();
+        handle({ kind: "error", text: String(e.message || "Error de sintaxis").replace(/^Uncaught /, ""), line: e.lineno });
+        finish(false);
+      };
+      cleanup = () => { w.terminate(); URL.revokeObjectURL(url); };
+    } else {
+      const target = host || $("#offscreen");
+      if (target.__rid) frameHandlers.delete(target.__rid);
+      target.__rid = rid;
+      const A = '<!doctype html><html><head><meta charset="utf-8"><style>' + FRAME_CSS + "</style></head><body>\n" + (html || "").replace(/<\/script/gi, "") + "\n<script>" + runtimeCall + "<\/script>\n<script>\n";
+      offset = A.split("\n").length - 1 + before;
+      const doc = A + prog + "__start(__main);\n<\/script></body></html>";
+      const ifr = h("iframe", { sandbox: "allow-scripts allow-forms", title: "Vista previa de la página" });
+      target.replaceChildren(ifr);
+      frameHandlers.set(rid, { win: ifr.contentWindow, fn: handle });
+      ifr.srcdoc = doc;
+      cleanup = () => { frameHandlers.delete(rid); if (!html) ifr.remove(); };
+    }
+    timer = setTimeout(() => {
+      handle({ kind: "error", text: "Se cortó a los 5 segundos. ¿Hay un bucle que nunca termina o un setInterval sin clearInterval?" });
+      finish(true);
+    }, TIMEOUT);
+  }));
+}
+
+// ---------------------------------------------------------------- error explanations
+const ERROR_HINTS = [
+  [/^\w*Error: (\w+) is not defined/, (m) => m[1] === "document" || m[1] === "window"
+    ? "Acá no hay página web: `document` solo existe en los desafíos con vista previa."
+    : "`" + m[1] + "` no existe. ¿La declaraste? ¿Está bien escrita? (Mayúsculas y minúsculas cuentan.)"],
+  [/Cannot read properties of (undefined|null) \(reading '([^']+)'\)/, (m) => "Intentaste leer `." + m[2] + "` de algo que vale `" + m[1] + "`. Revisá que esa variable tenga el valor que creés."],
+  [/Cannot set properties of (undefined|null)/, (m) => "Intentaste asignar una propiedad a algo que vale `" + m[1] + "`. ¿El querySelector encontró el elemento?"],
+  [/([\w.$[\]"']+) is not a function/, (m) => "`" + m[1] + "` no es una función. ¿Está bien escrito el nombre? ¿Le faltan los paréntesis a otra cosa?"],
+  [/Assignment to constant variable/, () => "Intentaste reasignar una `const`. Si el valor cambia, declarala con `let`."],
+  [/Identifier '(\w+)' has already been declared/, (m) => "Declaraste `" + m[1] + "` dos veces. Sacá el segundo `let`/`const`, o usá otro nombre."],
+  [/Cannot access '(\w+)' before initialization/, (m) => "Usaste `" + m[1] + "` antes de la línea donde se declara. Movelo más abajo."],
+  [/Unexpected end of input/, () => "Falta cerrar algo: una llave `}`, un paréntesis `)` o un corchete `]`."],
+  [/missing \) after/, () => "Falta cerrar un paréntesis `)`."],
+  [/Unexpected token|Unexpected identifier|Invalid or unexpected token|Unexpected string|Unexpected number|Invalid left-hand side|Unexpected strict mode/, () => "Error de sintaxis: revisá llaves, paréntesis, comas y comillas cerca de esa línea."],
+  [/await is only valid/, () => "`await` solo funciona adentro de una función `async`."],
+  [/Class constructor (\w+) cannot be invoked without 'new'/, (m) => "Para crear un " + m[1] + " usá `new " + m[1] + "(...)`."],
+  [/is not a constructor/, () => "Eso no se puede usar con `new`. ¿Es una clase?"],
+  [/is not iterable/, () => "Intentaste recorrer con `for...of` (o desestructurar) algo que no es una lista."],
+  [/Maximum call stack size exceeded/, () => "Recursión infinita: una función se llama a sí misma sin parar."],
+  [/Promesa rechazada sin catch/, () => "Una promesa falló y nadie atrapó el error. Usá `try / catch` alrededor del `await`."],
+];
+function explainError(text) {
+  for (const [re, fn] of ERROR_HINTS) { const m = text.match(re); if (m) return fn(m); }
+  return null;
+}
+
+// ---------------------------------------------------------------- UI components
+function makeEditor(code, { id, label, onRun, onChange } = {}) {
+  const wrap = h("div", { class: "editor" });
+  const pre = h("pre", { class: "editor-hl", "aria-hidden": "true" });
+  const ta = h("textarea", { class: "editor-ta", id, spellcheck: "false", autocapitalize: "off", autocomplete: "off", autocorrect: "off", wrap: "soft", "aria-label": label || "Editor de código" });
+  ta.value = code;
+  wrap.append(pre, ta);
+  let escMode = false, lastW = 0;
+  const sync = () => {
+    pre.innerHTML = highlight(ta.value) + "\n";
+    ta.style.height = "auto";
+    ta.style.height = ta.scrollHeight + "px";
+  };
+  const insert = (text) => {
+    ta.focus();
+    let ok = false;
+    try { ok = document.execCommand("insertText", false, text); } catch (e) { ok = false; }
+    if (!ok) { ta.setRangeText(text, ta.selectionStart, ta.selectionEnd, "end"); ta.dispatchEvent(new Event("input")); }
+  };
+  ta.addEventListener("input", () => { sync(); if (onChange) onChange(ta.value); });
+  ta.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); if (onRun) onRun(); return; }
+    if (e.key === "Escape") { escMode = true; return; }
+    if (e.key === "Tab" && !escMode && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) { e.preventDefault(); insert("  "); return; }
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing && ta.selectionStart === ta.selectionEnd) {
+      const before = ta.value.slice(0, ta.selectionStart);
+      const line = before.slice(before.lastIndexOf("\n") + 1);
+      let ind = line.match(/^\s*/)[0];
+      if (/[{[(]\s*$/.test(line)) ind += "  ";
+      e.preventDefault();
+      insert("\n" + ind);
+      return;
+    }
+    escMode = false;
+  });
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(() => { const w = wrap.clientWidth; if (w && w !== lastW) { lastW = w; sync(); } }).observe(wrap);
+  }
+  wrap.__sync = sync;
+  sync();
+  return {
+    el: wrap,
+    get value() { return ta.value; },
+    setValue(v) { ta.value = v; sync(); if (onChange) onChange(v); },
+    sync,
+  };
+}
+const syncEditors = () => $$(".editor").forEach((e) => e.__sync && e.__sync());
+
+function makeConsole() {
+  const el = h("div", { class: "console", role: "log", "aria-label": "Consola", hidden: true });
+  const add = (node) => { el.hidden = false; el.append(node); el.scrollTop = el.scrollHeight; };
+  return {
+    el,
+    clear() { el.replaceChildren(); el.hidden = true; },
+    note(t) { add(h("div", { class: "ln note" }, t)); },
+    event(m) {
+      if (m.kind === "log") add(h("div", { class: "ln " + m.type }, m.text === "" ? "\u00a0" : m.text));
+      else if (m.kind === "error") {
+        const hint = explainError(m.text);
+        add(h("div", { class: "ln error" }, (m.line ? "Línea " + m.line + " · " : "") + m.text, hint ? h("span", { class: "err-h", html: mdInline(hint) }) : null));
+      } else if (m.kind === "clear") el.replaceChildren();
+    },
+  };
+}
+
+function toast(msg, xp) {
+  const t = h("div", { class: "toast" }, xp ? h("b", {}, "+" + xp + " XP") : null, msg);
+  $("#toasts").append(t);
+  setTimeout(() => t.remove(), 3200);
+}
+
+// ---------------------------------------------------------------- XP & progress
+const LEVELS = [[0, "Curioso"], [150, "Aprendiz"], [400, "Scripter"], [700, "Dev nocturno"], [1000, "Ninja de JS"]];
+function levelOf(xp) { let name = LEVELS[0][1]; for (const [min, n] of LEVELS) if (xp >= min) name = n; return name; }
+function addXP(n, msg) {
+  const before = levelOf(store.xp);
+  store.xp += n;
+  save();
+  toast(msg, n);
+  const after = levelOf(store.xp);
+  if (after !== before) setTimeout(() => toast("Subiste de nivel: " + after), 600);
+  paintProgress();
+}
+function paintProgress() {
+  const done = ALL_ITEMS.filter(isDone).length;
+  $("#bar-fill").style.width = (100 * done / ALL_ITEMS.length).toFixed(1) + "%";
+  $("#prog-text").textContent = done + "/" + ALL_ITEMS.length;
+  $("#xp").textContent = store.xp + " XP";
+  $("#level").textContent = levelOf(store.xp);
+  for (const m of MISSIONS) {
+    const link = $('#nav a[data-id="' + m.id + '"]');
+    if (!link) continue;
+    const items = itemsOf(m), d = items.filter(isDone).length;
+    link.classList.toggle("done", d === items.length);
+    link.querySelector(".nav-count").textContent = d + "/" + items.length;
+  }
+}
+function checkMissionComplete(m) {
+  const items = itemsOf(m);
+  if (items.every(isDone)) setTimeout(() => toast("Misión " + m.num + " completa: " + m.title), 900);
+}
+
+// ---------------------------------------------------------------- Claude (sample capability)
+let SAMPLE = null;
+const sampleReady = (window.claude && typeof window.claude.use === "function")
+  ? window.claude.use("sample").then((s) => s || null, () => null)
+  : Promise.resolve(null);
+sampleReady.then((s) => { SAMPLE = s; if (s) document.documentElement.classList.add("has-ai"); });
+function disableAI() { SAMPLE = null; document.documentElement.classList.remove("has-ai"); closeTutor(); }
+function aiErrorText(e) {
+  switch (e && e.code) {
+    case "cancelled": return null;
+    case "not_granted": case "sampling_disabled": case "not_declared": case "capability_disabled": case "capability_removed":
+      setTimeout(disableAI, 2500);
+      return "El tutor no está disponible en esta vista.";
+    case "rate_limited": return "Muchas consultas seguidas. Esperá un momento y probá de nuevo.";
+    case "session_expired": return "Tu sesión de Claude venció: volvé a iniciar sesión.";
+    case "refused": return "Claude no respondió a eso. Probá preguntarlo de otra forma.";
+    case "prompt_too_large": return "Hay demasiado texto para mandar. Acortá el código o la pregunta.";
+    default: return "No se pudo hablar con Claude. Probá de nuevo.";
+  }
+}
+const plain = (html) => { const d = document.createElement("div"); d.innerHTML = html; return d.textContent.replace(/\s+\n/g, "\n").trim(); };
+let currentMission = null;
+
+function makeAIBox(title) {
+  const body = h("div", { class: "ai-body" });
+  const stop = h("button", { type: "button", hidden: true }, "Detener");
+  const box = h("div", { class: "ai-box", hidden: true }, h("div", { class: "who" }, h("span", {}, title), stop), body);
+  let ctl = null;
+  stop.addEventListener("click", () => ctl && ctl.abort());
+  async function ask(prompt, opts) {
+    if (!SAMPLE) return;
+    if (ctl) ctl.abort();
+    ctl = new AbortController();
+    const mine = ctl;
+    box.hidden = false; stop.hidden = false;
+    body.innerHTML = "<p>Pensando…</p>";
+    try {
+      const { truncated } = await SAMPLE(prompt, Object.assign({ signal: mine.signal, onText: ({ text }) => { body.innerHTML = md(text); } }, opts));
+      if (truncated) body.append(h("p", { class: "frame-note" }, "(La respuesta se cortó por largo.)"));
+    } catch (e) {
+      const msg = aiErrorText(e);
+      if (e && e.text && e.code !== "refused") body.innerHTML = md(e.text); else body.replaceChildren();
+      if (msg) body.append(h("p", { class: "frame-note" }, msg));
+      if (!msg && !body.textContent.trim()) box.hidden = true;
+    } finally {
+      if (ctl === mine) { stop.hidden = true; ctl = null; }
+    }
+  }
+  return { box, ask };
+}
+
+// ---------------------------------------------------------------- views
+function renderExample(b) {
+  const wrap = h("div", { class: "example" });
+  const out = makeConsole();
+  let host = null;
+  const run = async () => {
+    btnRun.disabled = true;
+    out.clear();
+    const r = await runCode({ code: ed.value, html: b.html, host, onEvent: out.event });
+    btnRun.disabled = false;
+    if (!r.logs && !r.gotError && b.html == null) out.note("Sin salida. Usá console.log(...) para ver valores.");
+  };
+  const ed = makeEditor(b.code, { id: "ed-" + b.id, label: "Ejemplo editable", onRun: run });
+  const btnRun = h("button", { class: "btn primary", type: "button", onclick: run }, "▶ Ejecutar ", h("span", { class: "k" }, "Ctrl+Enter"));
+  const btnReset = h("button", { class: "btn ghost", type: "button", onclick: () => ed.setValue(b.code) }, "Restaurar");
+  wrap.append(h("div", { class: "ex-label" }, h("span", {}, "Ejemplo · cambialo y ejecutalo")));
+  if (b.html != null) {
+    host = h("div", { class: "frame-host" });
+    wrap.append(h("div", { class: "dom-split" },
+      h("div", { class: "dom-col" }, h("p", { class: "label" }, "HTML"), codeBlock(b.html, "html"), h("p", { class: "label" }, "JavaScript"), ed.el),
+      h("div", { class: "dom-col" }, h("p", { class: "label" }, "Vista previa"), host, h("p", { class: "frame-note" }, "Ejecutá el código y después interactuá con la página."))));
+    setTimeout(() => runCode({ code: "", html: b.html, host }), 0);
+  } else wrap.append(ed.el);
+  wrap.append(h("div", { class: "toolbar" }, btnRun, btnReset), out.el);
+  return wrap;
+}
+
+function renderQuiz(b, n) {
+  const card = h("section", { class: "quiz", id: b.id });
+  card.append(h("p", { class: "eyebrow" }, "Predicción " + n), h("p", { class: "q", html: b.q || "¿Qué muestra la consola?" }));
+  if (b.code) card.append(codeBlock(b.code));
+  const opts = h("div", { class: "opts" + (b.prose ? " prose-opts" : ""), role: "group", "aria-label": "Opciones" });
+  const buttons = b.options.map((o, i) => h("button", { class: "opt", type: "button", onclick: () => answer(i) }, h("span", { class: "opt-k" }, "ABCD"[i]), h("span", { class: "opt-v" }, o)));
+  opts.append(...buttons);
+  const fb = h("div", { class: "why", hidden: true });
+  const out = makeConsole();
+  card.append(opts, fb, out.el);
+  function answer(i) {
+    if (store.quiz[b.id] != null) return;
+    store.quiz[b.id] = i;
+    save();
+    if (i === b.answer) addXP(10, "Predicción correcta"); else paintProgress();
+    paint();
+    if (currentMission) checkMissionComplete(currentMission);
+  }
+  function paint() {
+    const s = store.quiz[b.id];
+    if (s == null) return;
+    opts.classList.add("answered");
+    buttons.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === b.answer) btn.classList.add("correct");
+      else if (i === s) btn.classList.add("wrong");
+    });
+    const ok = s === b.answer;
+    fb.hidden = false;
+    fb.innerHTML = '<p><span class="verdict ' + (ok ? "ok" : "bad") + '">' + (ok ? "¡Bien!" : "Era la " + "ABCD"[b.answer] + ".") + "</span> " + plainInner(b.why) + "</p>";
+    if (b.code && !b.noverify) {
+      const btn = h("button", { class: "btn ghost", type: "button" }, "▶ Ejecutar y comprobar");
+      btn.addEventListener("click", async () => { btn.disabled = true; out.clear(); await runCode({ code: b.code, onEvent: out.event }); btn.disabled = false; });
+      fb.append(h("div", { class: "toolbar", style: "margin-top:10px" }, btn));
+    }
+  }
+  paint();
+  return card;
+}
+const plainInner = (html) => html.replace(/^\s*<p>/, "").replace(/<\/p>\s*$/, "");
+
+function renderChallenge(b, m, n) {
+  const card = h("section", { class: "challenge" + (store.done[b.id] ? " solved" : ""), id: b.id });
+  const status = h("span", { class: "status" }, store.done[b.id] ? "Resuelto" : "Pendiente");
+  card.append(h("div", { class: "ch-head" }, h("p", { class: "eyebrow" }, "Desafío " + m.num + "." + n), status), h("h3", {}, b.title), h("div", { class: "prose", html: b.prompt }));
+  if (b.pre) card.append(h("details", { class: "pre" }, h("summary", {}, "Código que ya está cargado"), codeBlock(b.pre)));
+
+  let lastRun = null;
+  const run = async () => {
+    btnRun.disabled = true;
+    out.clear();
+    paintTests(null);
+    const code = editor.value;
+    const res = await runCode({ code, pre: b.pre, tests: b.tests, html: b.html, host: frameHost, onEvent: out.event });
+    btnRun.disabled = false;
+    lastRun = { res, code };
+    paintTests(res);
+    const all = res.results.every((r) => r.pass);
+    if (all && !store.done[b.id]) {
+      store.done[b.id] = true;
+      save();
+      card.classList.add("solved", "pop");
+      status.textContent = "Resuelto";
+      addXP(store.peek[b.id] ? 10 : 30, "Desafío resuelto");
+      checkMissionComplete(m);
+    } else if (all) toast("Todas las pruebas pasan");
+  };
+  const editor = makeEditor(store.code[b.id] != null ? store.code[b.id] : b.starter, {
+    id: "ed-" + b.id, label: "Tu solución para " + b.title, onRun: run,
+    onChange: (v) => { store.code[b.id] = v; save(); },
+  });
+  let frameHost = null;
+  if (b.html != null) {
+    frameHost = h("div", { class: "frame-host" });
+    card.append(h("div", { class: "dom-split" },
+      h("div", { class: "dom-col" }, h("p", { class: "label" }, "HTML de la página"), codeBlock(b.html, "html"), h("p", { class: "label" }, "Tu JavaScript"), editor.el),
+      h("div", { class: "dom-col" }, h("p", { class: "label" }, "Vista previa"), frameHost, h("p", { class: "frame-note" }, "Las pruebas hacen clics y escriben en tu página; después podés seguir probando a mano."))));
+    setTimeout(() => runCode({ code: "", html: b.html, host: frameHost }), 0);
+  } else card.append(editor.el);
+
+  const btnRun = h("button", { class: "btn primary", type: "button", onclick: run }, "▶ Probar ", h("span", { class: "k" }, "Ctrl+Enter"));
+  const btnReset = h("button", { class: "btn ghost", type: "button" }, "Reiniciar");
+  let resetArmed = false;
+  btnReset.addEventListener("click", () => {
+    if (!resetArmed) { resetArmed = true; btnReset.textContent = "¿Borrar tu código?"; btnReset.classList.add("warn"); setTimeout(() => { resetArmed = false; btnReset.textContent = "Reiniciar"; btnReset.classList.remove("warn"); }, 3000); return; }
+    resetArmed = false; btnReset.textContent = "Reiniciar"; btnReset.classList.remove("warn");
+    editor.setValue(b.starter);
+  });
+  const hintsEl = h("ol", { class: "hints", hidden: true });
+  const btnHint = h("button", { class: "btn", type: "button" });
+  const paintHints = () => {
+    const shown = store.hints[b.id] || 0;
+    hintsEl.replaceChildren(...b.hints.slice(0, shown).map((x) => h("li", { html: x })));
+    hintsEl.hidden = shown === 0;
+    btnHint.textContent = shown >= b.hints.length ? "Sin más pistas" : "Pista " + (shown + 1) + "/" + b.hints.length;
+    btnHint.disabled = shown >= b.hints.length;
+  };
+  btnHint.addEventListener("click", () => { store.hints[b.id] = Math.min((store.hints[b.id] || 0) + 1, b.hints.length); save(); paintHints(); });
+  paintHints();
+
+  const ai = makeAIBox("Pista de Claude");
+  const btnAI = h("button", { class: "btn ai ai-only", type: "button" }, "Pedile una pista a Claude");
+  btnAI.addEventListener("click", () => ai.ask(hintPrompt(b, editor.value, lastRun), { modelTier: "quick" }));
+
+  const solBox = h("div", { class: "solution", hidden: true });
+  const btnSol = h("button", { class: "btn ghost", type: "button" }, "Ver solución");
+  let solArmed = false;
+  const showSolution = () => {
+    const copy = h("button", { class: "btn", type: "button" }, "Copiar al editor");
+    copy.addEventListener("click", () => editor.setValue(b.solution));
+    solBox.replaceChildren(h("p", { class: "label" }, "Una solución posible"), codeBlock(b.solution), h("div", { class: "toolbar" }, copy));
+    solBox.hidden = false;
+    btnSol.hidden = true;
+  };
+  btnSol.addEventListener("click", () => {
+    if (store.peek[b.id] || store.done[b.id]) { store.peek[b.id] = true; save(); showSolution(); return; }
+    if (!solArmed) {
+      solArmed = true;
+      btnSol.textContent = "¿Seguro? Resolverlo después vale 10 XP en vez de 30";
+      btnSol.classList.add("warn");
+      setTimeout(() => { if (solArmed) { solArmed = false; btnSol.textContent = "Ver solución"; btnSol.classList.remove("warn"); } }, 4000);
+      return;
+    }
+    store.peek[b.id] = true; save(); showSolution();
+  });
+  if (store.peek[b.id]) showSolution();
+
+  const out = makeConsole();
+  const testsList = h("ol", { class: "tests" });
+  const testsCount = h("span", { class: "tests-count" });
+  function paintTests(res) {
+    testsList.replaceChildren();
+    let passed = 0;
+    b.tests.forEach((t, i) => {
+      const r = res ? res.results[i] : null;
+      const li = h("li", { class: "test" + (r ? (r.pass ? " pass" : " fail") : "") }, h("span", { class: "ic", "aria-hidden": "true" }, r ? (r.pass ? "✓" : "✗") : "·"));
+      const body = h("div", {}, h("span", {}, t.name), r ? h("span", { class: "sr-only" }) : null);
+      if (r && r.pass) passed++;
+      if (r && !r.pass) {
+        if (r.missing) body.append(h("span", { class: "detail" }, res.timedOut ? "Se cortó antes de llegar a esta prueba." : "No llegó a ejecutarse: tu código se detuvo antes por un error (mirá la consola)."));
+        else if (r.error) {
+          body.append(h("span", { class: "detail" }, r.error));
+          const hint = explainError(r.error);
+          if (hint) body.append(h("span", { class: "detail hint", html: mdInline(hint) }));
+        } else if (t.kind === "eq") body.append(h("span", { class: "detail" }, "Esperaba " + r.exp + " · obtuve " + r.got));
+        else if (t.kind === "log") body.append(h("span", { class: "detail" }, "No apareció en la consola: " + r.exp));
+        else if (t.kind === "logs") body.append(h("span", { class: "detail" }, "Esperaba: " + r.exp + "\nObtuve:   " + r.got));
+        else if (t.kind === "ok") body.append(h("span", { class: "detail" }, "La condición dio falso."));
+      }
+      li.append(body);
+      testsList.append(li);
+    });
+    testsCount.textContent = res ? passed + "/" + b.tests.length + " pasan" : b.tests.length + " pruebas";
+  }
+  paintTests(null);
+
+  card.append(
+    h("div", { class: "toolbar" }, btnRun, btnReset, h("span", { class: "spacer" }), btnHint, btnAI, btnSol),
+    out.el,
+    h("div", { class: "tests-wrap" }, h("div", { class: "tests-head" }, h("p", { class: "label", style: "margin:0" }, "Pruebas"), testsCount), testsList),
+    hintsEl, ai.box, solBox);
+  return card;
+}
+
+function hintPrompt(b, code, lastRun) {
+  let results = "Todavía no ejecutó las pruebas.";
+  if (lastRun && lastRun.code === code) {
+    results = lastRun.res.results.map((r, i) => (r.pass ? "✓ " : "✗ ") + b.tests[i].name +
+      (r.pass ? "" : r.error ? " (" + r.error + ")" : r.exp ? " (esperaba " + r.exp + (r.got ? ", obtuvo " + r.got : "") + ")" : r.missing ? " (no se ejecutó: el código falló antes)" : "")).join("\n");
+  }
+  return "Sos tutor de JavaScript para alguien que está aprendiendo desde cero en una sola noche.\n\n" +
+    "DESAFÍO: " + b.title + "\n" + plain(b.prompt) + "\n\n" +
+    (b.pre ? "CÓDIGO YA CARGADO (no lo escribe el estudiante):\n" + FENCE + "js\n" + b.pre + "\n" + FENCE + "\n\n" : "") +
+    "CÓDIGO DEL ESTUDIANTE:\n" + FENCE + "js\n" + code.slice(0, 6000) + "\n" + FENCE + "\n\n" +
+    "RESULTADO DE LAS PRUEBAS:\n" + results + "\n\n" +
+    "Dale UNA pista para avanzar, en español rioplatense (voseo), de 2 a 4 oraciones. Si hay un error concreto en su código, señalalo. " +
+    "No escribas la solución completa: como mucho una línea de código de ejemplo. Si ya pasan todas las pruebas, felicitalo y sugerí una mejora breve.";
+}
+
+function renderMission(m) {
+  currentMission = m;
+  const view = $("#view");
+  view.replaceChildren();
+  view.append(h("header", { class: "m-head" },
+    h("p", { class: "eyebrow" }, "Misión " + m.num + " de " + MISSIONS.length, h("span", {}, "≈" + m.mins + " min"), m.core ? h("span", { class: "chip" }, "Esencial") : null),
+    h("h1", {}, m.title),
+    h("p", { class: "goal" }, m.goal)));
+  let qn = 0, cn = 0, explained = false;
+  for (const b of m.blocks) {
+    if (b.type === "quiz" && !explained) { explained = true; view.append(renderExplain(m)); }
+    if (b.type === "heading") view.append(h("h2", { class: "sec" }, b.text));
+    else if (b.type === "text") view.append(h("div", { class: "prose", html: b.html }));
+    else if (b.type === "tip") view.append(h("aside", { class: "tip", html: b.html }));
+    else if (b.type === "example") view.append(renderExample(b));
+    else if (b.type === "quiz") view.append(renderQuiz(b, ++qn));
+    else if (b.type === "challenge") view.append(renderChallenge(b, m, ++cn));
+  }
+  const next = MISSIONS[m.num];
+  view.append(h("div", { class: "next" }, next
+    ? h("a", { class: "btn primary", href: "#" + next.id }, "Siguiente: " + next.title + " →")
+    : h("a", { class: "btn primary", href: "#chuleta" }, "Ver la chuleta final →")));
+  $("#tutor-ctx").textContent = "Contexto: Misión " + m.num + " · " + m.title;
+}
+
+function renderExplain(m) {
+  const ai = makeAIBox("Otra explicación, por Claude");
+  const btn = h("button", { class: "btn ai", type: "button" }, "¿No te cerró? Pedile a Claude que te lo explique de otra forma");
+  const concept = m.blocks.filter((b) => b.type === "text" || b.type === "example").map((b) => b.type === "text" ? plain(b.html) : FENCE + "js\n" + b.code + "\n" + FENCE).join("\n\n").slice(0, 7000);
+  btn.addEventListener("click", () => ai.ask(
+    "Sos tutor de JavaScript para alguien que aprende desde cero en una sola noche. Acaba de leer esta lección y no le terminó de cerrar:\n\n" +
+    "LECCIÓN: " + m.title + "\n" + concept + "\n\n" +
+    "Explicá las ideas centrales de otra forma, en español rioplatense (voseo): una analogía de la vida cotidiana y un ejemplo de código mínimo distinto a los de la lección. Máximo 180 palabras.",
+    { cache: { gcTime: 3600000 } }));
+  return h("div", { class: "ai-only", style: "display:flex;flex-direction:column;gap:10px" }, h("div", { class: "toolbar" }, btn), ai.box);
+}
+
+function renderHome() {
+  currentMission = null;
+  $("#tutor-ctx").textContent = "Claude, con el contexto de tu misión";
+  const view = $("#view");
+  view.replaceChildren();
+  const totalMin = MISSIONS.reduce((s, m) => s + m.mins, 0);
+  const coreMin = MISSIONS.filter((m) => m.core).reduce((s, m) => s + m.mins, 0);
+  const hm = (min) => Math.floor(min / 60) + " h" + (min % 60 ? " " + (min % 60) : "");
+  const nextM = MISSIONS.find((m) => !itemsOf(m).every(isDone));
+  const started = ALL_ITEMS.some(isDone);
+  view.append(h("section", { class: "hero" },
+    h("p", { class: "eyebrow" }, "Plan intensivo · " + MISSIONS.length + " misiones · ≈" + hm(totalMin)),
+    h("h1", { html: "Desvelo <em>JS</em>" }),
+    h("p", { class: "lead" }, "Aprendé JavaScript esta noche escribiendo código, no leyendo sobre código. Cada misión trae una explicación corta, ejemplos que podés romper, predicciones y desafíos que se corrigen solos."),
+    h("div", { class: "toolbar" },
+      nextM ? h("a", { class: "btn primary", href: "#" + nextM.id }, (started ? "Seguir: " : "Empezar: ") + "Misión " + nextM.num + " · " + nextM.title + " →") : h("a", { class: "btn primary", href: "#chuleta" }, "¡Completaste todo! Ver la chuleta →"),
+      h("a", { class: "btn ghost", href: "#chuleta" }, "Chuleta"))));
+
+  const strip = h("div", { class: "strip" });
+  for (const m of MISSIONS) {
+    const items = itemsOf(m), d = items.filter(isDone).length;
+    strip.append(h("a", { class: "seg" + (m.core ? " core" : "") + (d === items.length ? " done" : ""), href: "#" + m.id, style: "--w:" + m.mins + ";--p:" + Math.round(100 * d / items.length) + "%", title: "Misión " + m.num + ": " + m.title + " (≈" + m.mins + " min)" }, h("span", { class: "fill" }), h("span", {}, m.num)));
+  }
+  view.append(h("section", { class: "night" },
+    h("h2", { class: "sec" }, "La noche en bloques"),
+    strip,
+    h("div", { class: "legend" },
+      h("span", {}, h("i", { class: "core" }), "Esencial · ruta corta ≈" + hm(coreMin)),
+      h("span", {}, h("i", {}), "Si te queda energía"),
+      h("span", {}, h("i", { class: "done" }), "Completada"))));
+
+  view.append(h("h2", { class: "sec" }, "Cómo se usa cada misión"), h("ol", { class: "method" },
+    h("li", {}, h("strong", {}, "Leé"), h("span", {}, "Explicaciones de 2 o 3 minutos. Lo justo para arrancar.")),
+    h("li", {}, h("strong", {}, "Tocá"), h("span", {}, "Cambiá los ejemplos y ejecutalos con Ctrl + Enter. Romper cosas es parte del método.")),
+    h("li", {}, h("strong", {}, "Predecí"), h("span", {}, "Antes de ejecutar, adiviná qué imprime. Equivocarte acá es donde más aprendés.")),
+    h("li", {}, h("strong", {}, "Resolvé"), h("span", {}, "Las pruebas te dicen qué falla y por qué. ¿Trabado 5 minutos? Pista, tutor, solución.")),
+    h("li", {}, h("strong", {}, "Pausá"), h("span", {}, "Sprints de 25 minutos con 5 de descanso (botón arriba). El cerebro fija lo aprendido en las pausas."))));
+
+  const map = h("div", { class: "map" });
+  for (const m of MISSIONS) {
+    const items = itemsOf(m), d = items.filter(isDone).length;
+    map.append(h("a", { href: "#" + m.id },
+      h("div", { class: "row" }, h("span", {}, "Misión " + m.num + " · ≈" + m.mins + " min"), m.core ? h("span", { class: "chip" }, "Esencial") : null),
+      h("strong", {}, m.title),
+      h("div", { class: "row" }, h("span", {}, d + "/" + items.length + " completado")),
+      h("div", { class: "mini" }, h("span", { style: "width:" + Math.round(100 * d / items.length) + "%" }))));
+  }
+  view.append(h("h2", { class: "sec" }, "Misiones"), map,
+    h("p", { class: "foot" }, "Tu progreso y tu código se guardan en este navegador. El código corre aislado: podés probar cualquier cosa sin romper nada."));
+}
+
+function renderCheats() {
+  currentMission = null;
+  $("#tutor-ctx").textContent = "Claude, con el contexto de tu misión";
+  const view = $("#view");
+  view.replaceChildren();
+  view.append(h("header", { class: "m-head" },
+    h("p", { class: "eyebrow" }, "Referencia rápida"),
+    h("h1", {}, "Chuleta"),
+    h("p", { class: "goal" }, "Todo lo de esta noche en una página. Volvé acá cuando no te acuerdes de una sintaxis.")));
+  const grid = h("div", { class: "cheats" });
+  for (const c of CHEATS) grid.append(h("div", { class: "cheat" }, h("h3", {}, c.title), codeBlock(c.code)));
+  view.append(grid,
+    h("h2", { class: "sec" }, "Después de esta noche"),
+    h("ul", { class: "links" },
+      h("li", {}, h("a", { href: "https://es.javascript.info/", target: "_blank", rel: "noopener" }, "javascript.info en español"), " · el mejor tutorial gratuito para profundizar cada tema."),
+      h("li", {}, h("a", { href: "https://developer.mozilla.org/es/docs/Web/JavaScript", target: "_blank", rel: "noopener" }, "MDN Web Docs"), " · la referencia oficial de facto. Buscá ahí cualquier método."),
+      h("li", {}, h("a", { href: "https://exercism.org/tracks/javascript", target: "_blank", rel: "noopener" }, "Exercism, track de JavaScript"), " · cientos de ejercicios como los de hoy, con mentores."),
+      h("li", {}, "Proyecto para mañana: rehacé la lista de tareas de la Misión 12 en un archivo HTML propio y guardá las tareas con ", h("code", {}, "localStorage"), " para que no se borren al recargar.")));
+}
+
+// ---------------------------------------------------------------- navigation
+function buildNav() {
+  const nav = $("#nav");
+  nav.replaceChildren(
+    h("a", { class: "nav-item text", href: "#inicio", "data-id": "inicio" }, h("span", { class: "nav-num" }, "~"), h("span", { class: "nav-title" }, "Inicio")),
+    h("div", { class: "rail-label" }, "Misiones"));
+  for (const m of MISSIONS) {
+    nav.append(h("a", { class: "nav-item", href: "#" + m.id, "data-id": m.id, title: "Misión " + m.num + ": " + m.title },
+      h("span", { class: "nav-num" }, String(m.num)), h("span", { class: "nav-title mission" }, m.title), h("span", { class: "nav-count" })));
+  }
+  nav.append(h("div", { class: "rail-label" }, "Referencia"),
+    h("a", { class: "nav-item text", href: "#chuleta", "data-id": "chuleta" }, h("span", { class: "nav-num" }, "{}"), h("span", { class: "nav-title" }, "Chuleta")));
+}
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1)) || "inicio";
+  const m = MISSIONS.find((x) => x.id === id);
+  if (m) { renderMission(m); store.last = m.id; save(); }
+  else if (id === "chuleta") renderCheats();
+  else renderHome();
+  const active = m ? m.id : id === "chuleta" ? "chuleta" : "inicio";
+  $$("#nav a").forEach((a) => { if (a.dataset.id === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  const cur = $('#nav a[aria-current="page"]');
+  if (cur && cur.scrollIntoView && window.matchMedia("(max-width: 900px)").matches) cur.scrollIntoView({ block: "nearest", inline: "center" });
+  window.scrollTo(0, 0);
+  paintProgress();
+  requestAnimationFrame(syncEditors);
+}
+
+// ---------------------------------------------------------------- session clock & sprints
+const t0 = Date.now();
+let sprint = null;
+const clock = (ms) => { const s = Math.max(0, Math.round(ms / 1000)); const hh = Math.floor(s / 3600), mm = Math.floor((s % 3600) / 60), ss = s % 60; return (hh ? hh + ":" + String(mm).padStart(2, "0") : mm) + ":" + String(ss).padStart(2, "0"); };
+function paintSprint() {
+  const btn = $("#sprint");
+  if (!sprint) { btn.textContent = "Sprint 25"; btn.classList.remove("on"); return; }
+  btn.classList.add("on");
+  btn.textContent = (sprint.phase === "foco" ? "Foco " : "Pausa ") + clock(sprint.end - Date.now());
+}
+$("#sprint").addEventListener("click", () => {
+  if (sprint) { sprint = null; toast("Sprint detenido"); }
+  else { sprint = { phase: "foco", end: Date.now() + 25 * 60000 }; toast("25 minutos de foco. Celular lejos."); }
+  paintSprint();
+});
+setInterval(() => {
+  $("#session").textContent = clock(Date.now() - t0);
+  if (sprint && sprint.end <= Date.now()) {
+    if (sprint.phase === "foco") { sprint = { phase: "pausa", end: Date.now() + 5 * 60000 }; toast("¡Sprint terminado! 5 minutos de pausa: parate, estirate, tomá agua."); }
+    else { sprint = null; toast("Fin de la pausa. Arrancá otro sprint cuando quieras."); }
+  }
+  if (sprint) paintSprint();
+}, 1000);
+
+// ---------------------------------------------------------------- tutor chat
+const turns = [];
+let chatCtl = null;
+function openTutor(prefill) {
+  if (!SAMPLE) return;
+  $("#tutor").hidden = false; $("#scrim").hidden = false;
+  paintSuggestions();
+  if (prefill) $("#chat-input").value = prefill;
+  $("#chat-input").focus();
+}
+function closeTutor() { $("#tutor").hidden = true; $("#scrim").hidden = true; }
+function paintSuggestions() {
+  const m = currentMission;
+  const list = m
+    ? ["Dame un ejercicio extra de " + m.title.toLowerCase(), "¿Cuál es el error más común en " + m.title.toLowerCase() + "?", "Explicame esto con una analogía"]
+    : ["¿Qué diferencia hay entre let y const?", "¿Para qué se usa JavaScript en el mundo real?", "Armame un plan para seguir mañana"];
+  $("#suggest").replaceChildren(...list.map((s) => h("button", { type: "button", onclick: () => { $("#chat-input").value = s; sendChat(); } }, s)));
+}
+function chatRules() {
+  const m = currentMission;
+  return "Sos el tutor de JavaScript de \"Desvelo JS\", una app donde alguien está aprendiendo JavaScript desde cero en una sola noche. " +
+    "Hablá en español rioplatense (voseo), con calidez pero directo. Respondé corto (máximo 150 palabras) salvo que te pidan más. " +
+    "Usá ejemplos de código breves en bloques " + FENCE + "js. Si te piden la solución de un desafío, primero dale una pista y ofrecé la solución si la sigue pidiendo. " +
+    "Si te pide un ejercicio, dáselo con un enunciado claro y un ejemplo de entrada/salida, sin la solución. " +
+    (m ? "Ahora está en la Misión " + m.num + " de 12: \"" + m.title + "\" (" + m.goal + ")." : "Ahora está en la pantalla de inicio.") +
+    " Temario completo: variables, funciones, decisiones, bucles, arrays, objetos, métodos de array, closures, clases, asincronía, DOM y un proyecto final.";
+}
+async function sendChat() {
+  const input = $("#chat-input");
+  const text = input.value.trim();
+  if (!text || !SAMPLE || chatCtl) return;
+  input.value = "";
+  const chat = $("#chat");
+  chat.append(h("div", { class: "msg user", html: md(text) }));
+  const bubble = h("div", { class: "msg bot" }, h("p", {}, "Pensando…"));
+  chat.append(bubble);
+  chat.scrollTop = chat.scrollHeight;
+  turns.push({ role: "user", content: text });
+  while (turns.length > 14) turns.shift();
+  if (turns[0] && turns[0].role !== "user") turns.shift();
+  chatCtl = new AbortController();
+  $("#chat-send").hidden = true; $("#chat-stop").hidden = false;
+  try {
+    const { text: answer } = await SAMPLE([{ role: "user", content: chatRules() }, ...turns], {
+      cache: false, signal: chatCtl.signal,
+      onText: ({ text: t }) => { bubble.innerHTML = md(t); chat.scrollTop = chat.scrollHeight; },
+    });
+    turns.push({ role: "assistant", content: answer });
+  } catch (e) {
+    const msg = aiErrorText(e);
+    if (e && e.text && e.code !== "refused") { bubble.innerHTML = md(e.text); turns.push({ role: "assistant", content: e.text }); }
+    else bubble.replaceChildren();
+    if (msg) bubble.append(h("p", { class: "msg-err" }, msg));
+    if (!bubble.textContent.trim()) bubble.remove();
+  } finally {
+    chatCtl = null;
+    $("#chat-send").hidden = false; $("#chat-stop").hidden = true;
+  }
+}
+$("#tutor-btn").addEventListener("click", () => openTutor());
+$("#tutor-close").addEventListener("click", closeTutor);
+$("#scrim").addEventListener("click", closeTutor);
+$("#chat-stop").addEventListener("click", () => chatCtl && chatCtl.abort());
+$("#chat-form").addEventListener("submit", (e) => { e.preventDefault(); sendChat(); });
+$("#chat-input").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); sendChat(); } });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("#tutor").hidden) closeTutor(); });
+
+// ---------------------------------------------------------------- boot
+const setTopH = () => document.documentElement.style.setProperty("--top-h", $("#topbar").offsetHeight + "px");
+window.addEventListener("resize", setTopH);
+setTopH();
+buildNav();
+window.addEventListener("hashchange", route);
+route();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { setTopH(); syncEditors(); });
+
+// Self-check hook: runs every solution against its tests and every quiz against its answer.
+window.desvelo = {
+  missions: MISSIONS,
+  async verify() {
+    const report = [];
+    for (const m of MISSIONS) for (const b of m.blocks) {
+      if (b.type === "challenge") {
+        const host = b.html != null ? $("#offscreen") : null;
+        const ok = await runCode({ code: b.solution, pre: b.pre, tests: b.tests, html: b.html, host });
+        const bad = ok.results.map((r, i) => r.pass ? null : { test: b.tests[i].name, r }).filter(Boolean);
+        if (bad.length || ok.gotError) report.push({ id: b.id, problem: "la solución no pasa", bad, gotError: ok.gotError });
+        const st = await runCode({ code: b.starter, pre: b.pre, tests: b.tests, html: b.html, host });
+        if (st.results.every((r) => r.pass)) report.push({ id: b.id, problem: "el código inicial ya pasa" });
+      } else if (b.type === "quiz" && !b.noverify) {
+        const lines = [];
+        await runCode({ code: b.code, onEvent: (e) => { if (e.kind === "log") lines.push(e.text); } });
+        if (lines.join("\n") !== b.options[b.answer]) report.push({ id: b.id, problem: "la respuesta no coincide", got: lines.join("\n"), want: b.options[b.answer] });
+      } else if (b.type === "example") {
+        const errs = [];
+        await runCode({ code: b.code, html: b.html, host: b.html != null ? $("#offscreen") : null, onEvent: (e) => { if (e.kind === "error") errs.push(e.text); } });
+        if (errs.length) report.push({ id: b.id, problem: "el ejemplo da error", errs });
+      }
+    }
+    return report;
+  },
+};
+})();
+</script>
+
+</body>
+</html>
