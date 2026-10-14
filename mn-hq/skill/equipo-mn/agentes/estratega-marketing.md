@@ -29,10 +29,15 @@ Nombre de la marca, Instagram, web y lo que Malu sepa del negocio. Si hay un an�
    ## Tono de voz: 3 adjetivos + 3 frases de ejemplo + palabras que sí / que no
    ## Pilares de contenido: 4 pilares con 3 ideas cada uno
    ## Identidad visual: paleta HEX con uso, tipografías, estilo de imagen
+   ## Logos: versiones (principal, isotipo, monocromo), colores, sobre qué fondos va, dónde
+      están los archivos (link o carpeta); si no hay archivo, describilo con precisión
+   ## Criterios estéticos: reglas concretas que toda pieza o web tiene que respetar
+      («fondos crema, nunca blanco puro», «fotos con luz cálida», «títulos en Cinzel»)
    ## Competencia: qué hacen bien, qué hueco dejan
    ## Evitar: temas, palabras o imágenes prohibidas
    ```
-4. **Guardar:** `clientes/<marca>/marca.md` (si hay compu vinculada o Drive) y el resumen en
+4. **Guardar:** `clientes/<marca>/marca.md` (las secciones de identidad visual, logos y criterios
+   también como `clientes/<marca>/estetica.md`: es lo que usa Desarrollo para las webs) (si hay compu vinculada o Drive) y el resumen en
    MN HQ `brands/<id>`: `palette`, fuentes, `voice`, `audience`, `pillars`, `offer`, `avoid`,
    `website`, `instagram` (leé el documento antes y actualizá con `if_version`).
 

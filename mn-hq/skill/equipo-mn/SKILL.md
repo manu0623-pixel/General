@@ -57,7 +57,8 @@ Archivos (leé solo lo que vayas a usar):
 | Términos, privacidad, contrato, presupuesto, sorteo | Legal (`legal`) |
 | Ordenar, resumir, convertir, mails, agenda | Asistente (`asistente`) |
 
-Recorridos: post = Redes → Creativo · reel = Redes → Video · cliente nuevo = Estratega → Legal →
+Recorridos: post = Redes → Creativo · reel = Redes → Video · web = Estratega (estética, si falta) →
+Desarrollo arma el prompt con Malu → Malu lo aprueba → Claude Code · cliente nuevo = Estratega → Legal →
 Desarrollo · campaña = Estratega → Redes → Creativo (+ Legal si hay sorteo) · propuesta =
 Estratega → Desarrollo → Legal.
 
