@@ -848,6 +848,7 @@ function brandForm(b){
     <label class="f">Pilares de contenido<textarea class="inp" id="b-pillars" rows="3" maxlength="1000" placeholder="Uno por línea">${esc(b.pillars || '')}</textarea></label>
     <label class="f">Productos, servicios y precios<textarea class="inp" id="b-offer" rows="3" maxlength="1500">${esc(b.offer || '')}</textarea></label>
     <label class="f">Evitar<textarea class="inp" id="b-avoid" rows="2" maxlength="800">${esc(b.avoid || '')}</textarea></label>
+    <label class="f">Memoria del equipo<textarea class="inp" id="b-memory" rows="3" maxlength="1500" placeholder="Lo que aprendieron de vos: «sin emojis», «ganchos con pregunta»…">${esc(b.memory || '')}</textarea></label>
     <label class="f">Sitio web<input class="inp" id="b-web" value="${esc(b.website || '')}" maxlength="200" placeholder="https://"></label>
     <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm pri" type="submit">Guardar marca</button>${S.assets ? '<button class="btn sm" type="button" id="b-logo">Subir logo</button>' : ''}<button class="btn sm" type="button" id="b-new">+ Marca nueva</button></div>
   </form>`;
@@ -1176,7 +1177,7 @@ document.addEventListener('submit', e => {
     b.name = $('#b-name').value.trim() || b.name; b.handle = $('#b-handle').value.trim().replace(/^@/,'') || b.handle; b.bio = $('#b-bio').value;
     const pal = $('#b-pal').value.split(/[\s,;]+/).map(x => x.trim()).filter(isHex).map(x => x.toUpperCase());
     if (pal.length) b.palette = pal; b.headFont = $('#b-hf').value; b.accentFont = $('#b-af').value;
-    for (const [k, el] of [['voice','#b-voice'],['audience','#b-audience'],['pillars','#b-pillars'],['offer','#b-offer'],['avoid','#b-avoid'],['website','#b-web']]) b[k] = $(el).value.trim();
+    for (const [k, el] of [['voice','#b-voice'],['audience','#b-audience'],['pillars','#b-pillars'],['offer','#b-offer'],['avoid','#b-avoid'],['memory','#b-memory'],['website','#b-web']]) b[k] = $(el).value.trim();
     b.updatedAt = nowISO();
     saveNow('brands', b); S.brandEdit = false; renderStudio(); toast('Marca guardada');
   }

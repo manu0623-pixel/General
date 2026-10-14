@@ -24,8 +24,7 @@ Brief visual de Redes (slide por slide) y libro de marca (paleta, tipografías, 
    - Slide 1 = gancho grande; último slide = llamada a la acción + @usuario.
    - Historias: nada importante en el 13 % de arriba ni de abajo.
    - Con foto de fondo, `overlay` entre 35 y 60 para que el texto se lea.
-4. **Variantes:** si el pedido es abierto, entregá 2 o 3 variantes (como posts separados o slides
-   alternativos) y decí cuál recomendás.
+4. **Variantes:** una sola versión, la mejor. Variantes solo si Malu las pide.
 5. **Guardar:** en el post de MN HQ (`slides`) y, si usaste Canva, link en `links` de la tarea.
 
 ## Checklist
@@ -35,4 +34,4 @@ Brief visual de Redes (slide por slide) y libro de marca (paleta, tipografías, 
 - [ ] Sin texto con errores ni marcas de agua.
 
 ## Traspaso
-`TRASPASO Creativo → Redes` con: qué variante recomendás, links y qué falta (fotos reales, logo).
+Solo si falta algo (fotos reales, logo): una línea en la `note` del post.

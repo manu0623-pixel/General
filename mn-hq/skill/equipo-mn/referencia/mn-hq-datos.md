@@ -15,7 +15,14 @@ Usá la herramienta de base de datos del artifact (`ArtifactData`, a veces llama
 - Varias escrituras juntas: `batch` (una sola aprobación).
 - Sin esa herramienta: entregá el JSON del documento en la conversación y avisá que falta cargarlo.
 
-**Antes de escribir, leé siempre el documento actual.** Malu edita desde el panel.
+**Antes de escribir, leé el documento actual** (Malu edita desde el panel), pero una sola vez.
+
+### Lecturas baratas
+- Marca: `get` `brands/<id>`. Una vez por conversación.
+- Pendientes: `query` sobre `tasks` con `where: [["status","!=","hecho"]]` y `limit: 20`.
+- Cambios pedidos: `query` sobre `tasks` y `posts` con `where: [["feedback","!=",""]]`.
+- Un post: `get` por id. **No listes `posts` completos**: cada uno trae sus slides.
+- Escrituras de un mismo pedido: un solo `batch`.
 
 ## `brands/<id>` (libro de marca resumido)
 | Campo | Tipo | Uso |
@@ -29,6 +36,7 @@ Usá la herramienta de base de datos del artifact (`ArtifactData`, a veces llama
 | `offer` | texto | Productos/servicios y precios confirmados |
 | `avoid` | texto | Lo que nunca hay que decir o mostrar |
 | `website`, `instagram` | URL | Fuentes |
+| `memory` | texto | Memoria del equipo: preferencias y aprendizajes de Malu, una línea cada uno («sin emojis», «ganchos con pregunta»). Leela siempre; sumá líneas cortas, no la reescribas |
 | `order` | número | Orden en el panel |
 
 Si un campo de libro de marca (`voice`, `audience`, `pillars`, `offer`) está vacío, la marca **no
@@ -50,7 +58,7 @@ tiene libro de marca**: el primer paso es la Estratega.
 | `result` | texto | Resumen de lo entregado y dónde quedó |
 | `links` | lista de `{label, url}` | Canva, Drive, sitio, PR, etc. |
 | `feedback` | texto | Cambios que pidió Malu. **Leelo y resolvelo antes que nada.** |
-| `log` | lista de `{at, by, text}` | Bitácora: agregá una línea por cada paso (no borres las anteriores) |
+| `log` | lista de `{at, by, text}` | Bitácora: una línea corta por área que trabajó (no borres las anteriores) |
 | `createdAt`, `updatedAt` | ISO 8601 | Siempre actualizá `updatedAt` |
 
 Ids de área: `director`, `estratega-marketing`, `creativo`, `video`, `redes-sociales`,

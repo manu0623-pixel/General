@@ -31,6 +31,20 @@
   - Áreas Video y Asistente, Metricool marcado como conectado, estado «En cola» vs «Trabajando».
   - Arreglos: nombre de marca equivocado en la bandeja y contraste mal calculado en el editor.
 
+## Ahorro de tokens (ideas tomadas de Gentle-AI)
+No se instaló Gentle-AI: es un entorno para agentes que programan (binario, hooks, revisiones) y
+sumaría contexto en cada sesión. Se copiaron sus reglas de ahorro en la skill:
+- **Tamaño primero:** lo chico (un post, un copy) se hace en línea, sin tarea ni traspasos.
+- **Subagentes solo con motivo** (investigación pesada o piezas en paralelo), nunca uno por área.
+- **Brief por referencia:** el `detail` de la tarea es el único brief; nadie lo reescribe.
+- **Memoria:** la marca en MN HQ (`memory` + libro) evita volver a analizar y a corregir lo mismo.
+- **Lecturas y escrituras mínimas:** `get` por id, `query` filtrada y un solo `batch` por pedido.
+- **Salida corta:** una versión, cierre de 3 líneas, nada repetido en el chat.
+- Asistente corre con un modelo más chico (`model: haiku`) cuando se usa como subagente.
+
+Gentle-AI sí puede valer la pena **solo para Desarrollo en Claude Code** (memoria Engram entre
+sesiones de programación). Es opcional.
+
 ## Cómo instalar la skill nueva
 1. claude.ai → Configuración → Capacidades → Skills → reemplazá `equipo-mn` subiendo `equipo-mn.zip`.
 2. En la compu (opcional): copiá `skill/equipo-mn/agentes/*.md` a `MN/.claude/agents/`.

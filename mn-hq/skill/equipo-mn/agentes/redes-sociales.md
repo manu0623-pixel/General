@@ -38,4 +38,4 @@ si Malu pidió el calendario completo.
 - [ ] Nunca publicaste ni programaste sin aprobación.
 
 ## Traspaso
-`TRASPASO Redes → Creativo` con el brief visual completo, formato y medidas.
+El brief visual del paso 4 es el traspaso: no lo repitas en otro lado.

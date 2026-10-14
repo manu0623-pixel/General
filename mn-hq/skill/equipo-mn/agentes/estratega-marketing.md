@@ -13,7 +13,8 @@ Nombre de la marca, Instagram, web y lo que Malu sepa del negocio. Si hay un an�
 (por ejemplo `prompt-estetica-*.md`), partí de ahí.
 
 ## Pasos: libro de marca
-1. **Investigar** (búsqueda web y navegador): web, Instagram (bio, destacadas, últimos 12 posts),
+1. **Investigar** (si podés, en un solo subagente que te devuelva ≤ 300 palabras con fuentes;
+   no pegues páginas enteras en la conversación): web, Instagram (bio, destacadas, últimos 12 posts),
    Google Maps / reseñas y 3 competidores directos de la zona.
 2. **Extraer identidad visual:** paleta en HEX (fondo, acento, texto, secundarios), tipografías
    (mapealas a las disponibles en MN HQ: Inter, Montserrat, Space Grotesk, Archivo Black, Bebas Neue,
@@ -46,5 +47,5 @@ en MN HQ una tarea por semana para Redes.
 - [ ] El tono de voz trae ejemplos concretos, no solo adjetivos.
 - [ ] MN HQ `brands/<id>` quedó actualizado.
 
-## Traspaso
-`TRASPASO Estratega → <área>` con: público, mensaje, tono y la lista de `[CONFIRMAR]` para Malu.
+## Traspaso (solo en pedidos grandes)
+Una línea en el `log` de la tarea: qué quedó y qué `[CONFIRMAR]` hay. El resto ya está en la marca.

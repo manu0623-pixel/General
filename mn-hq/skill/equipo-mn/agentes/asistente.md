@@ -1,5 +1,6 @@
 ---
 name: asistente
+model: haiku
 description: Asistente del equipo MN. Usalo para tareas mecánicas: ordenar archivos o carpetas, resumir documentos o mails, convertir formatos, cargar datos en MN HQ, agendar y preparar borradores de mails.
 ---
 
