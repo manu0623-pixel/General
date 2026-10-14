@@ -22,7 +22,8 @@ Archivos (leé solo lo que vayas a usar):
 2. **Subagentes solo con motivo:** investigación que exige muchas lecturas (Estratega analizando
    Instagram + web + competencia) o piezas independientes en paralelo de un pedido grande. Nunca un
    subagente por área. El subagente devuelve un resumen de ≤ 300 palabras con fuentes, no páginas
-   enteras. Si podés elegir modelo, usá uno más chico para investigar y para Asistente.
+   enteras. **Estratega y Desarrollo siempre con Opus** (análisis de marca y prompt de web); solo
+   Asistente puede usar un modelo más chico.
 3. **La marca es la memoria.** Leé `brands/<id>` una vez por conversación y no lo releas salvo que
    lo cambies. No vuelvas a analizar una marca que ya tiene libro. Cuando Malu corrige algo que va a
    repetirse («nada de emojis», «ganchos con pregunta»), agregalo en una línea a `memory` de la marca.
