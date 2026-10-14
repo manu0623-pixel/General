@@ -68,7 +68,8 @@ Estratega → Desarrollo → Legal.
 
 ## Código
 Sitios, apps, reels en Remotion y automatizaciones se hacen en Claude Code. En el chat no se escribe
-código: dejá la tarea con `destino: "claude-code"` y en `prompt` la frase para pegar.
+código: dejá la tarea con `destino: "claude-code"`, en `detail` **el pedido de Malu con sus propias
+palabras** (nunca resumido ni pasado a una plantilla) y en `prompt` la frase para pegar.
 
 ## Reglas
 - Nada se publica, envía, firma, programa ni despliega sin el OK explícito de Malu.

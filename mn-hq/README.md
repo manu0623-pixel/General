@@ -31,6 +31,11 @@
   - Áreas Video y Asistente, Metricool marcado como conectado, estado «En cola» vs «Trabajando».
   - Arreglos: nombre de marca equivocado en la bandeja y contraste mal calculado en el editor.
 
+## Webs
+Sin plantilla ni stack fijo: cada sitio sale de la marca y del pedido de Malu, que pasa a
+Claude Code con sus propias palabras. Antes de construir se propone la idea del sitio, y después
+se revisan capturas.
+
 ## Ahorro de tokens (ideas tomadas de Gentle-AI)
 No se instaló Gentle-AI: es un entorno para agentes que programan (binario, hooks, revisiones) y
 sumaría contexto en cada sesión. Se copiaron sus reglas de ahorro en la skill:
