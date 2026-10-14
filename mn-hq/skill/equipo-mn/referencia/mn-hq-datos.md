@@ -36,6 +36,7 @@ Usá la herramienta de base de datos del artifact (`ArtifactData`, a veces llama
 | `offer` | texto | Productos/servicios y precios confirmados |
 | `avoid` | texto | Lo que nunca hay que decir o mostrar |
 | `website`, `instagram` | URL | Fuentes |
+| `estetica` | texto | Documento de estética y criterios completo (se arma en MN HQ → Chat → Analizar estética). Es lo que Desarrollo pega entero en el prompt de la web |
 | `memory` | texto | Memoria del equipo: preferencias y aprendizajes de Malu, una línea cada uno («sin emojis», «ganchos con pregunta»). Leela siempre; sumá líneas cortas, no la reescribas |
 | `order` | número | Orden en el panel |
 
@@ -108,3 +109,7 @@ Cada `slide`:
 ```
 Al terminar: el post en `posts/` con `status: "para-aprobar"` y `taskId`, y la tarea en
 `para-aprobar` con `result` y una línea más en `log`.
+
+## `chats/<id>` (pestaña Chat del panel)
+`{brand, mode: "estetica"|"web"|"libre", title, turns: [{role, content, at, model?}], taskId?}`.
+Conversaciones de Malu con Opus 5.5 desde el panel. Solo lectura para el equipo: no las edites.

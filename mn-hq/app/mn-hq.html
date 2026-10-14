@@ -317,6 +317,44 @@ input[type=color]{width:36px;height:30px;border:1px solid var(--line);border-rad
 .actrow{display:flex;gap:6px;flex-wrap:wrap}
 .lib{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;font-size:.82rem}
 
+/* ===== CHAT ===== */
+.chat{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}
+.modes{display:flex;flex-direction:column;gap:6px}
+.mode{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:center;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px;width:100%}
+.mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.mode b{display:block;font-size:.88rem}
+.mode span span{font:500 .68rem/1.3 var(--f-mono);color:var(--muted)}
+.mode canvas{width:30px;height:30px;border-radius:8px;background:var(--surface-2)}
+.clist{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto}
+.citem{all:unset;cursor:pointer;display:block;padding:7px 10px;border-radius:9px;font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.citem:hover{background:var(--surface-2)}
+.citem[aria-current="true"]{background:var(--accent-soft);color:var(--fg)}
+.citem small{display:block;font:500 .64rem/1.3 var(--f-mono);color:var(--muted)}
+.convo{background:var(--surface);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;min-height:min(72vh,760px);min-width:0}
+.convo-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.convo-h h2{font-size:1rem}
+.chip.model{color:var(--accent-text);border-color:var(--accent)}
+.msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;max-height:62vh}
+.msg{display:flex;gap:10px;align-items:flex-start;max-width:100%}
+.msg.user{justify-content:flex-end}
+.msg .bub{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 13px;font-size:.9rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-width:min(760px,100%);min-width:0}
+.msg.user .bub{background:var(--accent-soft);border-color:transparent;max-width:min(560px,90%)}
+.msg .bub pre{background:var(--surface-2);border-radius:8px;padding:10px;white-space:pre-wrap;font:400 .8rem/1.5 var(--f-mono);margin:8px 0}
+.msg .bub .hh{display:block;font-weight:700;margin-top:6px}
+.msg canvas{width:28px;height:28px;border-radius:8px;background:var(--surface-2);flex:none}
+.msg .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.msg .who2{font:500 .64rem/1 var(--f-mono);color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.composer{border-top:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.composer textarea{min-height:64px;max-height:240px}
+.composer .row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap}
+.thumbs span{position:relative}
+.thumbs img{width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.thumbs button{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:0;background:var(--fg);color:var(--bg);font-size:.7rem;line-height:1;padding:0}
+.starter{color:var(--muted);font-size:.9rem;max-width:62ch}
+.starter ul{margin:8px 0 0;padding-left:18px}
+@media (max-width:860px){.chat{grid-template-columns:minmax(0,1fr)}.msgs{max-height:none}}
+
 @media (max-width:1180px){
   .studio{grid-template-columns:240px minmax(0,1fr)}
   .studio .editor{grid-column:1/-1}
@@ -348,6 +386,7 @@ input[type=color]{width:36px;height:30px;border:1px solid var(--line);border-rad
     <div class="logo"><div class="mk">MN</div><div>MN HQ<small>Oficina · Implementaciones</small></div></div>
     <nav class="tabs" role="tablist" aria-label="Secciones">
       <button class="tab" role="tab" id="tab-oficina" data-view="oficina" aria-selected="true">Oficina</button>
+      <button class="tab" role="tab" id="tab-chat" data-view="chat" aria-selected="false">Chat</button>
       <button class="tab" role="tab" id="tab-tareas" data-view="tareas" aria-selected="false">Tareas <span class="n" id="n-tareas" hidden></span></button>
       <button class="tab" role="tab" id="tab-studio" data-view="studio" aria-selected="false">Studio <span class="n" id="n-studio" hidden></span></button>
     </nav>
@@ -358,12 +397,14 @@ input[type=color]{width:36px;height:30px;border:1px solid var(--line);border-rad
 <main class="wrap">
   <div id="banner" class="banner" hidden></div>
   <section class="view" id="v-oficina" role="tabpanel" aria-labelledby="tab-oficina"></section>
+  <section class="view" id="v-chat" role="tabpanel" aria-labelledby="tab-chat" hidden></section>
   <section class="view" id="v-tareas" role="tabpanel" aria-labelledby="tab-tareas" hidden></section>
   <section class="view" id="v-studio" role="tabpanel" aria-labelledby="tab-studio" hidden></section>
 </main>
 <div id="drawer-root"></div>
 <div class="toast" id="toast" hidden></div>
 <input type="file" id="file" accept="image/*" hidden>
+<input type="file" id="chat-file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
 
 <script>
 (() => {
@@ -512,6 +553,8 @@ const S = {
   brandId: lsGet('mnhq.brand') || null, postId: null, slide: 0, mode: 'post', igDark: lsGet('mnhq.igdark') === '1', safe: false,
   flow: 'publicacion', agentOpen: null, taskOpen: null, taskForm: false, confirm: null, brandEdit: false, comboIx: 0,
   fbOpen: null, reqBrand: lsGet('mnhq.reqbrand') || null,
+  chats: [], sample: null, sampleImages: false, chatId: null, chatMode: lsGet('mnhq.chatmode') || 'web', chatBrand: lsGet('mnhq.chatbrand') || null,
+  chatBusy: false, chatStream: '', chatErr: '', chatImgs: [],
 };
 const FALLBACK_BRANDS = [
   {id:'mn-implementaciones', name:'MN Implementaciones', handle:'mn.implementaciones', bio:'Páginas web, software de ventas y automatizaciones con IA para negocios.', palette:['#0A0A0A','#C6FF3D','#F3F3EF','#FFFFFF'], headFont:'Inter', accentFont:'Inter', bodyFont:'Inter', avatarBg:'#0A0A0A', avatarFg:'#C6FF3D', avatarText:'MN', order:0},
@@ -553,13 +596,14 @@ function subscribe(coll, key){
     for (const o of Object.values(local)) if (busyLocal(coll, o.id) && !S[key].some(x => x.id === o.id)) S[key].push(o);
     if (!S.live) { S.live = true; setSync(true); }
     const ae = document.activeElement;
-    render(ae && ae.closest && ae.closest('#v-studio, #tform, #reqform, #drawer-root') && ae.matches('input,textarea,select') ? 'soft' : 'all');
+    render(ae && ae.closest && ae.closest('#v-studio, #v-chat, #tform, #reqform, #drawer-root') && ae.matches('input,textarea,select') ? 'soft' : 'all');
   }, err => { setSync(false, 'Sin conexión'); });
 }
 function normalize(coll, o){
   if (coll === 'posts') { if (!Array.isArray(o.slides) || !o.slides.length) o.slides = [{}]; if (!fmtLabel[o.format]) o.format = 'post45'; }
   if (coll === 'tasks' && !Array.isArray(o.agents)) o.agents = [];
   if (coll === 'brands' && !Array.isArray(o.palette)) o.palette = [];
+  if (coll === 'chats') { if (!Array.isArray(o.turns)) o.turns = []; if (!MODES[o.mode]) o.mode = 'libre'; }
   return o;
 }
 function setSync(on, txt){ const s = $('#sync'); s.classList.toggle('on', on); $('span', s).textContent = txt || (on ? 'En vivo' : 'Conectando'); }
@@ -585,7 +629,7 @@ const FONTS = {
 const ff = n => FONTS[n] || FONTS.Inter;
 function agentLoad(id){ return S.tasks.filter(t => t.status !== 'hecho' && (t.agents || []).includes(id)); }
 const brandName = id => S.brands.find(b => b.id === id)?.name || '';
-const hasBook = b => !!(b && (String(b.voice || '').trim() || String(b.audience || '').trim() || String(b.pillars || '').trim()));
+const hasBook = b => !!(b && (String(b.estetica || '').trim() || String(b.voice || '').trim() || String(b.audience || '').trim() || String(b.pillars || '').trim()));
 const unrouted = t => t.by === 'ceo' && !(t.agents || []).length && t.status !== 'hecho';
 const nowISO = () => new Date().toISOString();
 function addLog(o, by, text){ o.log = Array.isArray(o.log) ? o.log : []; o.log.push({at:nowISO(), by, text}); }
@@ -652,6 +696,7 @@ function render(mode = 'all'){
   $('#n-tareas').hidden = !nt; $('#n-tareas').textContent = nt;
   $('#n-studio').hidden = !np; $('#n-studio').textContent = np;
   if (S.view === 'oficina' && !(mode === 'soft' && document.activeElement?.closest?.('#reqform'))) renderOficina(w);
+  if (S.view === 'chat') renderChat(mode === 'soft');
   if (S.view === 'tareas') renderTareas(mode === 'soft');
   if (S.view === 'studio') renderStudio(mode);
   if (!(mode === 'soft' && document.activeElement?.closest?.('#drawer-root'))) renderDrawer();
@@ -848,6 +893,7 @@ function brandForm(b){
     <label class="f">Pilares de contenido<textarea class="inp" id="b-pillars" rows="3" maxlength="1000" placeholder="Uno por línea">${esc(b.pillars || '')}</textarea></label>
     <label class="f">Productos, servicios y precios<textarea class="inp" id="b-offer" rows="3" maxlength="1500">${esc(b.offer || '')}</textarea></label>
     <label class="f">Evitar<textarea class="inp" id="b-avoid" rows="2" maxlength="800">${esc(b.avoid || '')}</textarea></label>
+    <label class="f">Documento de estética<textarea class="inp" id="b-estetica" rows="5" maxlength="20000" placeholder="Se arma en Chat → Analizar estética">${esc(b.estetica || '')}</textarea></label>
     <label class="f">Memoria del equipo<textarea class="inp" id="b-memory" rows="3" maxlength="1500" placeholder="Lo que aprendieron de vos: «sin emojis», «ganchos con pregunta»…">${esc(b.memory || '')}</textarea></label>
     <label class="f">Sitio web<input class="inp" id="b-web" value="${esc(b.website || '')}" maxlength="200" placeholder="https://"></label>
     <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm pri" type="submit">Guardar marca</button>${S.assets ? '<button class="btn sm" type="button" id="b-logo">Subir logo</button>' : ''}<button class="btn sm" type="button" id="b-new">+ Marca nueva</button></div>
@@ -976,6 +1022,173 @@ function renderEditor(){
   if (S.fbOpen === 'post:' + p.id) $('#fb-text', ed)?.focus();
 }
 
+/* ---------- chat con el equipo (Opus 5.5) ---------- */
+const CHAT_MODEL = 'claude-opus-5-5';
+const CHAT_KEEP = 14; // turnos que se mandan: los más viejos se dejan afuera para gastar menos
+const MODES = {
+  estetica:{n:'Analizar estética', agent:'estratega-marketing', sub:'Estratega · capturas del Instagram',
+    starter:['Subí capturas del perfil, del feed (varias filas) y del logo con el botón «Imágenes».','Contame lo que sepas del negocio: rubro, zona, a quién le vende.','Te devuelvo el documento de estética y criterios, listo para guardar en la marca.'],
+    rules:`Sos la Estratega de marketing del equipo MN. Analizás la estética de una marca a partir de capturas de su Instagram (perfil, feed, historias destacadas, logo) y lo que cuente Malu.
+Entregá el DOCUMENTO DE ESTÉTICA Y CRITERIOS con estas secciones:
+1. Esencia: qué transmite la marca en 2-3 frases.
+2. Paleta: cada color en HEX con su uso (fondo, acento, texto, secundario). Si lo estimás de una captura, decilo.
+3. Tipografías: estilo de títulos, cuerpo y acentos, y las Google Fonts más parecidas.
+4. Logos: versiones que ves (principal, isotipo, monocromo), colores, sobre qué fondos va, cómo NO usarlo.
+5. Fotografía e imágenes: luz, encuadre, temperatura, props, personas o producto.
+6. Composición y recursos gráficos: márgenes, texturas, íconos, ilustraciones, bordes.
+7. Tono de voz: 3 adjetivos y 3 frases de ejemplo.
+8. Criterios estéticos obligatorios: reglas concretas y verificables («fondos crema, nunca blanco puro»).
+9. Evitar: lo que rompe la marca.
+Basate solo en lo que ves y en lo que te dicen. Lo que no se pueda saber, marcalo [CONFIRMAR].
+Si falta material para analizar bien, pedilo en una línea antes de escribir.
+Cuando entregues el documento final, ponelo COMPLETO dentro de un único bloque \`\`\`md ... \`\`\`.`},
+  web:{n:'Prompt de web', agent:'desarrollo-web', sub:'Desarrollo · prompt para Claude Code',
+    starter:['Contame qué web querés: para qué es, qué tiene que sentir quien entra, secciones, referencias.','Si falta algo te pregunto todo junto, una sola vez.','Te armo el prompt completo, respetando la estética de la marca, para pegar en Claude Code.'],
+    rules:`Sos Desarrollo del equipo MN. Tu trabajo es armar con Malu el PROMPT para que Claude Code construya un sitio web.
+Así trabaja Malu cuando sale bien: documento de estética de la marca + prompt detallado con cómo quiere la página + ese prompt completo a Claude Code. Cada sitio es único: nunca uses una plantilla ni una estructura genérica.
+Proceso:
+1. Si falta su visión, hacé POCAS preguntas, todas juntas en un solo mensaje: sensación buscada y referencias; secciones y contenido; qué tiene que hacer el visitante (comprar, reservar, WhatsApp); fotos, logos y textos que ya tiene; qué no quiere. Si ya lo dijo, no preguntes.
+2. Escribí el prompt con esta estructura:
+# Sitio de <marca>
+## Qué es y para quién
+## Criterios estéticos (obligatorios) → el documento de estética de la marca COMPLETO, sin resumir
+## Cómo quiero la página → la visión de Malu sección por sección, con sus palabras y con detalle (qué va, cómo se ve, animaciones, textos, imágenes, llamadas a la acción)
+## Contenido real → datos confirmados; lo que falte: [CONFIRMAR]
+## Requisitos → responsive (celular primero), rápido, accesible, metadatos y vista previa para compartir. Antes de terminar, mirá capturas en escritorio y celular y corregí lo que se vea genérico o fuera de los criterios estéticos.
+## Reglas → respetá siempre los criterios estéticos; no inventes datos; no despliegues sin aprobación.
+3. Entregá el prompt final COMPLETO dentro de un único bloque \`\`\`md ... \`\`\` y preguntale a Malu qué quiere ajustar.
+Si la marca no tiene documento de estética, avisalo y sugerí hacerlo primero en el modo «Analizar estética».`},
+  libre:{n:'Director', agent:'director', sub:'Cualquier cosa del equipo',
+    starter:['Pedí lo que necesites para la marca elegida: ideas, copies, respuestas a clientes, planes.','Respondo corto y directo.'],
+    rules:`Sos el Director del equipo de MN Implementaciones (webs, software de ventas y automatizaciones con IA, La Plata). Ayudás a Malu, la CEO, con lo que pida para la marca elegida. Respondé corto, concreto y listo para usar. No inventes datos: [CONFIRMAR].`},
+};
+const curChat = () => S.chats.find(c => c.id === S.chatId);
+function brandContext(b){
+  if (!b) return '';
+  const f = [['Nombre', b.name], ['Instagram', b.handle ? '@' + b.handle : ''], ['Bio', b.bio], ['Sitio', b.website], ['Paleta', (b.palette || []).join(', ')],
+    ['Tipografías', [b.headFont, b.accentFont, b.bodyFont].filter(Boolean).join(' / ')], ['Tono de voz', b.voice], ['Público', b.audience], ['Pilares', b.pillars],
+    ['Productos y precios', b.offer], ['Evitar', b.avoid], ['Memoria (preferencias de Malu)', b.memory]].filter(([,v]) => String(v || '').trim());
+  return `MARCA\n${f.map(([k,v]) => `${k}: ${v}`).join('\n')}\n\nDOCUMENTO DE ESTÉTICA\n${String(b.estetica || '').trim() || '(todavía no hay)'}`;
+}
+function chatInput(ch){
+  const m = MODES[ch.mode] || MODES.libre; const b = S.brands.find(x => x.id === ch.brand);
+  const rules = `${m.rules}\n\nEscribí en español rioplatense, profesional y cercano. Nada se publica ni se despliega sin el OK de Malu.\n\n${brandContext(b)}`;
+  const turns = ch.turns.slice(-CHAT_KEEP).map(t => ({role:t.role, content:t.content}));
+  while (turns.length && turns[0].role !== 'user') turns.shift();
+  return [{role:'user', content:rules}, ...turns];
+}
+function mdLite(t){
+  // bloques de código tal cual; títulos y negritas solo fuera de ellos
+  return String(t).split(/```[a-z]*\n?/).map((part, i) => i % 2
+    ? `<pre>${esc(part.replace(/\n+$/, ''))}</pre>`
+    : esc(part.replace(/^\n+|\n+$/g, i ? '' : '$&')).replace(/^#{1,4} (.+)$/gm, '<span class="hh">$1</span>').replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')).join('');
+}
+const fenced = t => { const m = String(t).match(/```(?:md|markdown)?\n?([\s\S]*?)```/); return (m ? m[1] : t).trim(); };
+function chatErrCopy(code){
+  return ({not_granted:'No le diste permiso a la página para usar Claude.', sampling_disabled:'Claude no está disponible en esta cuenta.', rate_limited:'Llegaste al límite de uso por ahora. Probá más tarde.',
+    session_expired:'Volvé a iniciar sesión en Claude.', prompt_too_large:'La conversación es muy larga: empezá un chat nuevo.', image_rejected:'Una imagen no sirve (tipo o tamaño). Probá con otra.',
+    images_unavailable:'Desde acá no se pueden mandar imágenes.', refused:'Claude no respondió a ese mensaje. Probá decirlo de otra forma.', cancelled:''})[code] ?? 'Se cortó la respuesta. Probá de nuevo.';
+}
+let chatCtl = null;
+function renderChat(soft){
+  const v = $('#v-chat');
+  if (!S.chatBrand || !S.brands.some(b => b.id === S.chatBrand)) S.chatBrand = sortedBrands()[0]?.id || null;
+  const ch = curChat();
+  if (ch) { S.chatMode = ch.mode; S.chatBrand = ch.brand; }
+  if (!soft || !$('.chat', v)) {
+    v.innerHTML = `<div class="chat"><aside class="panel" id="c-side"></aside><section class="convo"><div class="convo-h" id="c-head"></div><div class="msgs" id="c-msgs" aria-live="polite"></div><div class="composer" id="c-comp"></div></section></div>`;
+    renderChatComposer();
+  }
+  const ae = document.activeElement;
+  if (!(soft && ae && ae.closest('#c-side'))) renderChatSide();
+  renderChatHead(); renderChatMsgs();
+}
+function renderChatSide(){
+  const list = S.chats.filter(c => c.brand === S.chatBrand).sort((a,b) => String(b.updatedAt || b.createdAt).localeCompare(String(a.updatedAt || a.createdAt)));
+  $('#c-side').innerHTML = `
+    <div class="ed-sec"><h3>Marca</h3><select class="inp" id="c-brand" ${S.chatBusy ? 'disabled' : ''}>${sortedBrands().map(b => `<option value="${esc(b.id)}" ${b.id === S.chatBrand ? 'selected' : ''}>${esc(b.name)}</option>`).join('')}</select>
+      ${S.brands.find(b => b.id === S.chatBrand)?.estetica ? '<span class="hint">✓ Tiene documento de estética</span>' : '<span class="hint">Sin documento de estética todavía</span>'}</div>
+    <div class="ed-sec"><h3>Con quién hablás</h3><div class="modes">${Object.entries(MODES).map(([k,m]) => `<button class="mode" data-cmode="${k}" aria-pressed="${k === S.chatMode}" ${S.chatBusy ? 'disabled' : ''}>${avatarSlot(m.agent,2)}<span><b>${esc(m.n)}</b><span>${esc(m.sub)}</span></span></button>`).join('')}</div></div>
+    <div class="ed-sec"><h3 style="display:flex;justify-content:space-between">Conversaciones <span>${list.length}</span></h3>
+      <button class="btn sm pri" data-cnew ${S.chatBusy ? 'disabled' : ''}>+ Chat nuevo</button>
+      <div class="clist">${list.length ? list.map(c => `<button class="citem" data-chat="${esc(c.id)}" aria-current="${c.id === S.chatId}">${esc(c.title || 'Sin título')}<small>${esc(MODES[c.mode]?.n || '')} · ${esc(fmtDate(c.updatedAt || c.createdAt))}</small></button>`).join('') : '<p class="hint">Todavía no hay chats para esta marca.</p>'}</div>
+    </div>`;
+  hydrateAvatars($('#c-side'));
+}
+function renderChatHead(){
+  const m = MODES[S.chatMode] || MODES.libre; const ch = curChat();
+  $('#c-head').innerHTML = `${avatarSlot(m.agent,2)}<h2>${esc(ch?.title || m.n)}</h2><span class="chip model"><span class="dot"></span>Opus 5.5</span>
+    <span class="chip">${esc(brandName(S.chatBrand))}</span>
+    ${ch && S.canWrite && !S.chatBusy ? (S.confirm === 'chat:' + ch.id ? `<span class="confirm" style="margin-left:auto">¿Borrar este chat? <button class="btn sm danger" data-cdel="${esc(ch.id)}">Sí</button><button class="btn sm" data-ccancel>No</button></span>` : `<button class="btn sm ghost" style="margin-left:auto" data-cconf="${esc(ch.id)}">Borrar chat</button>`) : ''}`;
+  hydrateAvatars($('#c-head'));
+}
+function msgActs(t, i, ch){
+  if (t.role !== 'assistant') return '';
+  const isLast = i === ch.turns.length - 1;
+  return `<div class="acts"><button class="btn sm" data-ccopy="${i}">Copiar</button>
+    ${ch.mode === 'estetica' && S.canWrite ? `<button class="btn sm ${isLast ? 'pri' : ''}" data-csave-est="${i}">Guardar como estética de la marca</button>` : ''}
+    ${ch.mode === 'web' && S.canWrite ? `<button class="btn sm ${isLast ? 'pri' : ''}" data-csave-web="${i}">Guardar prompt para Claude Code</button>` : ''}</div>`;
+}
+function renderChatMsgs(){
+  const box = $('#c-msgs'); const ch = curChat(); const m = MODES[S.chatMode] || MODES.libre;
+  if (!S.sample) { box.innerHTML = `<div class="empty">El chat funciona cuando abrís MN HQ desde Claude${S.live ? ' y le das permiso para usar Claude' : ''}.</div>`; return; }
+  const turns = ch ? ch.turns : [];
+  let html = turns.length ? '' : `<div class="starter"><b>${esc(m.n)}</b> con Opus 5.5 para ${esc(brandName(S.chatBrand) || 'la marca')}.<ul>${m.starter.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  html += turns.map((t, i) => t.role === 'user'
+    ? `<div class="msg user"><div class="bub">${esc(t.content)}</div></div>`
+    : `<div class="msg">${avatarSlot(m.agent,2)}<div style="min-width:0"><div class="who2">${esc(m.n)}${t.model && t.model !== CHAT_MODEL ? ' · respondió otro modelo' : ''}${t.cut ? ' · respuesta cortada' : ''}</div><div class="bub">${mdLite(t.content)}</div>${msgActs(t, i, ch)}</div></div>`).join('');
+  if (S.chatBusy) html += `<div class="msg">${avatarSlot(m.agent,2)}<div style="min-width:0"><div class="who2">${esc(m.n)}</div><div class="bub" id="c-stream">${S.chatStream ? mdLite(S.chatStream) : '<span class="muted">Pensando… (Opus puede tardar hasta un minuto)</span>'}</div></div></div>`;
+  if (S.chatErr) html += `<div class="feedback"><b>No se pudo</b>${esc(S.chatErr)}</div>`;
+  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+  box.innerHTML = html; hydrateAvatars(box);
+  if (atBottom || S.chatBusy) box.scrollTop = box.scrollHeight;
+}
+function renderChatComposer(){
+  const dis = !S.sample || !S.canWrite;
+  $('#c-comp').innerHTML = `<div class="thumbs" id="c-thumbs"></div>
+    <textarea class="inp" id="chat-in" rows="3" maxlength="20000" placeholder="Escribí acá… (Enter envía, Shift+Enter nueva línea)" ${dis ? 'disabled' : ''}></textarea>
+    <div class="row"><span style="display:flex;gap:6px;align-items:center">${S.sampleImages ? `<button class="btn sm" data-cimg ${dis ? 'disabled' : ''}>Imágenes</button>` : ''}<span class="hint">Se mandan los últimos ${CHAT_KEEP} mensajes, para gastar menos.</span></span>
+    <span style="display:flex;gap:6px"><button class="btn sm" data-cstop ${S.chatBusy ? '' : 'hidden'}>Detener</button><button class="btn pri" data-csend ${dis || S.chatBusy ? 'disabled' : ''}>Enviar</button></span></div>`;
+  renderThumbs();
+}
+function renderThumbs(){
+  const el = $('#c-thumbs'); if (!el) return;
+  (S.chatThumbUrls || []).forEach(u => URL.revokeObjectURL(u));
+  S.chatThumbUrls = S.chatImgs.map(f => URL.createObjectURL(f));
+  el.innerHTML = S.chatThumbUrls.map((u, i) => `<span><img src="${u}" alt="Imagen ${i+1}"><button data-cimgdel="${i}" aria-label="Quitar imagen">×</button></span>`).join('');
+}
+function setChatBusy(b){
+  S.chatBusy = b;
+  const send = $('[data-csend]'), stop = $('[data-cstop]');
+  if (send) send.disabled = b || !S.sample || !S.canWrite; if (stop) stop.hidden = !b;
+}
+async function sendChat(){
+  const box = $('#chat-in'); const text = (box?.value || '').trim();
+  if (S.chatBusy || !S.sample || (!text && !S.chatImgs.length)) return;
+  let ch = curChat();
+  if (!ch) { ch = {id:'c-' + uid(), brand:S.chatBrand, mode:S.chatMode, title:(text || 'Análisis de imágenes').split('\n')[0].slice(0, 60), turns:[], createdAt:nowISO()}; S.chats.push(ch); S.chatId = ch.id; }
+  const imgs = S.chatImgs.slice();
+  ch.turns.push({role:'user', content:(text || 'Analizá estas imágenes.') + (imgs.length ? `\n\n[Adjunté ${imgs.length} imagen${imgs.length > 1 ? 'es' : ''}]` : ''), at:nowISO()});
+  box.value = ''; S.chatImgs = []; renderThumbs(); S.chatErr = ''; S.chatStream = '';
+  setChatBusy(true); saveLater('chats', ch, 0); renderChatSide(); renderChatHead(); renderChatMsgs();
+  chatCtl = new AbortController();
+  const opts = {model:CHAT_MODEL, modelTier:'complex', cache:false, signal:chatCtl.signal, onText:({text}) => {
+    S.chatStream = text; const el = $('#c-stream'); if (el) { el.innerHTML = mdLite(text); const mb = $('#c-msgs'); mb.scrollTop = mb.scrollHeight; } }};
+  if (imgs.length) opts.images = imgs;
+  try {
+    const r = await S.sample(chatInput(ch), opts);
+    ch.turns.push({role:'assistant', content:r.text, at:nowISO(), model:r.modelApplied || r.modelTierApplied, cut:!!r.truncated});
+    S.chats = S.chats.map(c => c.id === ch.id ? ch : c);
+  } catch (e) {
+    if (e && e.text && e.code !== 'refused') ch.turns.push({role:'assistant', content:e.text, at:nowISO(), cut:true});
+    S.chats = S.chats.map(c => c.id === ch.id ? ch : c);
+    S.chatErr = chatErrCopy(e && e.code);
+  } finally {
+    chatCtl = null; S.chatStream = ''; setChatBusy(false); saveLater('chats', ch, 0);
+    if (S.view === 'chat') { renderChatSide(); renderChatHead(); renderChatMsgs(); $('#chat-in')?.focus(); }
+  }
+}
+
 /* ---------- drawer de agente ---------- */
 function fbFormHTML(key){
   return S.fbOpen === key ? `<div class="ed-sec" style="border:0;padding:0"><label class="f">¿Qué hay que cambiar?<textarea class="inp" id="fb-text" rows="3" maxlength="1500" placeholder="Ej.: El gancho está flojo, probá con una pregunta. Usá la foto del local."></textarea></label>
@@ -1039,7 +1252,7 @@ function renderDrawer(){
 /* ---------- acciones ---------- */
 function setView(v){
   S.view = v; S.confirm = null;
-  ['oficina','tareas','studio'].forEach(k => { $('#v-' + k).hidden = k !== v; $('#tab-' + k).setAttribute('aria-selected', k === v); });
+  ['oficina','chat','tareas','studio'].forEach(k => { $('#v-' + k).hidden = k !== v; $('#tab-' + k).setAttribute('aria-selected', k === v); });
   render();
   try { history.replaceState(null, '', '#' + v); } catch {}
 }
@@ -1088,6 +1301,31 @@ document.addEventListener('click', async e => {
   if (d.tapprove) { const tk = S.tasks.find(x => x.id === d.tapprove); if (!tk) return; tk.status = 'hecho'; tk.feedback = ''; addLog(tk, 'ceo', 'Aprobó la tarea'); saveLater('tasks', tk, 0); render(); return toast('Aprobada'); }
   if (d.copy) return copy(d.copy);
   if (d.flow) { S.flow = d.flow; return renderOficina(waiting()); }
+  // chat
+  if (d.cmode) { S.chatMode = d.cmode; lsSet('mnhq.chatmode', d.cmode); S.chatId = null; S.chatErr = ''; return renderChat(); }
+  if ('cnew' in d) { S.chatId = null; S.chatErr = ''; renderChat(); return $('#chat-in')?.focus(); }
+  if (d.chat) { if (S.chatBusy) return; S.chatId = d.chat; S.chatErr = ''; S.confirm = null; return renderChat(); }
+  if ('csend' in d) return sendChat();
+  if ('cstop' in d) { chatCtl?.abort(); return; }
+  if ('cimg' in d) return $('#chat-file').click();
+  if (d.cimgdel !== undefined) { S.chatImgs.splice(+d.cimgdel, 1); return renderThumbs(); }
+  if (d.cconf) { S.confirm = 'chat:' + d.cconf; return renderChatHead(); }
+  if ('ccancel' in d) { S.confirm = null; return renderChatHead(); }
+  if (d.cdel) { S.chats = S.chats.filter(c => c.id !== d.cdel); removeDoc('chats', d.cdel); S.chatId = null; S.confirm = null; return renderChat(); }
+  if (d.ccopy !== undefined) { const t = curChat()?.turns[+d.ccopy]; return t && copy(t.content); }
+  if (d.csaveEst !== undefined) {
+    const ch = curChat(); const t = ch?.turns[+d.csaveEst]; const b = S.brands.find(x => x.id === ch?.brand); if (!t || !b) return;
+    b.estetica = fenced(t.content); b.updatedAt = nowISO(); saveNow('brands', b); renderChatSide(); return toast('Guardado en la estética de ' + b.name);
+  }
+  if (d.csaveWeb !== undefined) {
+    const ch = curChat(); const t = ch?.turns[+d.csaveWeb]; if (!t) return;
+    const text = fenced(t.content); const bn = brandName(ch.brand) || 'la marca';
+    let tk = ch.taskId && S.tasks.find(x => x.id === ch.taskId);
+    if (!tk) { tk = {id:'t-' + uid(), title:'Sitio de ' + bn, brand:ch.brand, due:'', status:'pendiente', agents:['desarrollo-web'], route:'Prompt aprobado → Claude Code', by:'ceo', createdAt:nowISO(), log:[]}; S.tasks.push(tk); ch.taskId = tk.id; saveLater('chats', ch, 0); }
+    tk.destino = 'claude-code'; tk.prompt = text; tk.detail = 'Prompt armado en el chat «' + (ch.title || '') + '». Copialo con «Copiar para Claude Code» y pegalo en Claude Code.';
+    addLog(tk, 'ceo', 'Guardó el prompt de la web desde el chat'); saveNow('tasks', tk); copy(text);
+    return toast('Prompt guardado en Tareas y copiado: pegalo en Claude Code');
+  }
   if (d.open) { const [k,id] = d.open.split(':'); if (k === 'post') { const p = S.posts.find(x => x.id === id); if (p) { S.brandId = p.brand; S.postId = id; S.slide = 0; } setView('studio'); } else { S.taskOpen = id; S.agentOpen = null; setView('tareas'); setTimeout(() => $('#task-' + CSS.escape(id))?.scrollIntoView({behavior:'smooth', block:'center'}), 50); } return; }
   if ('cancel' in d) { S.confirm = null; return S.view === 'tareas' ? renderTareas() : renderEditor(); }
   // tareas
@@ -1150,10 +1388,21 @@ document.addEventListener('change', e => {
   const sk = el.id.startsWith('s-') ? el.id.slice(2) : null;
   if (['align','headFont','accentFont'].includes(sk)) return mutSlide(s => { s[sk] = el.value; }, {editor:true});
   if (sk === 'sign') return mutSlide(s => { s.sign = el.checked; });
+  if (el.id === 'c-brand') { S.chatBrand = el.value; lsSet('mnhq.chatbrand', el.value); S.chatId = null; S.chatErr = ''; return renderChat(); }
   if (el.id.startsWith('c-')) return renderEditor();
   if (el.id === 'e-format') return mutPost(p => { p.format = el.value; S.mode = el.value === 'historia' ? 'story' : 'post'; }, {editor:true, delay:0});
   if (el.id === 'e-status') return mutPost(p => { p.status = el.value; }, {editor:true, delay:0});
   if (el.id === 'e-date') return mutPost(p => { p.date = el.value; }, {delay:0});
+});
+document.addEventListener('keydown', e => {
+  if (e.target.id === 'chat-in' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); sendChat(); }
+});
+$('#chat-file').addEventListener('change', e => {
+  const max = S.sampleImages?.maxCount || 5;
+  const ok = [...e.target.files].filter(f => /^image\/(jpeg|png|webp|gif)$/.test(f.type));
+  e.target.value = '';
+  S.chatImgs = [...S.chatImgs, ...ok].slice(0, max); renderThumbs();
+  if (ok.length && S.chatImgs.length === max) toast('Hasta ' + max + ' imágenes por mensaje');
 });
 document.addEventListener('submit', e => {
   e.preventDefault();
@@ -1177,7 +1426,7 @@ document.addEventListener('submit', e => {
     b.name = $('#b-name').value.trim() || b.name; b.handle = $('#b-handle').value.trim().replace(/^@/,'') || b.handle; b.bio = $('#b-bio').value;
     const pal = $('#b-pal').value.split(/[\s,;]+/).map(x => x.trim()).filter(isHex).map(x => x.toUpperCase());
     if (pal.length) b.palette = pal; b.headFont = $('#b-hf').value; b.accentFont = $('#b-af').value;
-    for (const [k, el] of [['voice','#b-voice'],['audience','#b-audience'],['pillars','#b-pillars'],['offer','#b-offer'],['avoid','#b-avoid'],['memory','#b-memory'],['website','#b-web']]) b[k] = $(el).value.trim();
+    for (const [k, el] of [['voice','#b-voice'],['audience','#b-audience'],['pillars','#b-pillars'],['offer','#b-offer'],['avoid','#b-avoid'],['memory','#b-memory'],['estetica','#b-estetica'],['website','#b-web']]) b[k] = $(el).value.trim();
     b.updatedAt = nowISO();
     saveNow('brands', b); S.brandEdit = false; renderStudio(); toast('Marca guardada');
   }
@@ -1197,18 +1446,20 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && (S.agentOp
 /* ---------- arranque ---------- */
 const startView = (location.hash || '').slice(1);
 S.brands = clone(FALLBACK_BRANDS);
-setView(['oficina','tareas','studio'].includes(startView) ? startView : 'oficina');
+setView(['oficina','chat','tareas','studio'].includes(startView) ? startView : 'oficina');
 
 (async () => {
   const c = window.claude;
   if (!c || !c.use) { setSync(false, 'Vista local'); showBanner('Estás viendo una copia local: los cambios no se guardan. Abrí MN HQ desde Claude para trabajar con el equipo.'); return; }
-  const [db, assets, user] = await Promise.all([c.use('db'), c.use('assets').catch(() => null), c.use('user').catch(() => null)]);
-  S.assets = assets;
+  const [db, assets, user, sample] = await Promise.all([c.use('db'), c.use('assets').catch(() => null), c.use('user').catch(() => null), c.use('sample').catch(() => null)]);
+  S.assets = assets; S.sample = sample;
+  if (sample) { try { S.sampleImages = (await sample.limits())?.images || false; } catch { S.sampleImages = false; } }
+  if (S.view === 'chat') renderChat();
   if (!db) { setSync(false, 'Sin base'); showBanner('No se pudo conectar la base del equipo: podés probar el Studio, pero los cambios no se guardan.'); return; }
   S.db = db;
   try { if (user && (await user.can('data.write')) === false) { S.canWrite = false; showBanner('Tenés acceso de solo lectura.'); } } catch {}
   S.brands = []; render();
-  subscribe('brands','brands'); subscribe('posts','posts'); subscribe('tasks','tasks');
+  subscribe('brands','brands'); subscribe('posts','posts'); subscribe('tasks','tasks'); subscribe('chats','chats');
 })();
 })();
 </script>

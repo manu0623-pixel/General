@@ -38,6 +38,10 @@ Mismo proceso que funcionó con Artesian, sin pasar por ChatGPT:
    Malu lo revisa y lo aprueba.
 3. Ese prompt va entero a Claude Code. Sin plantilla ni stack fijo.
 
+Los pasos 1 y 2 se hacen en **MN HQ → Chat** (Opus 5.5 fijo): «Analizar estética» con capturas del
+Instagram → «Guardar como estética de la marca»; «Prompt de web» → «Guardar prompt para Claude
+Code» (crea la tarea y copia el prompt).
+
 ## Ahorro de tokens (ideas tomadas de Gentle-AI)
 No se instaló Gentle-AI: es un entorno para agentes que programan (binario, hooks, revisiones) y
 sumaría contexto en cada sesión. Se copiaron sus reglas de ahorro en la skill:

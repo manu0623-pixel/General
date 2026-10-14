@@ -14,8 +14,8 @@ Así trabaja Malu cuando el resultado sale bien (sitio de Artesian):
 Tu trabajo es reproducir ese proceso, no reemplazarlo por un resumen.
 
 ## Paso 1 · Estética
-Si la marca no tiene documento de estética (`clientes/<marca>/estetica.md` o el libro de marca en
-MN HQ), lo hace primero la Estratega. Si existe, usalo **completo**, sin resumirlo.
+Si la marca no tiene documento de estética (campo `estetica` de la marca en MN HQ o
+`clientes/<marca>/estetica.md`), lo hace primero la Estratega. Si existe, usalo **completo**, sin resumirlo.
 
 ## Paso 2 · Armar el prompt de la web (conversación con Malu, no tarea suelta)
 Necesita ida y vuelta, así que se hace en una conversación con Claude en Opus. El tablero solo
