@@ -1,0 +1,962 @@
+[
+  {
+    "id": "arquitectura", "label": "Arquitectura",
+    "riasec": { "A": 0.35, "R": 0.25, "I": 0.2, "E": 0.1, "C": 0.1 },
+    "domains": { "diseno": 1, "ingenieria": 0.6, "artes_visuales": 0.4, "sociedad": 0.3, "matematica": 0.2 },
+    "aptitudes": { "espacial": 1, "creatividad": 0.8, "problemas": 0.6, "planificacion": 0.6, "cuantitativo": 0.4, "manual": 0.4, "sistemas": 0.4 },
+    "style": { "estructura": [0.4, 0.4], "practica": [0.65, 0.5], "colaboracion": [0.6, 0.4], "paciencia": [0.8, 0.6], "cosas": [0.6, 0.4], "ideas": [0.6, 0.4] },
+    "demands": { "critica_iterativa": 1, "dibujo_tecnico": 1, "exposicion_publica": 0.7, "obra": 0.5, "autogestion_clientes": 0.6, "calculo_intensivo": 0.3, "carrera_larga": 0.4 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.4, "autonomia_v": 0.7, "emprender": 0.8, "creatividad_v": 0.85, "crecimiento": 0.6, "reconocimiento": 0.6, "impacto": 0.6, "desafio": 0.7, "flexibilidad": 0.55, "remoto": 0.45, "movilidad": 0.5, "equilibrio": 0.35, "especializacion": 0.6, "variedad_v": 0.75, "demanda": 0.5 },
+    "futureNote": "Ejercicio independiente frecuente y sensible a la actividad de la construcción.",
+    "study": ["Taller de arquitectura (proyecto) a lo largo de toda la carrera", "Sistemas de representación y dibujo", "Estructuras y construcciones", "Instalaciones", "Historia y teoría de la arquitectura", "Planeamiento y urbanismo"],
+    "tasks": ["Proyectar viviendas, edificios o espacios públicos", "Dibujar planos y modelos 3D", "Dirigir y supervisar obras", "Presentar propuestas a clientes y organismos", "Gestionar permisos y documentación técnica"],
+    "settings": ["Estudios de arquitectura", "Ejercicio independiente", "Empresas constructoras", "Organismos públicos de planeamiento"],
+    "specializations": ["Diseño arquitectónico", "Urbanismo y planeamiento", "Patrimonio", "Dirección de obra", "Diseño sustentable"],
+    "difficulties": ["Talleres con correcciones públicas y entregas intensas", "Mucho tiempo de producción fuera del aula", "Costos de materiales y maquetas"],
+    "experiences": [
+      { "id": "arq-relevamiento", "title": "Relevar y rediseñar un ambiente de tu casa", "hypothesis": "Disfrutás pensar el espacio en 3D y sostener varias iteraciones de un diseño.", "type": "proyecto", "steps": ["Medí un ambiente real y dibujá su planta a escala 1:50.", "Proponé dos redistribuciones distintas que mejoren su uso.", "Mostrásela a alguien, pedí una crítica y hacé una tercera versión corrigiendo lo señalado."], "duration": "4 a 6 horas en 2 o 3 días", "demands": ["dibujo_tecnico", "critica_iterativa"] },
+      { "id": "arq-taller", "title": "Asistir a una entrega o corrección de taller", "hypothesis": "La dinámica de taller (crítica pública y entregas) te resulta estimulante y no solo tolerable.", "type": "conversacion", "steps": ["Consultá en la facultad si podés presenciar una corrección o entrega abierta.", "Hablá con dos estudiantes sobre cuántas horas por semana le dedican al taller.", "Anotá qué te atrajo y qué te generó rechazo."], "duration": "Una tarde", "demands": ["critica_iterativa", "exposicion_publica"] }
+    ]
+  },
+  {
+    "id": "diseno_comunicacion_visual", "label": "Diseño en Comunicación Visual",
+    "riasec": { "A": 0.5, "E": 0.15, "I": 0.1, "C": 0.1, "S": 0.15 },
+    "domains": { "diseno": 1, "artes_visuales": 0.6, "comunicacion": 0.7, "tecnologia": 0.3 },
+    "aptitudes": { "creatividad": 1, "espacial": 0.6, "verbal": 0.4, "critico": 0.4, "interpretacion": 0.4, "planificacion": 0.4 },
+    "style": { "estructura": [0.35, 0.4], "practica": [0.75, 0.5], "variedad": [0.7, 0.4], "colaboracion": [0.5, 0.3], "ideas": [0.6, 0.3], "ejecucion": [0.7, 0.4] },
+    "demands": { "critica_iterativa": 1, "produccion_creativa_sostenida": 0.9, "autogestion_clientes": 0.7, "exposicion_publica": 0.5, "programacion_larga": 0.4 },
+    "future": { "ingresos": 0.45, "estabilidad": 0.35, "autonomia_v": 0.7, "emprender": 0.75, "creatividad_v": 0.9, "crecimiento": 0.55, "reconocimiento": 0.5, "impacto": 0.45, "desafio": 0.55, "flexibilidad": 0.7, "remoto": 0.8, "movilidad": 0.6, "equilibrio": 0.45, "especializacion": 0.55, "variedad_v": 0.8, "demanda": 0.55 },
+    "futureNote": "Mercado competitivo, con mucho trabajo freelance y remoto; los ingresos dependen del portafolio.",
+    "study": ["Taller de diseño en comunicación visual", "Tipografía", "Morfología y lenguaje visual", "Tecnología y producción gráfica/digital", "Historia del diseño", "Comunicación y teoría de la imagen"],
+    "tasks": ["Crear identidades visuales y marcas", "Diseñar piezas editoriales, señalética e interfaces", "Desarrollar campañas de comunicación", "Presentar propuestas a clientes y ajustarlas según sus devoluciones"],
+    "settings": ["Estudios de diseño", "Agencias", "Freelance", "Equipos de comunicación institucional", "Empresas de producto digital"],
+    "specializations": ["Identidad", "Editorial", "Diseño de interfaces", "Señalética", "Tipografía"],
+    "difficulties": ["Correcciones constantes de talleres y clientes", "Competencia y precarización del trabajo freelance"],
+    "experiences": [
+      { "id": "dcv-identidad", "title": "Diseñar la identidad de un emprendimiento real", "hypothesis": "Disfrutás resolver un encargo ajeno (no solo expresarte) y mejorar el trabajo con devoluciones.", "type": "proyecto", "steps": ["Elegí un comercio o proyecto conocido.", "Hacé tres bocetos de logotipo con distintas ideas.", "Mostráselos a la persona responsable, pedí que elija y critique, y desarrollá la versión final."], "duration": "6 a 8 horas", "demands": ["critica_iterativa", "produccion_creativa_sostenida"] },
+      { "id": "dcv-analisis", "title": "Analizar piezas gráficas de la calle", "hypothesis": "Te interesa entender por qué una pieza comunica bien, no solo si es linda.", "type": "caso", "steps": ["Fotografiá 10 carteles o señales de tu ciudad.", "Para cada una, anotá qué comunica, a quién y qué cambiarías.", "Rediseñá la peor en una hoja."], "duration": "2 a 3 horas" }
+    ]
+  },
+  {
+    "id": "diseno_multimedial", "label": "Diseño Multimedial",
+    "riasec": { "A": 0.4, "I": 0.2, "R": 0.15, "E": 0.1, "C": 0.15 },
+    "domains": { "diseno": 1, "tecnologia": 0.8, "artes_visuales": 0.6, "comunicacion": 0.5, "musica": 0.2 },
+    "aptitudes": { "creatividad": 0.9, "sistemas": 0.6, "logico": 0.5, "espacial": 0.6, "aprendizaje": 0.6, "problemas": 0.5 },
+    "style": { "estructura": [0.35, 0.4], "practica": [0.75, 0.5], "variedad": [0.75, 0.4], "colaboracion": [0.55, 0.3], "ejecucion": [0.7, 0.4] },
+    "demands": { "critica_iterativa": 0.9, "produccion_creativa_sostenida": 0.8, "programacion_larga": 0.6, "depurar": 0.5, "autogestion_clientes": 0.6, "exposicion_publica": 0.5 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.4, "autonomia_v": 0.7, "emprender": 0.75, "creatividad_v": 0.9, "crecimiento": 0.6, "reconocimiento": 0.5, "impacto": 0.45, "desafio": 0.65, "flexibilidad": 0.75, "remoto": 0.85, "movilidad": 0.65, "equilibrio": 0.5, "especializacion": 0.6, "variedad_v": 0.85, "demanda": 0.6 },
+    "futureNote": "Cruza diseño, arte y tecnología: interfaces, instalaciones, videojuegos, contenidos interactivos.",
+    "study": ["Taller de diseño multimedial", "Lenguaje y morfología visual", "Programación y medios interactivos", "Imagen, sonido y animación", "Teoría y estética de los nuevos medios"],
+    "tasks": ["Diseñar experiencias interactivas, interfaces o videojuegos", "Crear instalaciones y piezas de arte digital", "Producir animaciones y contenidos multimedia", "Programar prototipos interactivos"],
+    "settings": ["Estudios de producto digital", "Desarrolladoras de videojuegos", "Agencias", "Freelance", "Proyectos culturales y artísticos"],
+    "specializations": ["Experiencia de usuario (UX)", "Arte digital e instalaciones", "Animación", "Videojuegos"],
+    "difficulties": ["Requiere sostener a la vez exigencias creativas y técnicas", "Herramientas que cambian rápido"],
+    "experiences": [
+      { "id": "dm-interactivo", "title": "Crear una pieza interactiva simple", "hypothesis": "Disfrutás combinar lo visual con lógica de programación, incluyendo lo frustrante de lo técnico.", "type": "proyecto", "steps": ["Seguí un tutorial introductorio de p5.js o Scratch.", "Creá una pieza visual que reaccione al mouse o al teclado.", "Mostrásela a alguien y mejorala según cómo la usó."], "duration": "4 a 6 horas", "demands": ["programacion_larga", "depurar", "critica_iterativa"] },
+      { "id": "dm-ux", "title": "Rediseñar la pantalla de una app que uses", "hypothesis": "Te interesa diseñar para que otros usen algo, observando su comportamiento.", "type": "caso", "steps": ["Elegí una pantalla confusa de una app.", "Observá a dos personas usándola y anotá dónde se traban.", "Dibujá una alternativa y probala con ellas en papel."], "duration": "3 horas" }
+    ]
+  },
+  {
+    "id": "diseno_industrial", "label": "Diseño Industrial",
+    "riasec": { "A": 0.3, "R": 0.3, "I": 0.2, "E": 0.1, "C": 0.1 },
+    "domains": { "diseno": 1, "ingenieria": 0.7, "tecnologia": 0.4, "artes_visuales": 0.3, "economia": 0.2 },
+    "aptitudes": { "espacial": 1, "creatividad": 0.8, "problemas": 0.6, "manual": 0.6, "sistemas": 0.5, "cuantitativo": 0.3 },
+    "style": { "practica": [0.75, 0.5], "cosas": [0.85, 0.6], "estructura": [0.45, 0.3], "paciencia": [0.7, 0.4], "ejecucion": [0.7, 0.4] },
+    "demands": { "critica_iterativa": 1, "dibujo_tecnico": 0.9, "precision_manual": 0.5, "obra": 0.4, "autogestion_clientes": 0.5, "exposicion_publica": 0.5 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.4, "autonomia_v": 0.65, "emprender": 0.8, "creatividad_v": 0.85, "crecimiento": 0.55, "reconocimiento": 0.5, "impacto": 0.5, "desafio": 0.7, "flexibilidad": 0.55, "remoto": 0.45, "movilidad": 0.55, "equilibrio": 0.5, "especializacion": 0.6, "variedad_v": 0.75, "demanda": 0.5 },
+    "futureNote": "Depende fuertemente de la actividad industrial y de la capacidad de emprender.",
+    "study": ["Taller de diseño industrial", "Tecnología de materiales y procesos productivos", "Sistemas de representación y modelado 3D", "Ergonomía", "Morfología", "Gestión y producción"],
+    "tasks": ["Diseñar productos, muebles, equipamiento o envases", "Construir prototipos y maquetas", "Definir materiales y procesos de fabricación", "Trabajar con ingenieros y fabricantes"],
+    "settings": ["Industrias", "Estudios de diseño", "Emprendimientos propios", "Pymes manufactureras"],
+    "specializations": ["Producto", "Mobiliario", "Packaging", "Diseño para la salud", "Diseño sustentable"],
+    "difficulties": ["Mucha producción en taller y modelado", "Costos de materiales y prototipos"],
+    "experiences": [
+      { "id": "di-objeto", "title": "Rediseñar un objeto cotidiano", "hypothesis": "Disfrutás pensar cómo se usa y se fabrica un objeto, y llevarlo a prototipo.", "type": "proyecto", "steps": ["Elegí un objeto que funcione mal (un perchero, un soporte, un envase).", "Hacé 5 bocetos de alternativas.", "Construí un prototipo con cartón o materiales simples y probalo."], "duration": "5 a 8 horas", "demands": ["critica_iterativa", "dibujo_tecnico", "precision_manual"] },
+      { "id": "di-fabrica", "title": "Investigar cómo se fabrica algo", "hypothesis": "Te interesan los procesos productivos y materiales, no solo la forma.", "type": "caso", "steps": ["Elegí un producto de plástico o metal de tu casa.", "Buscá videos de su proceso de fabricación.", "Anotá qué decisiones de diseño explican su forma."], "duration": "2 horas" }
+    ]
+  },
+  {
+    "id": "musica_educacion", "label": "Música – Educación Musical",
+    "riasec": { "S": 0.4, "A": 0.4, "E": 0.1, "C": 0.1 },
+    "domains": { "musica": 1, "educacion": 0.9, "sociedad": 0.3 },
+    "aptitudes": { "auditivo": 1, "interpersonal": 0.8, "verbal": 0.5, "planificacion": 0.5, "creatividad": 0.5 },
+    "style": { "personas": [0.85, 0.6], "colaboracion": [0.7, 0.4], "variedad": [0.6, 0.3], "practica": [0.65, 0.3] },
+    "demands": { "frente_aula": 1, "practica_instrumental": 0.6, "exposicion_publica": 0.6, "lectura_teorica": 0.4 },
+    "future": { "ingresos": 0.35, "estabilidad": 0.7, "autonomia_v": 0.45, "emprender": 0.4, "creatividad_v": 0.7, "crecimiento": 0.4, "reconocimiento": 0.4, "impacto": 0.8, "desafio": 0.5, "flexibilidad": 0.45, "remoto": 0.2, "movilidad": 0.3, "equilibrio": 0.6, "especializacion": 0.45, "variedad_v": 0.6, "demanda": 0.65 },
+    "futureNote": "Salida principal en docencia de música en el sistema educativo, con estabilidad relativa e ingresos de escala docente.",
+    "study": ["Audioperceptiva", "Instrumento y canto", "Lenguaje musical", "Didáctica de la música", "Producción y dirección de conjuntos", "Pedagogía y práctica docente"],
+    "tasks": ["Enseñar música en escuelas de distintos niveles", "Coordinar coros y ensambles escolares", "Diseñar proyectos de educación musical", "Investigar sobre enseñanza musical"],
+    "settings": ["Escuelas", "Institutos de música", "Proyectos culturales y comunitarios"],
+    "difficulties": ["Requiere manejar a la vez práctica musical y gestión de grupos", "Puede requerir conocimientos musicales previos para el ingreso"],
+    "experiences": [
+      { "id": "mused-clase", "title": "Enseñar una canción a un grupo pequeño", "hypothesis": "Disfrutás enseñar música a otros, más que tocar para vos.", "type": "clase", "steps": ["Elegí una canción simple.", "Enseñásela a 2 o 3 personas (familiares, amigos) en 20 minutos.", "Anotá qué te resultó satisfactorio y qué te frustró."], "duration": "1 hora", "demands": ["frente_aula"] },
+      { "id": "mused-observar", "title": "Observar una clase de música escolar", "hypothesis": "La realidad del aula de música te resulta atractiva.", "type": "conversacion", "steps": ["Pedí permiso para observar una clase o entrevistá a un docente de música.", "Preguntá qué parte del trabajo disfruta y cuál le pesa."], "duration": "2 horas" }
+    ]
+  },
+  {
+    "id": "musica_instrumento", "label": "Música – Instrumento",
+    "riasec": { "A": 0.6, "R": 0.15, "C": 0.1, "S": 0.15 },
+    "domains": { "musica": 1, "artes_visuales": 0.1, "educacion": 0.3 },
+    "aptitudes": { "auditivo": 1, "manual": 0.8, "aprendizaje": 0.5, "patrones": 0.4, "planificacion": 0.4 },
+    "style": { "colaboracion": [0.35, 0.3], "paciencia": [0.9, 0.7], "estructura": [0.55, 0.3], "practica": [0.8, 0.4] },
+    "demands": { "practica_instrumental": 1, "exposicion_publica": 0.9, "autogestion_clientes": 0.5, "frente_aula": 0.4 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.3, "autonomia_v": 0.6, "emprender": 0.5, "creatividad_v": 0.8, "crecimiento": 0.45, "reconocimiento": 0.6, "impacto": 0.5, "desafio": 0.7, "flexibilidad": 0.55, "remoto": 0.2, "movilidad": 0.6, "equilibrio": 0.4, "especializacion": 0.7, "variedad_v": 0.5, "demanda": 0.35 },
+    "futureNote": "Muy competitivo. Suele combinarse interpretación, docencia (con el profesorado) y proyectos propios.",
+    "study": ["Instrumento (estudio individual intensivo)", "Audioperceptiva", "Armonía y análisis", "Historia de la música", "Música de cámara"],
+    "tasks": ["Interpretar en conciertos solistas o de cámara", "Enseñar el instrumento", "Grabar y acompañar", "Participar en orquestas o ensambles"],
+    "settings": ["Escenarios y salas de concierto", "Conservatorios y escuelas", "Estudios de grabación"],
+    "difficulties": ["Exige un nivel instrumental previo considerable para el ingreso", "Práctica diaria prolongada durante años"],
+    "experiences": [
+      { "id": "musinst-rutina", "title": "Sostener una rutina de práctica de dos semanas", "hypothesis": "Disfrutás (o toleras bien) la práctica diaria lenta y repetitiva que exige el nivel profesional.", "type": "ejercicio", "steps": ["Elegí una obra o estudio un poco por encima de tu nivel.", "Practicá 90 minutos diarios durante 14 días con registro de avances.", "Grabate el día 1 y el día 14 y compará."], "duration": "2 semanas", "demands": ["practica_instrumental"] },
+      { "id": "musinst-ingreso", "title": "Averiguar el nivel de ingreso", "hypothesis": "Tu nivel actual es compatible con las exigencias de ingreso o podés alcanzarlo en un plazo razonable.", "type": "plan", "steps": ["Consultá en la Facultad de Artes los requisitos de ingreso para la orientación.", "Pedí a un docente del instrumento una evaluación de tu nivel."], "duration": "1 a 2 semanas" }
+    ]
+  },
+  {
+    "id": "musica_direccion", "label": "Música – Dirección",
+    "riasec": { "A": 0.45, "E": 0.25, "S": 0.2, "C": 0.1 },
+    "domains": { "musica": 1, "organizacion": 0.6, "educacion": 0.4 },
+    "aptitudes": { "auditivo": 1, "interpersonal": 0.7, "planificacion": 0.6, "patrones": 0.5, "critico": 0.4 },
+    "style": { "personas": [0.8, 0.5], "responsabilidad": [0.8, 0.5], "colaboracion": [0.8, 0.4], "autonomia": [0.7, 0.3] },
+    "demands": { "practica_instrumental": 0.7, "exposicion_publica": 1, "frente_aula": 0.5, "autogestion_clientes": 0.5 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.3, "autonomia_v": 0.6, "emprender": 0.5, "creatividad_v": 0.8, "crecimiento": 0.45, "reconocimiento": 0.7, "impacto": 0.6, "desafio": 0.8, "flexibilidad": 0.45, "remoto": 0.1, "movilidad": 0.55, "equilibrio": 0.4, "especializacion": 0.7, "variedad_v": 0.6, "demanda": 0.35 },
+    "futureNote": "Pocas posiciones estables; frecuente combinación con docencia y dirección de agrupaciones comunitarias o educativas.",
+    "study": ["Dirección (coral u orquestal)", "Audioperceptiva", "Armonía, contrapunto y análisis", "Instrumentación", "Canto o piano complementario"],
+    "tasks": ["Dirigir coros u orquestas en ensayos y conciertos", "Preparar repertorio y estudiar partituras", "Coordinar músicos y organizar temporadas", "Enseñar"],
+    "settings": ["Coros y orquestas", "Escuelas de música", "Agrupaciones comunitarias e institucionales"],
+    "difficulties": ["Requiere formación musical previa sólida", "Liderazgo de grupos en público"],
+    "experiences": [
+      { "id": "musdir-ensayo", "title": "Coordinar un ensayo breve", "hypothesis": "Disfrutás liderar musicalmente a un grupo y corregirlo en tiempo real.", "type": "proyecto", "steps": ["Reuní a 3 o 4 personas que canten o toquen.", "Prepará un fragmento corto y dirigí 30 minutos de ensayo.", "Anotá qué decisiones tomaste y cómo respondió el grupo."], "duration": "2 horas", "demands": ["exposicion_publica"] },
+      { "id": "musdir-observar", "title": "Presenciar un ensayo de coro u orquesta", "hypothesis": "La tarea real del director (detalle, repetición, gestión humana) te atrae.", "type": "conversacion", "steps": ["Pedí permiso para observar un ensayo universitario o comunitario.", "Anotá cuánto tiempo se dedica a repetir pasajes y cómo se manejan los conflictos."], "duration": "Una tarde" }
+    ]
+  },
+  {
+    "id": "musica_composicion", "label": "Música – Composición",
+    "riasec": { "A": 0.6, "I": 0.25, "C": 0.05, "R": 0.1 },
+    "domains": { "musica": 1, "tecnologia": 0.3, "matematica": 0.2, "artes_visuales": 0.2 },
+    "aptitudes": { "auditivo": 1, "creatividad": 1, "patrones": 0.6, "logico": 0.3, "planificacion": 0.3 },
+    "style": { "colaboracion": [0.3, 0.3], "estructura": [0.25, 0.4], "paciencia": [0.85, 0.5], "ideas": [0.8, 0.4], "autonomia": [0.85, 0.4] },
+    "demands": { "produccion_creativa_sostenida": 1, "critica_iterativa": 0.6, "exposicion_publica": 0.6, "practica_instrumental": 0.4, "autogestion_clientes": 0.6, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.25, "autonomia_v": 0.8, "emprender": 0.6, "creatividad_v": 1, "crecimiento": 0.45, "reconocimiento": 0.6, "impacto": 0.45, "desafio": 0.8, "flexibilidad": 0.7, "remoto": 0.55, "movilidad": 0.5, "equilibrio": 0.45, "especializacion": 0.7, "variedad_v": 0.6, "demanda": 0.3 },
+    "futureNote": "Salidas en música para medios, audiovisual, videojuegos, docencia e investigación; trabajo mayormente por proyectos.",
+    "study": ["Composición (taller)", "Armonía, contrapunto y análisis", "Orquestación", "Música electroacústica y tecnología musical", "Audioperceptiva"],
+    "tasks": ["Componer obras para conciertos, cine, teatro o videojuegos", "Arreglar y orquestar", "Producir música electroacústica", "Enseñar"],
+    "settings": ["Trabajo independiente por proyectos", "Producciones audiovisuales", "Instituciones educativas"],
+    "difficulties": ["Requiere formación musical previa", "Mercado reducido y muy competitivo"],
+    "experiences": [
+      { "id": "muscomp-pieza", "title": "Componer una pieza breve con consigna", "hypothesis": "Disfrutás crear música con restricciones y corregirla, no solo improvisar.", "type": "creativa", "steps": ["Componé 1 minuto de música para una escena de video muda que elijas.", "Escribila o grabala con un software gratuito.", "Pedí devolución a alguien con formación y hacé una segunda versión."], "duration": "1 semana", "demands": ["produccion_creativa_sostenida", "critica_iterativa"] }
+    ]
+  },
+  {
+    "id": "musica_popular", "label": "Música Popular",
+    "riasec": { "A": 0.55, "S": 0.15, "E": 0.15, "R": 0.15 },
+    "domains": { "musica": 1, "sociedad": 0.3, "educacion": 0.3, "comunicacion": 0.2 },
+    "aptitudes": { "auditivo": 1, "creatividad": 0.7, "manual": 0.6, "interpersonal": 0.4 },
+    "style": { "colaboracion": [0.75, 0.4], "estructura": [0.3, 0.3], "practica": [0.8, 0.4], "variedad": [0.7, 0.3] },
+    "demands": { "practica_instrumental": 0.9, "exposicion_publica": 0.9, "autogestion_clientes": 0.7, "produccion_creativa_sostenida": 0.6, "frente_aula": 0.4 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.3, "autonomia_v": 0.7, "emprender": 0.65, "creatividad_v": 0.9, "crecimiento": 0.45, "reconocimiento": 0.6, "impacto": 0.55, "desafio": 0.6, "flexibilidad": 0.6, "remoto": 0.25, "movilidad": 0.5, "equilibrio": 0.45, "especializacion": 0.55, "variedad_v": 0.7, "demanda": 0.4 },
+    "futureNote": "Combinación habitual de interpretación, producción, docencia y gestión de proyectos propios.",
+    "study": ["Instrumento y ensambles de música popular", "Audioperceptiva", "Armonía y arreglos", "Producción musical", "Historia de la música popular"],
+    "tasks": ["Tocar en bandas y ensambles", "Arreglar y producir", "Enseñar música popular", "Gestionar proyectos musicales"],
+    "settings": ["Escenarios", "Estudios", "Escuelas y talleres"],
+    "difficulties": ["Puede requerir nivel musical previo", "Ingresos variables"],
+    "experiences": [
+      { "id": "muspop-arreglo", "title": "Arreglar y tocar un tema con otros", "hypothesis": "Disfrutás el trabajo de ensamble y arreglo, incluyendo los ensayos repetidos.", "type": "proyecto", "steps": ["Elegí un tema popular.", "Armá un arreglo con 2 o 3 personas y ensayalo tres veces.", "Grabalo y anotá qué disfrutaste del proceso."], "duration": "1 a 2 semanas", "demands": ["practica_instrumental", "exposicion_publica"] }
+    ]
+  },
+  {
+    "id": "historia_arte", "label": "Historia del Arte",
+    "riasec": { "I": 0.35, "A": 0.4, "S": 0.15, "C": 0.1 },
+    "domains": { "artes_visuales": 1, "humanidades": 0.9, "lenguas": 0.4, "educacion": 0.3 },
+    "aptitudes": { "verbal": 1, "critico": 0.8, "interpretacion": 0.7, "aprendizaje": 0.5, "patrones": 0.3 },
+    "style": { "practica": [0.25, 0.4], "ejecucion": [0.25, 0.4], "colaboracion": [0.35, 0.2], "ideas": [0.9, 0.5] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 0.9, "investigacion_lenta": 0.6, "exposicion_publica": 0.4, "frente_aula": 0.4 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.45, "autonomia_v": 0.5, "emprender": 0.3, "creatividad_v": 0.6, "crecimiento": 0.4, "reconocimiento": 0.45, "impacto": 0.5, "desafio": 0.7, "flexibilidad": 0.55, "remoto": 0.45, "movilidad": 0.35, "equilibrio": 0.6, "especializacion": 0.6, "variedad_v": 0.5, "demanda": 0.35 },
+    "futureNote": "Salidas en docencia, museos, gestión cultural, curaduría, crítica e investigación.",
+    "study": ["Historia del arte por períodos", "Teoría y estética", "Historia del arte argentino y latinoamericano", "Metodología de la investigación", "Didáctica (profesorado)"],
+    "tasks": ["Investigar y escribir sobre obras y artistas", "Curar exposiciones", "Trabajar en museos y archivos", "Enseñar historia del arte", "Escribir crítica"],
+    "settings": ["Museos", "Universidades e institutos de investigación", "Escuelas", "Gestión cultural pública y privada"],
+    "difficulties": ["Gran volumen de lectura y escritura académica", "Mercado laboral acotado"],
+    "experiences": [
+      { "id": "ha-texto", "title": "Escribir un análisis de una obra", "hypothesis": "Disfrutás investigar e interpretar obras por escrito, no solo contemplarlas.", "type": "caso", "steps": ["Visitá un museo y elegí una obra.", "Buscá dos textos sobre su autor o contexto.", "Escribí 2 páginas analizándola y pedí una lectura crítica."], "duration": "5 a 6 horas", "demands": ["lectura_teorica", "escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "artes_plasticas", "label": "Artes Plásticas",
+    "riasec": { "A": 0.65, "R": 0.2, "S": 0.1, "I": 0.05 },
+    "domains": { "artes_visuales": 1, "diseno": 0.3, "humanidades": 0.2, "educacion": 0.2 },
+    "aptitudes": { "creatividad": 1, "espacial": 0.7, "manual": 0.8, "critico": 0.3 },
+    "style": { "estructura": [0.15, 0.5], "autonomia": [0.85, 0.5], "colaboracion": [0.3, 0.2], "cosas": [0.75, 0.4], "practica": [0.75, 0.3] },
+    "demands": { "produccion_creativa_sostenida": 1, "critica_iterativa": 0.7, "exposicion_publica": 0.7, "precision_manual": 0.5, "autogestion_clientes": 0.7, "lectura_teorica": 0.3 },
+    "future": { "ingresos": 0.25, "estabilidad": 0.25, "autonomia_v": 0.85, "emprender": 0.6, "creatividad_v": 1, "crecimiento": 0.4, "reconocimiento": 0.55, "impacto": 0.5, "desafio": 0.6, "flexibilidad": 0.75, "remoto": 0.35, "movilidad": 0.5, "equilibrio": 0.5, "especializacion": 0.6, "variedad_v": 0.6, "demanda": 0.3 },
+    "futureNote": "Pocas salidas en relación de dependencia; frecuente combinación con docencia (profesorado), talleres y proyectos públicos o por encargo.",
+    "study": ["Taller de la orientación (pintura, dibujo, cerámica, escultura, grabado, escenografía, muralismo)", "Lenguaje visual", "Historia del arte", "Procedimientos y materiales", "Didáctica (profesorado)"],
+    "tasks": ["Producir obra propia y exponerla", "Realizar murales, escenografías u obras por encargo", "Dictar talleres y clases", "Participar en convocatorias y proyectos culturales"],
+    "settings": ["Taller propio", "Escuelas y talleres", "Teatros (escenografía)", "Espacio público (muralismo)"],
+    "specializations": ["Pintura", "Dibujo", "Cerámica", "Escenografía", "Escultura", "Grabado y Arte Impreso", "Muralismo y Arte Público Monumental"],
+    "difficulties": ["Ingresos inciertos", "Requiere disciplina para producir sin consignas externas", "Costos de materiales"],
+    "experiences": [
+      { "id": "ap-serie", "title": "Producir una serie de cinco obras", "hypothesis": "Podés sostener producción creativa propia sin consignas externas.", "type": "creativa", "steps": ["Elegí un tema y una técnica.", "Producí cinco obras en tres semanas.", "Mostralas a alguien con formación y registrá qué sentiste al exponerlas."], "duration": "3 semanas", "demands": ["produccion_creativa_sostenida", "exposicion_publica"] },
+      { "id": "ap-taller", "title": "Tomar un taller de la orientación que te interesa", "hypothesis": "La técnica específica (cerámica, grabado, escultura...) te atrae en su práctica real.", "type": "clase", "steps": ["Buscá un taller abierto o de extensión universitaria.", "Asistí al menos a tres encuentros."], "duration": "3 semanas" }
+    ]
+  },
+  {
+    "id": "audiovisual_teoria", "label": "Artes Audiovisuales – Teoría y Crítica",
+    "riasec": { "I": 0.35, "A": 0.45, "S": 0.1, "C": 0.1 },
+    "domains": { "artes_visuales": 1, "humanidades": 0.6, "comunicacion": 0.6, "lenguas": 0.4 },
+    "aptitudes": { "verbal": 1, "critico": 0.9, "interpretacion": 0.7, "aprendizaje": 0.4 },
+    "style": { "practica": [0.25, 0.4], "ejecucion": [0.25, 0.4], "ideas": [0.9, 0.5] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 1, "investigacion_lenta": 0.5, "exposicion_publica": 0.3 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.35, "autonomia_v": 0.6, "emprender": 0.4, "creatividad_v": 0.6, "crecimiento": 0.4, "reconocimiento": 0.5, "impacto": 0.4, "desafio": 0.7, "flexibilidad": 0.65, "remoto": 0.6, "movilidad": 0.4, "equilibrio": 0.55, "especializacion": 0.6, "variedad_v": 0.5, "demanda": 0.3 },
+    "study": ["Historia del cine y del audiovisual", "Teoría y análisis audiovisual", "Lenguaje audiovisual", "Crítica y escritura", "Metodología de investigación"],
+    "tasks": ["Escribir crítica y ensayo audiovisual", "Investigar", "Programar festivales y ciclos", "Enseñar", "Curaduría y archivo"],
+    "settings": ["Medios", "Universidades", "Festivales y espacios culturales"],
+    "difficulties": ["Mercado reducido", "Mucha lectura y escritura"],
+    "experiences": [
+      { "id": "avt-critica", "title": "Escribir tres críticas de películas", "hypothesis": "Disfrutás analizar y argumentar sobre el cine por escrito de manera sostenida.", "type": "caso", "steps": ["Mirá tres películas de distintos estilos.", "Escribí una crítica de 600 palabras de cada una.", "Compará con críticas publicadas."], "duration": "1 semana", "demands": ["escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "audiovisual_produccion", "label": "Artes Audiovisuales – Producción",
+    "riasec": { "A": 0.5, "R": 0.2, "E": 0.15, "S": 0.1, "I": 0.05 },
+    "domains": { "artes_visuales": 1, "comunicacion": 0.6, "tecnologia": 0.4, "diseno": 0.3 },
+    "aptitudes": { "creatividad": 1, "espacial": 0.6, "planificacion": 0.6, "interpersonal": 0.5, "verbal": 0.4 },
+    "style": { "colaboracion": [0.8, 0.5], "variedad": [0.75, 0.4], "practica": [0.8, 0.4], "incertidumbre": [0.7, 0.3], "ejecucion": [0.8, 0.4] },
+    "demands": { "audiovisual_rodaje": 1, "critica_iterativa": 0.7, "produccion_creativa_sostenida": 0.8, "autogestion_clientes": 0.7, "exposicion_publica": 0.5 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.3, "autonomia_v": 0.6, "emprender": 0.7, "creatividad_v": 0.9, "crecimiento": 0.5, "reconocimiento": 0.6, "impacto": 0.5, "desafio": 0.6, "flexibilidad": 0.5, "remoto": 0.4, "movilidad": 0.6, "equilibrio": 0.35, "especializacion": 0.6, "variedad_v": 0.8, "demanda": 0.45 },
+    "futureNote": "Trabajo por proyectos (cine, series, publicidad, contenidos); fuerte competencia e inestabilidad.",
+    "study": ["Realización audiovisual (taller)", "Lenguaje audiovisual", "Fotografía e iluminación", "Montaje y sonido", "Guion", "Producción"],
+    "tasks": ["Dirigir, filmar o editar piezas audiovisuales", "Escribir guiones", "Diseñar la imagen e iluminación de una producción", "Producir contenidos para medios y plataformas"],
+    "settings": ["Productoras", "Canales y plataformas", "Publicidad", "Proyectos independientes"],
+    "difficulties": ["Jornadas largas y trabajo por proyectos", "Equipamiento y costos de producción"],
+    "experiences": [
+      { "id": "avp-corto", "title": "Realizar un cortometraje de un minuto", "hypothesis": "Disfrutás todo el proceso (guion, rodaje, edición), incluidas las repeticiones y los imprevistos.", "type": "proyecto", "steps": ["Escribí una escena de un minuto.", "Filmala con el celular junto a 2 personas.", "Editala y mostrala a alguien para recibir devolución."], "duration": "1 fin de semana", "demands": ["audiovisual_rodaje", "critica_iterativa"] }
+    ]
+  },
+  {
+    "id": "agro", "label": "Ciencias agrarias y forestales",
+    "riasec": { "R": 0.35, "I": 0.35, "E": 0.15, "C": 0.15 },
+    "domains": { "tierra_ambiente": 1, "quimica_bio": 0.6, "economia": 0.4, "animales": 0.3, "ingenieria": 0.3 },
+    "aptitudes": { "sistemas": 0.8, "problemas": 0.6, "cuantitativo": 0.5, "interpretacion": 0.5, "planificacion": 0.5, "logico": 0.4 },
+    "style": { "exterior": [0.8, 0.6], "practica": [0.7, 0.4], "cosas": [0.6, 0.3], "variedad": [0.6, 0.3] },
+    "demands": { "campo": 1, "trabajo_rural": 0.9, "laboratorio": 0.5, "calculo_intensivo": 0.5, "memoria_volumen": 0.4, "incertidumbre_decisiones": 0.5 },
+    "future": { "ingresos": 0.6, "estabilidad": 0.6, "autonomia_v": 0.6, "emprender": 0.65, "creatividad_v": 0.4, "crecimiento": 0.6, "reconocimiento": 0.5, "impacto": 0.65, "desafio": 0.6, "flexibilidad": 0.45, "remoto": 0.15, "movilidad": 0.6, "equilibrio": 0.5, "especializacion": 0.7, "variedad_v": 0.65, "demanda": 0.65 },
+    "futureNote": "Sector productivo relevante en Argentina; muchas oportunidades requieren vivir o viajar al interior.",
+    "study": ["Química y biología", "Matemática y física aplicadas", "Edafología (suelos)", "Fisiología vegetal", "Producción vegetal / forestal / animal", "Economía y administración agraria"],
+    "tasks": ["Asesorar establecimientos productivos", "Diseñar planes de cultivo o manejo forestal", "Analizar suelos, plagas y rendimientos", "Investigar en organismos técnicos", "Gestionar empresas agropecuarias"],
+    "settings": ["Establecimientos rurales", "Empresas de insumos", "Organismos técnicos (INTA, etc.)", "Consultoras ambientales"],
+    "specializations": ["Producción vegetal", "Manejo forestal", "Agroecología", "Economía agraria", "Protección vegetal"],
+    "difficulties": ["Base de ciencias exactas y naturales en los primeros años", "Trabajo en ámbitos rurales"],
+    "experiences": [
+      { "id": "agro-visita", "title": "Visitar un establecimiento productivo", "hypothesis": "El trabajo concreto en el campo y con productores te resulta atractivo, no solo la idea de naturaleza.", "type": "conversacion", "steps": ["Contactá a un productor o una estación experimental.", "Acompañá una recorrida y preguntá por los problemas cotidianos.", "Anotá qué te interesó y qué no."], "duration": "1 día", "demands": ["campo", "trabajo_rural"] },
+      { "id": "agro-huerta", "title": "Llevar un registro de cultivo", "hypothesis": "Disfrutás observar, medir y sacar conclusiones de un sistema vivo en el tiempo.", "type": "proyecto", "steps": ["Sembrá dos variantes de una misma planta con distintas condiciones.", "Registrá crecimiento durante 4 semanas.", "Analizá las diferencias."], "duration": "4 semanas" }
+    ]
+  },
+  {
+    "id": "geofisica_meteorologia", "label": "Ciencias de la atmósfera y geofísica",
+    "riasec": { "I": 0.6, "R": 0.2, "C": 0.2 },
+    "domains": { "fisica": 1, "matematica": 0.8, "tierra_ambiente": 0.8, "tecnologia": 0.5 },
+    "aptitudes": { "cuantitativo": 1, "logico": 0.8, "sistemas": 0.8, "interpretacion": 0.7, "problemas": 0.6, "espacial": 0.4 },
+    "style": { "practica": [0.4, 0.3], "ejecucion": [0.3, 0.4], "datos": [0.85, 0.5], "paciencia": [0.75, 0.4], "ideas": [0.7, 0.3] },
+    "demands": { "calculo_intensivo": 1, "programacion_larga": 0.8, "investigacion_lenta": 0.6, "campo": 0.4, "abstraccion_formal": 0.5 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.6, "autonomia_v": 0.55, "emprender": 0.3, "creatividad_v": 0.45, "crecimiento": 0.55, "reconocimiento": 0.5, "impacto": 0.65, "desafio": 0.85, "flexibilidad": 0.5, "remoto": 0.5, "movilidad": 0.6, "equilibrio": 0.55, "especializacion": 0.75, "variedad_v": 0.5, "demanda": 0.55 },
+    "futureNote": "Pocos graduados y demanda específica (servicios meteorológicos, energía, recursos, investigación).",
+    "study": ["Análisis matemático y álgebra", "Física general", "Métodos numéricos y programación", "Dinámica de la atmósfera / Física de la Tierra", "Estadística"],
+    "tasks": ["Modelar y pronosticar fenómenos atmosféricos", "Procesar datos sísmicos, gravimétricos o satelitales", "Investigar el clima", "Asesorar a industrias energéticas o al sector agropecuario"],
+    "settings": ["Servicio Meteorológico y organismos públicos", "Empresas de energía y recursos", "Universidades y centros de investigación"],
+    "difficulties": ["Fuerte carga de matemática y física", "Programación científica"],
+    "experiences": [
+      { "id": "geo-datos", "title": "Analizar datos meteorológicos reales", "hypothesis": "Disfrutás trabajar con datos y modelos de fenómenos naturales.", "type": "problema", "steps": ["Descargá temperaturas diarias de tu ciudad de un año (datos abiertos).", "Hacé gráficos en una planilla y buscá patrones.", "Intentá explicar una anomalía."], "duration": "3 a 4 horas", "demands": ["programacion_larga"] }
+    ]
+  },
+  {
+    "id": "fisica_astronomia", "label": "Física y astronomía",
+    "riasec": { "I": 0.75, "R": 0.15, "C": 0.1 },
+    "domains": { "fisica": 1, "matematica": 0.9, "tecnologia": 0.4 },
+    "aptitudes": { "logico": 1, "cuantitativo": 1, "problemas": 0.8, "sistemas": 0.6, "aprendizaje": 0.6, "espacial": 0.4 },
+    "style": { "practica": [0.25, 0.5], "ejecucion": [0.2, 0.5], "paciencia": [0.85, 0.6], "ideas": [0.9, 0.5], "incertidumbre": [0.65, 0.3] },
+    "demands": { "abstraccion_formal": 0.9, "calculo_intensivo": 1, "investigacion_lenta": 0.9, "programacion_larga": 0.7, "laboratorio": 0.4 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.5, "autonomia_v": 0.65, "emprender": 0.25, "creatividad_v": 0.6, "crecimiento": 0.5, "reconocimiento": 0.6, "impacto": 0.5, "desafio": 1, "flexibilidad": 0.6, "remoto": 0.5, "movilidad": 0.75, "equilibrio": 0.55, "especializacion": 0.85, "variedad_v": 0.5, "demanda": 0.5 },
+    "futureNote": "Salida principal en investigación (becas, CONICET, universidades); creciente demanda en industria de datos y tecnología.",
+    "study": ["Análisis matemático y álgebra avanzados", "Mecánica, electromagnetismo, termodinámica", "Física cuántica y relatividad", "Métodos numéricos", "Laboratorios"],
+    "tasks": ["Investigar fenómenos físicos o astronómicos", "Desarrollar modelos y simulaciones", "Procesar observaciones y datos", "Enseñar en universidades"],
+    "settings": ["Universidades y CONICET", "Observatorios", "Empresas tecnológicas y de datos"],
+    "difficulties": ["Muy alta exigencia matemática", "Trayectoria de investigación larga e incierta (doctorado)"],
+    "experiences": [
+      { "id": "fis-problema", "title": "Resolver problemas de un curso introductorio", "hypothesis": "Disfrutás el esfuerzo sostenido de entender y resolver problemas físico-matemáticos.", "type": "problema", "steps": ["Elegí un curso gratuito introductorio de física o astronomía.", "Resolvé 10 problemas en una semana sin mirar soluciones de inmediato.", "Registrá cuánto tiempo sostuviste el esfuerzo en los difíciles."], "duration": "1 semana", "demands": ["calculo_intensivo", "abstraccion_formal"] },
+      { "id": "fis-charla", "title": "Conversar con un investigador o becario", "hypothesis": "La vida cotidiana de la investigación te resulta atractiva.", "type": "conversacion", "steps": ["Asistí a una charla abierta del Observatorio o del Departamento de Física.", "Preguntá cómo es una semana típica de trabajo."], "duration": "Una tarde", "demands": ["investigacion_lenta"] }
+    ]
+  },
+  {
+    "id": "matematica", "label": "Matemática",
+    "riasec": { "I": 0.7, "C": 0.2, "A": 0.1 },
+    "domains": { "matematica": 1, "fisica": 0.3, "tecnologia": 0.3 },
+    "aptitudes": { "logico": 1, "cuantitativo": 0.9, "patrones": 0.8, "problemas": 0.8, "aprendizaje": 0.6, "critico": 0.4 },
+    "style": { "practica": [0.15, 0.6], "ejecucion": [0.2, 0.5], "paciencia": [0.9, 0.6], "ideas": [0.95, 0.5], "colaboracion": [0.3, 0.2] },
+    "demands": { "abstraccion_formal": 1, "calculo_intensivo": 0.8, "investigacion_lenta": 0.7, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.55, "autonomia_v": 0.65, "emprender": 0.25, "creatividad_v": 0.6, "crecimiento": 0.55, "reconocimiento": 0.5, "impacto": 0.4, "desafio": 1, "flexibilidad": 0.6, "remoto": 0.6, "movilidad": 0.75, "equilibrio": 0.6, "especializacion": 0.85, "variedad_v": 0.45, "demanda": 0.55 },
+    "futureNote": "Investigación y docencia universitaria; también ciencia de datos, finanzas y tecnología.",
+    "study": ["Análisis matemático", "Álgebra y geometría", "Topología", "Probabilidad y estadística", "Análisis numérico", "Ecuaciones diferenciales"],
+    "tasks": ["Demostrar resultados nuevos", "Modelar problemas de otras disciplinas", "Analizar datos", "Enseñar"],
+    "settings": ["Universidades y CONICET", "Empresas de datos y finanzas", "Docencia"],
+    "difficulties": ["Muy alto nivel de abstracción desde los primeros años"],
+    "experiences": [
+      { "id": "mat-demo", "title": "Intentar demostraciones elementales", "hypothesis": "Disfrutás la matemática como construcción de argumentos, no solo como cálculo.", "type": "problema", "steps": ["Buscá un libro o curso de introducción a las demostraciones.", "Intentá demostrar 5 proposiciones (por ejemplo, que la raíz de 2 es irracional).", "Registrá tu satisfacción al lograrlo y tu frustración al trabarte."], "duration": "1 semana", "demands": ["abstraccion_formal"] }
+    ]
+  },
+  {
+    "id": "contable", "label": "Contador Público",
+    "riasec": { "C": 0.55, "E": 0.25, "I": 0.15, "S": 0.05 },
+    "domains": { "economia": 1, "derecho": 0.5, "organizacion": 0.5, "matematica": 0.4 },
+    "aptitudes": { "planificacion": 0.8, "cuantitativo": 0.7, "interpretacion": 0.8, "logico": 0.5, "sistemas": 0.5 },
+    "style": { "estructura": [0.85, 0.6], "variedad": [0.4, 0.3], "datos": [0.9, 0.5], "responsabilidad": [0.7, 0.3], "practica": [0.75, 0.3] },
+    "demands": { "numeros_contables": 1, "normas_detalle": 1, "memoria_volumen": 0.5, "atencion_publico": 0.4, "autogestion_clientes": 0.5 },
+    "future": { "ingresos": 0.65, "estabilidad": 0.8, "autonomia_v": 0.6, "emprender": 0.65, "creatividad_v": 0.25, "crecimiento": 0.65, "reconocimiento": 0.5, "impacto": 0.35, "desafio": 0.5, "flexibilidad": 0.5, "remoto": 0.6, "movilidad": 0.5, "equilibrio": 0.45, "especializacion": 0.7, "variedad_v": 0.45, "demanda": 0.8 },
+    "futureNote": "Alta demanda sostenida; vencimientos impositivos generan picos de trabajo.",
+    "study": ["Contabilidad", "Impuestos", "Derecho comercial, laboral y tributario", "Auditoría", "Administración y finanzas", "Matemática y estadística"],
+    "tasks": ["Llevar la contabilidad de empresas", "Liquidar impuestos y sueldos", "Auditar estados contables", "Asesorar en finanzas y normativa"],
+    "settings": ["Estudios contables", "Empresas", "Organismos públicos", "Ejercicio independiente"],
+    "specializations": ["Tributación", "Auditoría", "Costos", "Finanzas", "Sindicatura concursal"],
+    "difficulties": ["Gran volumen de normativa que cambia con frecuencia", "Trabajo con plazos y vencimientos"],
+    "experiences": [
+      { "id": "cont-conciliar", "title": "Ordenar y conciliar las finanzas de un mes", "hypothesis": "Disfrutás (o toleras bien) el registro preciso y la búsqueda de diferencias.", "type": "ejercicio", "steps": ["Registrá todos los gastos e ingresos de tu hogar de un mes en una planilla.", "Concilialos con extractos o comprobantes.", "Encontrá y explicá las diferencias."], "duration": "3 a 4 horas", "demands": ["numeros_contables", "normas_detalle"] },
+      { "id": "cont-charla", "title": "Pasar una mañana en un estudio contable", "hypothesis": "El día a día del estudio contable te resulta llevadero.", "type": "conversacion", "steps": ["Pedí a un contador conocido observar su trabajo.", "Preguntá qué es lo más repetitivo y lo más interesante."], "duration": "Una mañana" }
+    ]
+  },
+  {
+    "id": "administracion", "label": "Administración y gestión",
+    "riasec": { "E": 0.45, "C": 0.3, "S": 0.15, "I": 0.1 },
+    "domains": { "economia": 1, "organizacion": 1, "sociedad": 0.3, "derecho": 0.2 },
+    "aptitudes": { "planificacion": 1, "interpersonal": 0.6, "interpretacion": 0.6, "sistemas": 0.6, "cuantitativo": 0.5, "critico": 0.4 },
+    "style": { "colaboracion": [0.75, 0.4], "personas": [0.7, 0.4], "responsabilidad": [0.75, 0.4], "incertidumbre": [0.6, 0.3], "practica": [0.75, 0.3] },
+    "demands": { "incertidumbre_decisiones": 0.8, "normas_detalle": 0.5, "numeros_contables": 0.5, "conflicto": 0.5, "exposicion_publica": 0.5 },
+    "future": { "ingresos": 0.65, "estabilidad": 0.65, "autonomia_v": 0.55, "emprender": 0.8, "creatividad_v": 0.4, "crecimiento": 0.75, "reconocimiento": 0.6, "impacto": 0.45, "desafio": 0.55, "flexibilidad": 0.5, "remoto": 0.6, "movilidad": 0.6, "equilibrio": 0.45, "especializacion": 0.6, "variedad_v": 0.65, "demanda": 0.7 },
+    "study": ["Administración general", "Contabilidad y costos", "Finanzas", "Marketing", "Recursos humanos", "Economía", "Estrategia"],
+    "tasks": ["Planificar y coordinar áreas de una organización", "Analizar costos y finanzas", "Gestionar equipos", "Diseñar estrategias comerciales"],
+    "settings": ["Empresas", "Organismos públicos", "Consultoras", "Emprendimientos propios"],
+    "specializations": ["Finanzas", "Recursos humanos", "Marketing", "Operaciones", "Gestión pública"],
+    "difficulties": ["Decisiones con información incompleta", "Coordinación de personas con intereses diversos"],
+    "experiences": [
+      { "id": "adm-plan", "title": "Armar un plan de negocio simple", "hypothesis": "Disfrutás organizar recursos y decidir bajo incertidumbre.", "type": "proyecto", "steps": ["Elegí una idea de emprendimiento pequeña.", "Estimá costos, precio y punto de equilibrio en una planilla.", "Presentáselo a alguien y defendé tus supuestos."], "duration": "4 a 5 horas", "demands": ["incertidumbre_decisiones"] },
+      { "id": "adm-evento", "title": "Organizar un evento real", "hypothesis": "Disfrutás coordinar personas, tiempos y presupuesto.", "type": "proyecto", "steps": ["Organizá un evento pequeño (torneo, colecta, reunión).", "Distribuí tareas y llevá un presupuesto.", "Anotá qué parte de la coordinación disfrutaste."], "duration": "2 a 3 semanas" }
+    ]
+  },
+  {
+    "id": "economia", "label": "Economía",
+    "riasec": { "I": 0.5, "E": 0.2, "C": 0.2, "S": 0.1 },
+    "domains": { "economia": 1, "matematica": 0.7, "sociedad": 0.6, "humanidades": 0.3 },
+    "aptitudes": { "cuantitativo": 1, "logico": 0.8, "critico": 0.7, "interpretacion": 0.8, "sistemas": 0.7, "verbal": 0.4 },
+    "style": { "practica": [0.4, 0.3], "ejecucion": [0.35, 0.3], "datos": [0.85, 0.5], "ideas": [0.8, 0.4], "incertidumbre": [0.6, 0.3] },
+    "demands": { "calculo_intensivo": 0.8, "programacion_larga": 0.5, "lectura_teorica": 0.6, "incertidumbre_decisiones": 0.5, "investigacion_lenta": 0.5 },
+    "future": { "ingresos": 0.7, "estabilidad": 0.6, "autonomia_v": 0.6, "emprender": 0.35, "creatividad_v": 0.45, "crecimiento": 0.7, "reconocimiento": 0.65, "impacto": 0.75, "desafio": 0.85, "flexibilidad": 0.6, "remoto": 0.65, "movilidad": 0.75, "equilibrio": 0.55, "especializacion": 0.75, "variedad_v": 0.6, "demanda": 0.65 },
+    "study": ["Microeconomía y macroeconomía", "Matemática y estadística", "Econometría", "Historia económica", "Economía del desarrollo", "Finanzas públicas"],
+    "tasks": ["Analizar datos económicos y elaborar informes", "Evaluar políticas públicas", "Modelar mercados y proyecciones", "Asesorar empresas y gobiernos", "Investigar"],
+    "settings": ["Organismos públicos y bancos centrales", "Consultoras", "Bancos y finanzas", "Universidades y centros de investigación"],
+    "specializations": ["Economía aplicada", "Finanzas", "Desarrollo", "Economía laboral", "Econometría"],
+    "difficulties": ["Fuerte componente matemático y estadístico", "Mucha lectura de teoría"],
+    "experiences": [
+      { "id": "eco-informe", "title": "Escribir un mini informe de coyuntura", "hypothesis": "Disfrutás explicar fenómenos sociales con datos y modelos.", "type": "caso", "steps": ["Buscá la serie de inflación mensual del último año (INDEC).", "Graficala y buscá dos explicaciones posibles de sus cambios.", "Escribí una página argumentando cuál es más convincente."], "duration": "4 horas", "demands": ["lectura_teorica"] }
+    ]
+  },
+  {
+    "id": "turismo", "label": "Turismo",
+    "riasec": { "E": 0.4, "S": 0.35, "C": 0.15, "A": 0.1 },
+    "domains": { "economia": 0.7, "sociedad": 0.6, "comunicacion": 0.5, "tierra_ambiente": 0.4, "organizacion": 0.7, "humanidades": 0.3 },
+    "aptitudes": { "interpersonal": 0.9, "planificacion": 0.9, "idiomas": 0.6, "verbal": 0.5, "creatividad": 0.4 },
+    "style": { "personas": [0.85, 0.5], "variedad": [0.8, 0.4], "exterior": [0.6, 0.3], "colaboracion": [0.7, 0.3] },
+    "demands": { "atencion_publico": 0.9, "incertidumbre_decisiones": 0.4, "idioma_inmersion": 0.4, "normas_detalle": 0.4, "autogestion_clientes": 0.5 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.4, "autonomia_v": 0.55, "emprender": 0.7, "creatividad_v": 0.55, "crecimiento": 0.5, "reconocimiento": 0.4, "impacto": 0.5, "desafio": 0.45, "flexibilidad": 0.4, "remoto": 0.35, "movilidad": 0.8, "equilibrio": 0.4, "especializacion": 0.5, "variedad_v": 0.75, "demanda": 0.5 },
+    "futureNote": "Actividad sensible a la economía y a la estacionalidad.",
+    "study": ["Planificación turística", "Gestión de empresas turísticas", "Patrimonio natural y cultural", "Idiomas", "Marketing", "Geografía turística"],
+    "tasks": ["Planificar destinos y productos turísticos", "Gestionar empresas de viajes u hoteleras", "Diseñar políticas públicas de turismo", "Promocionar destinos"],
+    "settings": ["Organismos públicos de turismo", "Agencias y hotelería", "Consultoras", "Emprendimientos"],
+    "difficulties": ["Estacionalidad y horarios irregulares"],
+    "experiences": [
+      { "id": "tur-circuito", "title": "Diseñar un circuito turístico local", "hypothesis": "Disfrutás planificar experiencias para otros combinando logística, patrimonio y comunicación.", "type": "proyecto", "steps": ["Diseñá un recorrido de un día por tu ciudad.", "Estimá costos y tiempos.", "Guiá a dos personas y pedí devolución."], "duration": "1 día", "demands": ["atencion_publico"] }
+    ]
+  },
+  {
+    "id": "bioquimica_farmacia", "label": "Ciencias bioquímicas y farmacéuticas",
+    "riasec": { "I": 0.55, "R": 0.2, "C": 0.15, "S": 0.1 },
+    "domains": { "quimica_bio": 1, "salud": 0.7, "matematica": 0.3 },
+    "aptitudes": { "logico": 0.6, "cuantitativo": 0.6, "planificacion": 0.6, "interpretacion": 0.7, "aprendizaje": 0.6, "problemas": 0.5, "manual": 0.4 },
+    "style": { "estructura": [0.8, 0.5], "paciencia": [0.75, 0.4], "cosas": [0.6, 0.3], "datos": [0.7, 0.3], "exterior": [0.1, 0.3] },
+    "demands": { "laboratorio": 1, "memoria_volumen": 0.8, "calculo_intensivo": 0.6, "normas_detalle": 0.6, "contacto_clinico": 0.3, "atencion_publico": 0.3 },
+    "future": { "ingresos": 0.6, "estabilidad": 0.75, "autonomia_v": 0.45, "emprender": 0.45, "creatividad_v": 0.3, "crecimiento": 0.55, "reconocimiento": 0.55, "impacto": 0.7, "desafio": 0.7, "flexibilidad": 0.4, "remoto": 0.1, "movilidad": 0.5, "equilibrio": 0.55, "especializacion": 0.75, "variedad_v": 0.45, "demanda": 0.7 },
+    "study": ["Química general, inorgánica, orgánica y analítica", "Biología, fisiología y bioquímica", "Microbiología", "Análisis clínicos / Farmacología y tecnología farmacéutica", "Física y matemática"],
+    "tasks": ["Realizar análisis clínicos", "Controlar calidad en industria farmacéutica o alimentaria", "Dispensar y asesorar sobre medicamentos", "Investigar"],
+    "settings": ["Laboratorios clínicos", "Hospitales", "Industria farmacéutica y alimentaria", "Farmacias", "Investigación"],
+    "difficulties": ["Gran carga de química en los primeros años", "Muchas horas de laboratorio"],
+    "experiences": [
+      { "id": "bq-lab", "title": "Hacer un experimento con protocolo y registro", "hypothesis": "Disfrutás (o toleras bien) la precisión y repetición del trabajo de laboratorio.", "type": "ejercicio", "steps": ["Elegí un experimento casero con medición (por ejemplo, indicador de pH con repollo colorado).", "Escribí un protocolo y repetí la medición tres veces.", "Registrá resultados y errores."], "duration": "3 horas", "demands": ["laboratorio"] },
+      { "id": "bq-visita", "title": "Visitar un laboratorio de análisis clínicos", "hypothesis": "El trabajo cotidiano del laboratorio te resulta atractivo.", "type": "conversacion", "steps": ["Pedí a un bioquímico o farmacéutico conversar 30 minutos.", "Preguntá cómo es su rutina y qué le resulta más exigente."], "duration": "1 hora" }
+    ]
+  },
+  {
+    "id": "biotecnologia", "label": "Biotecnología y Biología Molecular",
+    "riasec": { "I": 0.7, "R": 0.15, "C": 0.1, "E": 0.05 },
+    "domains": { "quimica_bio": 1, "tecnologia": 0.4, "salud": 0.4, "matematica": 0.3 },
+    "aptitudes": { "logico": 0.7, "problemas": 0.7, "sistemas": 0.6, "interpretacion": 0.7, "aprendizaje": 0.7, "cuantitativo": 0.5, "manual": 0.3 },
+    "style": { "ejecucion": [0.3, 0.4], "paciencia": [0.85, 0.5], "ideas": [0.7, 0.3], "estructura": [0.65, 0.3] },
+    "demands": { "laboratorio": 1, "investigacion_lenta": 0.8, "calculo_intensivo": 0.5, "memoria_volumen": 0.6, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.5, "autonomia_v": 0.55, "emprender": 0.45, "creatividad_v": 0.5, "crecimiento": 0.6, "reconocimiento": 0.6, "impacto": 0.7, "desafio": 0.9, "flexibilidad": 0.45, "remoto": 0.15, "movilidad": 0.75, "equilibrio": 0.5, "especializacion": 0.85, "variedad_v": 0.5, "demanda": 0.55 },
+    "study": ["Química y bioquímica", "Biología celular y molecular", "Genética", "Microbiología", "Ingeniería genética y bioprocesos"],
+    "tasks": ["Investigar en biología molecular", "Desarrollar productos biotecnológicos", "Trabajar en diagnóstico molecular", "Controlar bioprocesos industriales"],
+    "settings": ["Institutos de investigación", "Empresas de biotecnología", "Laboratorios de diagnóstico"],
+    "difficulties": ["Fuerte base química", "Investigación de largo plazo"],
+    "experiences": [
+      { "id": "bt-paper", "title": "Leer y resumir un artículo de divulgación científica", "hypothesis": "Te atrae la lógica experimental de la biología molecular.", "type": "caso", "steps": ["Elegí una nota de divulgación sobre CRISPR o vacunas de ARN.", "Hacé un esquema del experimento clave.", "Pensá qué experimento harías después."], "duration": "2 a 3 horas", "demands": ["investigacion_lenta"] }
+    ]
+  },
+  {
+    "id": "alimentos", "label": "Ciencia y tecnología de los alimentos",
+    "riasec": { "I": 0.4, "R": 0.3, "C": 0.2, "E": 0.1 },
+    "domains": { "quimica_bio": 1, "ingenieria": 0.5, "salud": 0.3, "economia": 0.2 },
+    "aptitudes": { "planificacion": 0.6, "problemas": 0.6, "interpretacion": 0.6, "cuantitativo": 0.5, "logico": 0.5, "sistemas": 0.5 },
+    "style": { "practica": [0.7, 0.4], "estructura": [0.7, 0.4], "cosas": [0.6, 0.3] },
+    "demands": { "laboratorio": 0.9, "normas_detalle": 0.7, "obra": 0.5, "calculo_intensivo": 0.5, "memoria_volumen": 0.4 },
+    "future": { "ingresos": 0.6, "estabilidad": 0.7, "autonomia_v": 0.45, "emprender": 0.55, "creatividad_v": 0.45, "crecimiento": 0.6, "reconocimiento": 0.45, "impacto": 0.6, "desafio": 0.6, "flexibilidad": 0.4, "remoto": 0.1, "movilidad": 0.55, "equilibrio": 0.55, "especializacion": 0.6, "variedad_v": 0.5, "demanda": 0.7 },
+    "study": ["Química y microbiología de alimentos", "Procesos de elaboración y conservación", "Control de calidad y bromatología", "Legislación alimentaria", "Operaciones unitarias"],
+    "tasks": ["Controlar la calidad e inocuidad de alimentos", "Desarrollar nuevos productos", "Supervisar procesos en plantas", "Asesorar en normativa alimentaria"],
+    "settings": ["Industria alimentaria", "Organismos de control", "Laboratorios"],
+    "difficulties": ["Trabajo en planta con normas estrictas"],
+    "experiences": [
+      { "id": "alim-producto", "title": "Desarrollar y estandarizar una receta", "hypothesis": "Disfrutás optimizar un proceso con criterios medibles (calidad, conservación).", "type": "proyecto", "steps": ["Elegí un alimento casero (pan, conserva).", "Hacé tres versiones variando una sola condición.", "Registrá diferencias medibles y elegí la mejor."], "duration": "1 fin de semana", "demands": ["laboratorio", "normas_detalle"] }
+    ]
+  },
+  {
+    "id": "quimica", "label": "Química",
+    "riasec": { "I": 0.6, "R": 0.25, "C": 0.15 },
+    "domains": { "quimica_bio": 1, "matematica": 0.4, "fisica": 0.4, "tierra_ambiente": 0.2 },
+    "aptitudes": { "logico": 0.7, "cuantitativo": 0.7, "problemas": 0.6, "planificacion": 0.5, "interpretacion": 0.6, "espacial": 0.3, "manual": 0.3 },
+    "style": { "estructura": [0.7, 0.4], "paciencia": [0.8, 0.4], "cosas": [0.6, 0.3], "exterior": [0.15, 0.2] },
+    "demands": { "laboratorio": 1, "calculo_intensivo": 0.8, "investigacion_lenta": 0.6, "normas_detalle": 0.5, "memoria_volumen": 0.5 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.6, "autonomia_v": 0.5, "emprender": 0.35, "creatividad_v": 0.45, "crecimiento": 0.55, "reconocimiento": 0.5, "impacto": 0.6, "desafio": 0.8, "flexibilidad": 0.45, "remoto": 0.1, "movilidad": 0.65, "equilibrio": 0.55, "especializacion": 0.75, "variedad_v": 0.5, "demanda": 0.6 },
+    "study": ["Química general, inorgánica, orgánica, analítica y fisicoquímica", "Matemática y física", "Laboratorios", "Química ambiental (en la orientación ambiental)"],
+    "tasks": ["Analizar y sintetizar sustancias", "Controlar calidad en industrias", "Monitorear contaminantes ambientales", "Investigar"],
+    "settings": ["Industrias químicas, petroquímicas y farmacéuticas", "Laboratorios de control", "Organismos ambientales", "Investigación"],
+    "difficulties": ["Muchas horas de laboratorio", "Base matemática y física"],
+    "experiences": [
+      { "id": "qca-lab", "title": "Repetir un experimento y analizar errores", "hypothesis": "Disfrutás la precisión experimental y el análisis de por qué algo no salió.", "type": "ejercicio", "steps": ["Realizá una titulación casera simple (vinagre y bicarbonato con indicador).", "Repetila tres veces y compará.", "Explicá las diferencias."], "duration": "3 horas", "demands": ["laboratorio"] }
+    ]
+  },
+  {
+    "id": "optica", "label": "Óptica Ocular y Optometría",
+    "riasec": { "R": 0.3, "I": 0.3, "S": 0.3, "C": 0.1 },
+    "domains": { "salud": 0.9, "fisica": 0.6, "tecnologia": 0.3, "economia": 0.2 },
+    "aptitudes": { "manual": 0.7, "espacial": 0.6, "interpersonal": 0.6, "cuantitativo": 0.5, "planificacion": 0.4 },
+    "style": { "personas": [0.7, 0.4], "estructura": [0.7, 0.3], "cosas": [0.6, 0.3] },
+    "demands": { "atencion_publico": 0.9, "precision_manual": 0.8, "calculo_intensivo": 0.4, "memoria_volumen": 0.4 },
+    "future": { "ingresos": 0.55, "estabilidad": 0.7, "autonomia_v": 0.6, "emprender": 0.75, "creatividad_v": 0.25, "crecimiento": 0.45, "reconocimiento": 0.45, "impacto": 0.6, "desafio": 0.45, "flexibilidad": 0.5, "remoto": 0.05, "movilidad": 0.5, "equilibrio": 0.65, "especializacion": 0.5, "variedad_v": 0.4, "demanda": 0.65 },
+    "study": ["Óptica física y geométrica", "Anatomía y fisiología ocular", "Optometría", "Contactología", "Taller óptico"],
+    "tasks": ["Evaluar la visión y adaptar lentes", "Fabricar y montar anteojos", "Adaptar lentes de contacto", "Gestionar una óptica"],
+    "settings": ["Ópticas", "Consultorios oftalmológicos", "Emprendimiento propio"],
+    "difficulties": ["Combina física, salud y trabajo manual"],
+    "experiences": [
+      { "id": "opt-visita", "title": "Observar el trabajo en una óptica", "hypothesis": "Disfrutás la combinación de atención al público y trabajo técnico de precisión.", "type": "conversacion", "steps": ["Pedí a un óptico conversar y ver el taller.", "Preguntá cómo se distribuye su día."], "duration": "1 hora", "demands": ["atencion_publico", "precision_manual"] }
+    ]
+  },
+  {
+    "id": "derecho", "label": "Derecho",
+    "riasec": { "E": 0.4, "I": 0.2, "S": 0.2, "C": 0.2 },
+    "domains": { "derecho": 1, "sociedad": 0.6, "humanidades": 0.4, "lenguas": 0.4, "organizacion": 0.3 },
+    "aptitudes": { "verbal": 1, "critico": 0.9, "interpretacion": 0.8, "logico": 0.6, "interpersonal": 0.5, "planificacion": 0.4 },
+    "style": { "personas": [0.7, 0.3], "responsabilidad": [0.75, 0.4], "estructura": [0.65, 0.3], "ideas": [0.6, 0.3] },
+    "demands": { "memoria_volumen": 0.9, "escritura_argumentativa": 1, "normas_detalle": 0.8, "conflicto": 0.8, "lectura_teorica": 0.7, "exposicion_publica": 0.5, "atencion_publico": 0.5 },
+    "future": { "ingresos": 0.6, "estabilidad": 0.6, "autonomia_v": 0.7, "emprender": 0.7, "creatividad_v": 0.35, "crecimiento": 0.65, "reconocimiento": 0.7, "impacto": 0.7, "desafio": 0.7, "flexibilidad": 0.55, "remoto": 0.45, "movilidad": 0.3, "equilibrio": 0.45, "especializacion": 0.8, "variedad_v": 0.6, "demanda": 0.55 },
+    "futureNote": "Muchos graduados: alta competencia en el ejercicio liberal; mejores perspectivas con especialización o en el sector público y judicial.",
+    "study": ["Derecho civil, penal, constitucional, comercial, laboral, administrativo", "Derecho procesal", "Introducción al derecho y filosofía del derecho", "Práctica profesional"],
+    "tasks": ["Asesorar y representar a personas u organizaciones", "Redactar escritos, contratos y dictámenes", "Litigar en tribunales", "Trabajar en el Poder Judicial o en la administración pública"],
+    "settings": ["Estudios jurídicos", "Poder Judicial", "Administración pública", "Empresas"],
+    "specializations": ["Derecho de familia", "Penal", "Laboral", "Empresarial", "Ambiental", "Derechos humanos"],
+    "difficulties": ["Gran volumen de lectura y memoria normativa", "Exámenes orales y finales extensos"],
+    "experiences": [
+      { "id": "der-caso", "title": "Analizar un fallo judicial real", "hypothesis": "Disfrutás leer normas y argumentos y construir una posición propia por escrito.", "type": "caso", "steps": ["Buscá un fallo comentado de la Corte Suprema.", "Identificá los hechos, el problema jurídico y la decisión.", "Escribí una página defendiendo la postura contraria."], "duration": "4 horas", "demands": ["escritura_argumentativa", "lectura_teorica"] },
+      { "id": "der-audiencia", "title": "Presenciar una audiencia o hablar con abogados", "hypothesis": "El trabajo cotidiano del derecho (trámites, conflicto, plazos) te resulta llevadero.", "type": "conversacion", "steps": ["Consultá si podés presenciar una audiencia pública oral.", "Hablá con un abogado sobre lo más tedioso de su trabajo."], "duration": "Una mañana", "demands": ["conflicto", "normas_detalle"] }
+    ]
+  },
+  {
+    "id": "medicina", "label": "Medicina",
+    "riasec": { "I": 0.45, "S": 0.35, "R": 0.15, "E": 0.05 },
+    "domains": { "salud": 1, "quimica_bio": 0.8, "sociedad": 0.3 },
+    "aptitudes": { "aprendizaje": 0.8, "interpretacion": 0.7, "problemas": 0.7, "interpersonal": 0.7, "logico": 0.5, "manual": 0.4, "planificacion": 0.5 },
+    "style": { "personas": [0.85, 0.5], "responsabilidad": [0.95, 0.6], "estructura": [0.65, 0.3], "incertidumbre": [0.6, 0.3], "practica": [0.75, 0.3] },
+    "demands": { "memoria_volumen": 1, "contacto_clinico": 1, "guardias": 0.9, "carrera_larga": 1, "atencion_publico": 0.7, "laboratorio": 0.3 },
+    "future": { "ingresos": 0.65, "estabilidad": 0.85, "autonomia_v": 0.55, "emprender": 0.45, "creatividad_v": 0.25, "crecimiento": 0.7, "reconocimiento": 0.8, "impacto": 0.95, "desafio": 0.85, "flexibilidad": 0.3, "remoto": 0.1, "movilidad": 0.6, "equilibrio": 0.25, "especializacion": 0.95, "variedad_v": 0.6, "demanda": 0.85 },
+    "futureNote": "Alta demanda, pero ingresos y condiciones dependen mucho de la especialidad; residencias exigentes.",
+    "study": ["Anatomía, histología, fisiología, bioquímica", "Patología y farmacología", "Semiología y clínica", "Cirugía, pediatría, tocoginecología", "Práctica final obligatoria"],
+    "tasks": ["Diagnosticar y tratar pacientes", "Hacer guardias", "Indicar estudios e interpretar resultados", "Comunicar diagnósticos difíciles", "Investigar o gestionar servicios de salud"],
+    "settings": ["Hospitales", "Centros de atención primaria", "Consultorios", "Investigación clínica"],
+    "difficulties": ["Formación muy extensa con residencia posterior", "Gran volumen de memoria", "Carga emocional"],
+    "experiences": [
+      { "id": "med-hospital", "title": "Acompañar a un profesional de la salud una jornada", "hypothesis": "La realidad del trabajo clínico (pacientes, ritmo, sufrimiento) te resulta sostenible y motivadora.", "type": "conversacion", "steps": ["Contactá a un médico o residente.", "Preguntá cómo fue la residencia y qué es lo más difícil.", "Si es posible, observá una jornada en un centro de salud."], "duration": "1 día", "demands": ["contacto_clinico", "guardias"] },
+      { "id": "med-anatomia", "title": "Estudiar un tema de anatomía como en la carrera", "hypothesis": "Podés sostener el estudio de gran volumen de memoria con precisión.", "type": "ejercicio", "steps": ["Elegí un sistema (por ejemplo, huesos del miembro superior).", "Estudialo en detalle durante una semana con un atlas.", "Autoevaluate con preguntas de práctica."], "duration": "1 semana", "demands": ["memoria_volumen"] }
+    ]
+  },
+  {
+    "id": "salud_asistencial", "label": "Salud asistencial",
+    "riasec": { "S": 0.5, "I": 0.2, "R": 0.2, "C": 0.1 },
+    "domains": { "salud": 1, "quimica_bio": 0.4, "sociedad": 0.4, "educacion": 0.2 },
+    "aptitudes": { "interpersonal": 0.9, "planificacion": 0.6, "aprendizaje": 0.6, "manual": 0.5, "interpretacion": 0.5 },
+    "style": { "personas": [0.9, 0.6], "responsabilidad": [0.85, 0.5], "estructura": [0.7, 0.3], "practica": [0.85, 0.4] },
+    "demands": { "contacto_clinico": 1, "guardias": 0.8, "atencion_publico": 0.8, "memoria_volumen": 0.6, "vulnerabilidad": 0.5 },
+    "future": { "ingresos": 0.45, "estabilidad": 0.85, "autonomia_v": 0.4, "emprender": 0.3, "creatividad_v": 0.2, "crecimiento": 0.5, "reconocimiento": 0.55, "impacto": 0.9, "desafio": 0.55, "flexibilidad": 0.35, "remoto": 0.05, "movilidad": 0.75, "equilibrio": 0.35, "especializacion": 0.6, "variedad_v": 0.5, "demanda": 0.9 },
+    "futureNote": "Muy alta demanda (especialmente enfermería); trabajo por turnos.",
+    "study": ["Anatomía y fisiología", "Prácticas asistenciales", "Farmacología", "Salud pública", "Prácticas hospitalarias"],
+    "tasks": ["Cuidar y acompañar pacientes", "Administrar tratamientos", "Asistir procedimientos", "Educar en salud"],
+    "settings": ["Hospitales", "Clínicas", "Centros de salud", "Atención domiciliaria"],
+    "difficulties": ["Turnos rotativos y carga emocional"],
+    "experiences": [
+      { "id": "sa-voluntariado", "title": "Voluntariado en un centro de salud o de cuidado", "hypothesis": "El cuidado directo de personas te resulta motivador y no te agota rápidamente.", "type": "conversacion", "steps": ["Buscá un voluntariado en hospital, hogar de ancianos o Cruz Roja.", "Participá al menos tres veces.", "Registrá cómo te sentiste después de cada jornada."], "duration": "3 semanas", "demands": ["contacto_clinico", "atencion_publico"] }
+    ]
+  },
+  {
+    "id": "nutricion", "label": "Nutrición",
+    "riasec": { "S": 0.4, "I": 0.35, "E": 0.1, "C": 0.15 },
+    "domains": { "salud": 1, "quimica_bio": 0.6, "educacion": 0.4, "deporte": 0.3 },
+    "aptitudes": { "interpersonal": 0.8, "interpretacion": 0.6, "planificacion": 0.6, "cuantitativo": 0.4, "aprendizaje": 0.5 },
+    "style": { "personas": [0.8, 0.5], "estructura": [0.6, 0.3], "practica": [0.75, 0.3] },
+    "demands": { "atencion_publico": 0.9, "memoria_volumen": 0.6, "laboratorio": 0.3, "autogestion_clientes": 0.6 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.55, "autonomia_v": 0.7, "emprender": 0.75, "creatividad_v": 0.35, "crecimiento": 0.5, "reconocimiento": 0.5, "impacto": 0.75, "desafio": 0.5, "flexibilidad": 0.65, "remoto": 0.45, "movilidad": 0.5, "equilibrio": 0.65, "especializacion": 0.65, "variedad_v": 0.5, "demanda": 0.6 },
+    "study": ["Química y bioquímica de los alimentos", "Fisiología", "Nutrición normal y clínica", "Técnica dietética", "Salud pública"],
+    "tasks": ["Atender consultas nutricionales", "Planificar alimentación en instituciones", "Trabajar en salud pública", "Asesorar deportistas o industrias"],
+    "settings": ["Consultorio propio", "Hospitales", "Comedores e instituciones", "Industria alimentaria"],
+    "difficulties": ["Base de química y biología"],
+    "experiences": [
+      { "id": "nut-registro", "title": "Analizar un registro alimentario", "hypothesis": "Disfrutás aplicar conocimiento biológico para orientar hábitos de otras personas.", "type": "caso", "steps": ["Registrá tu alimentación de tres días.", "Comparala con guías alimentarias oficiales.", "Pensá cómo explicárselo a otra persona sin juzgarla."], "duration": "2 horas" }
+    ]
+  },
+  {
+    "id": "fonoaudiologia", "label": "Fonoaudiología",
+    "riasec": { "S": 0.5, "I": 0.3, "R": 0.1, "C": 0.1 },
+    "domains": { "salud": 1, "lenguas": 0.5, "educacion": 0.5, "sociedad": 0.4, "musica": 0.2 },
+    "aptitudes": { "interpersonal": 0.9, "auditivo": 0.6, "verbal": 0.6, "interpretacion": 0.5, "planificacion": 0.5 },
+    "style": { "personas": [0.9, 0.6], "paciencia": [0.85, 0.5], "estructura": [0.6, 0.3] },
+    "demands": { "atencion_publico": 0.9, "escucha_prolongada": 0.6, "memoria_volumen": 0.5, "contacto_clinico": 0.4, "vulnerabilidad": 0.4 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.65, "autonomia_v": 0.65, "emprender": 0.6, "creatividad_v": 0.4, "crecimiento": 0.5, "reconocimiento": 0.5, "impacto": 0.85, "desafio": 0.55, "flexibilidad": 0.6, "remoto": 0.25, "movilidad": 0.4, "equilibrio": 0.65, "especializacion": 0.7, "variedad_v": 0.5, "demanda": 0.7 },
+    "study": ["Anatomía y fisiología de la voz, la audición y el lenguaje", "Lingüística", "Audiología", "Clínica fonoaudiológica", "Psicología del desarrollo"],
+    "tasks": ["Evaluar y tratar trastornos del lenguaje, la voz y la audición", "Trabajar con niños y adultos", "Rehabilitar la deglución", "Asesorar instituciones educativas"],
+    "settings": ["Consultorios", "Hospitales", "Escuelas e instituciones de rehabilitación"],
+    "difficulties": ["Tratamientos largos con avances graduales"],
+    "experiences": [
+      { "id": "fono-charla", "title": "Conversar con un/a fonoaudiólogo/a", "hypothesis": "El trabajo terapéutico de largo plazo y uno a uno te resulta motivador.", "type": "conversacion", "steps": ["Contactá a un profesional.", "Preguntá por un caso típico y cuánto tarda en verse un progreso."], "duration": "1 hora", "demands": ["atencion_publico"] }
+    ]
+  },
+  {
+    "id": "odontologia", "label": "Odontología",
+    "riasec": { "I": 0.3, "R": 0.3, "S": 0.3, "E": 0.1 },
+    "domains": { "salud": 1, "quimica_bio": 0.6, "economia": 0.2 },
+    "aptitudes": { "manual": 1, "espacial": 0.7, "interpersonal": 0.6, "aprendizaje": 0.5, "planificacion": 0.5 },
+    "style": { "personas": [0.8, 0.4], "cosas": [0.75, 0.4], "autonomia": [0.7, 0.3], "practica": [0.85, 0.4] },
+    "demands": { "precision_manual": 1, "contacto_clinico": 0.9, "atencion_publico": 0.8, "memoria_volumen": 0.7, "autogestion_clientes": 0.5 },
+    "future": { "ingresos": 0.65, "estabilidad": 0.65, "autonomia_v": 0.8, "emprender": 0.8, "creatividad_v": 0.3, "crecimiento": 0.55, "reconocimiento": 0.65, "impacto": 0.7, "desafio": 0.55, "flexibilidad": 0.65, "remoto": 0.0, "movilidad": 0.5, "equilibrio": 0.65, "especializacion": 0.75, "variedad_v": 0.45, "demanda": 0.6 },
+    "futureNote": "Ejercicio mayormente independiente; instalar un consultorio requiere inversión.",
+    "study": ["Anatomía y fisiología", "Materiales dentales", "Operatoria y prótesis", "Cirugía", "Clínicas con pacientes"],
+    "tasks": ["Diagnosticar y tratar problemas bucales", "Realizar intervenciones de precisión", "Gestionar un consultorio"],
+    "settings": ["Consultorio propio", "Clínicas", "Hospitales"],
+    "difficulties": ["Instrumental y materiales costosos durante la carrera", "Requiere conseguir pacientes para las clínicas"],
+    "experiences": [
+      { "id": "odo-precision", "title": "Ejercicio de motricidad fina", "hypothesis": "Disfrutás (o toleras bien) el trabajo manual de alta precisión sostenido.", "type": "ejercicio", "steps": ["Tallá formas pequeñas en jabón o cera con un instrumento fino durante una hora.", "Repetilo en tres días distintos.", "Registrá tu concentración y tu satisfacción."], "duration": "3 horas", "demands": ["precision_manual"] }
+    ]
+  },
+  {
+    "id": "odontologia_tecnica", "label": "Técnicas odontológicas",
+    "riasec": { "R": 0.45, "C": 0.25, "S": 0.2, "I": 0.1 },
+    "domains": { "salud": 0.9, "ingenieria": 0.3 },
+    "aptitudes": { "manual": 1, "espacial": 0.6, "planificacion": 0.5, "interpersonal": 0.4 },
+    "style": { "cosas": [0.85, 0.5], "estructura": [0.75, 0.4], "practica": [0.9, 0.5] },
+    "demands": { "precision_manual": 1, "contacto_clinico": 0.5, "atencion_publico": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.6, "autonomia_v": 0.5, "emprender": 0.55, "creatividad_v": 0.3, "crecimiento": 0.35, "reconocimiento": 0.35, "impacto": 0.55, "desafio": 0.4, "flexibilidad": 0.55, "remoto": 0.0, "movilidad": 0.45, "equilibrio": 0.7, "especializacion": 0.45, "variedad_v": 0.35, "demanda": 0.6 },
+    "study": ["Anatomía dental", "Materiales dentales", "Técnicas de laboratorio protésico / asistencia clínica", "Bioseguridad"],
+    "tasks": ["Confeccionar prótesis dentales", "Asistir al odontólogo en la clínica", "Esterilizar instrumental y organizar el consultorio"],
+    "settings": ["Laboratorios dentales", "Consultorios"],
+    "difficulties": ["Tareas repetitivas de alta precisión"],
+    "experiences": [
+      { "id": "odt-modelado", "title": "Modelado de precisión", "hypothesis": "Disfrutás trabajo manual minucioso y repetitivo.", "type": "ejercicio", "steps": ["Modelá en plastilina o cera réplicas de piezas pequeñas siguiendo una imagen.", "Repetí hasta lograr detalle fino."], "duration": "2 horas", "demands": ["precision_manual"] }
+    ]
+  },
+  {
+    "id": "antropologia", "label": "Antropología",
+    "riasec": { "I": 0.5, "S": 0.25, "A": 0.15, "R": 0.1 },
+    "domains": { "sociedad": 1, "humanidades": 0.8, "tierra_ambiente": 0.3, "quimica_bio": 0.2 },
+    "aptitudes": { "critico": 0.8, "verbal": 0.8, "interpretacion": 0.7, "interpersonal": 0.6, "aprendizaje": 0.4 },
+    "style": { "ejecucion": [0.25, 0.4], "exterior": [0.6, 0.3], "ideas": [0.8, 0.4], "incertidumbre": [0.7, 0.3] },
+    "demands": { "lectura_teorica": 1, "campo": 0.7, "escritura_argumentativa": 0.8, "investigacion_lenta": 0.8 },
+    "future": { "ingresos": 0.35, "estabilidad": 0.4, "autonomia_v": 0.6, "emprender": 0.25, "creatividad_v": 0.55, "crecimiento": 0.4, "reconocimiento": 0.45, "impacto": 0.7, "desafio": 0.8, "flexibilidad": 0.55, "remoto": 0.35, "movilidad": 0.6, "equilibrio": 0.55, "especializacion": 0.75, "variedad_v": 0.65, "demanda": 0.35 },
+    "study": ["Antropología sociocultural", "Arqueología", "Antropología biológica", "Lingüística", "Metodología de campo"],
+    "tasks": ["Investigar comunidades y culturas mediante trabajo de campo", "Excavar y analizar restos arqueológicos", "Asesorar políticas públicas y evaluaciones de impacto", "Trabajar en museos"],
+    "settings": ["Universidades y CONICET", "Museos", "Organismos públicos", "Consultoras de impacto ambiental"],
+    "difficulties": ["Mercado reducido, fuerte orientación a investigación"],
+    "experiences": [
+      { "id": "ant-observacion", "title": "Hacer una observación etnográfica", "hypothesis": "Disfrutás observar y comprender prácticas sociales con método.", "type": "caso", "steps": ["Elegí un espacio (una feria, una plaza, un club).", "Observá 2 horas y tomá notas detalladas.", "Escribí qué reglas implícitas descubriste."], "duration": "4 horas", "demands": ["campo", "escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "biologia", "label": "Biología",
+    "riasec": { "I": 0.6, "R": 0.3, "C": 0.1 },
+    "domains": { "quimica_bio": 1, "tierra_ambiente": 0.8, "animales": 0.5, "matematica": 0.2 },
+    "aptitudes": { "interpretacion": 0.7, "sistemas": 0.7, "aprendizaje": 0.6, "logico": 0.5, "cuantitativo": 0.4, "patrones": 0.5 },
+    "style": { "exterior": [0.6, 0.4], "ejecucion": [0.3, 0.4], "paciencia": [0.8, 0.4], "ideas": [0.6, 0.3] },
+    "demands": { "campo": 0.8, "laboratorio": 0.7, "investigacion_lenta": 0.9, "memoria_volumen": 0.6, "calculo_intensivo": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.45, "autonomia_v": 0.6, "emprender": 0.25, "creatividad_v": 0.45, "crecimiento": 0.45, "reconocimiento": 0.5, "impacto": 0.7, "desafio": 0.8, "flexibilidad": 0.5, "remoto": 0.15, "movilidad": 0.65, "equilibrio": 0.55, "especializacion": 0.85, "variedad_v": 0.6, "demanda": 0.4 },
+    "futureNote": "Fuerte dependencia del sistema científico (becas); también consultoría ambiental y gestión de áreas protegidas.",
+    "study": ["Química y física", "Biología general, celular y genética", "Botánica y zoología", "Ecología y evolución", "Estadística", "Materias de la orientación"],
+    "tasks": ["Investigar organismos y ecosistemas", "Realizar campañas de muestreo", "Evaluar impacto ambiental", "Trabajar en museos y colecciones"],
+    "settings": ["Universidades y CONICET", "Museos", "Áreas protegidas", "Consultoras ambientales"],
+    "difficulties": ["Investigación de largo plazo y mercado acotado"],
+    "experiences": [
+      { "id": "bio-relevamiento", "title": "Relevar biodiversidad en un área cercana", "hypothesis": "Disfrutás observar, identificar y registrar seres vivos con método.", "type": "proyecto", "steps": ["Elegí un parque o reserva.", "Registrá especies durante 2 horas (iNaturalist puede ayudarte).", "Organizá los datos y sacá alguna conclusión."], "duration": "1 día", "demands": ["campo"] },
+      { "id": "bio-museo", "title": "Visitar el Museo de La Plata y hablar con investigadores", "hypothesis": "La vida de investigación en ciencias naturales te atrae.", "type": "conversacion", "steps": ["Visitá el museo y una charla abierta.", "Preguntá a un becario cómo es su trabajo."], "duration": "Una tarde", "demands": ["investigacion_lenta"] }
+    ]
+  },
+  {
+    "id": "geologia", "label": "Geología y geoquímica",
+    "riasec": { "I": 0.55, "R": 0.35, "C": 0.1 },
+    "domains": { "tierra_ambiente": 1, "quimica_bio": 0.5, "fisica": 0.5, "matematica": 0.3 },
+    "aptitudes": { "espacial": 0.8, "sistemas": 0.7, "interpretacion": 0.7, "logico": 0.5, "cuantitativo": 0.5 },
+    "style": { "exterior": [0.8, 0.6], "ejecucion": [0.4, 0.3], "variedad": [0.65, 0.3], "cosas": [0.6, 0.3] },
+    "demands": { "campo": 1, "laboratorio": 0.6, "calculo_intensivo": 0.6, "trabajo_rural": 0.5, "investigacion_lenta": 0.5 },
+    "future": { "ingresos": 0.7, "estabilidad": 0.55, "autonomia_v": 0.55, "emprender": 0.4, "creatividad_v": 0.4, "crecimiento": 0.6, "reconocimiento": 0.5, "impacto": 0.6, "desafio": 0.75, "flexibilidad": 0.4, "remoto": 0.1, "movilidad": 0.8, "equilibrio": 0.35, "especializacion": 0.75, "variedad_v": 0.65, "demanda": 0.65 },
+    "futureNote": "Demanda ligada a minería, energía, hidrogeología y ambiente; frecuente trabajo lejos de las ciudades.",
+    "study": ["Química, física y matemática", "Mineralogía y petrología", "Geología estructural", "Geomorfología y sedimentología", "Campañas de campo", "Geoquímica"],
+    "tasks": ["Mapear y estudiar rocas y suelos en campañas", "Buscar recursos minerales, hídricos o energéticos", "Evaluar riesgos geológicos y ambientales"],
+    "settings": ["Empresas mineras y petroleras", "Organismos públicos", "Consultoras ambientales", "Investigación"],
+    "difficulties": ["Campañas largas en lugares remotos"],
+    "experiences": [
+      { "id": "geo-salida", "title": "Participar en una salida geológica o de campo", "hypothesis": "El trabajo de campo en condiciones exigentes te resulta estimulante.", "type": "proyecto", "steps": ["Sumate a una excursión de geología o trekking interpretativo.", "Tomá notas y fotos de las formaciones.", "Investigá luego su origen."], "duration": "1 a 2 días", "demands": ["campo"] }
+    ]
+  },
+  {
+    "id": "veterinaria", "label": "Ciencias veterinarias",
+    "riasec": { "I": 0.4, "R": 0.35, "S": 0.15, "E": 0.1 },
+    "domains": { "animales": 1, "salud": 0.7, "quimica_bio": 0.7, "tierra_ambiente": 0.4 },
+    "aptitudes": { "aprendizaje": 0.7, "interpretacion": 0.6, "manual": 0.6, "problemas": 0.6, "interpersonal": 0.4 },
+    "style": { "cosas": [0.6, 0.3], "exterior": [0.55, 0.3], "practica": [0.8, 0.4], "responsabilidad": [0.8, 0.3] },
+    "demands": { "animales_manejo": 1, "memoria_volumen": 0.8, "contacto_clinico": 0.7, "trabajo_rural": 0.6, "laboratorio": 0.5, "guardias": 0.4 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.55, "autonomia_v": 0.7, "emprender": 0.75, "creatividad_v": 0.3, "crecimiento": 0.5, "reconocimiento": 0.55, "impacto": 0.7, "desafio": 0.65, "flexibilidad": 0.4, "remoto": 0.05, "movilidad": 0.6, "equilibrio": 0.4, "especializacion": 0.75, "variedad_v": 0.65, "demanda": 0.6 },
+    "futureNote": "Salidas en clínica de pequeños animales, producción animal, salud pública e industria.",
+    "study": ["Anatomía y fisiología animal", "Microbiología y patología", "Clínica médica y quirúrgica", "Producción animal", "Salud pública y bromatología"],
+    "tasks": ["Atender clínicamente animales", "Asesorar producción ganadera", "Controlar alimentos de origen animal", "Investigar enfermedades zoonóticas"],
+    "settings": ["Veterinarias", "Establecimientos ganaderos", "Organismos de control sanitario", "Laboratorios"],
+    "difficulties": ["Situaciones de sufrimiento y eutanasia", "Gran volumen de contenidos biológicos"],
+    "experiences": [
+      { "id": "vet-clinica", "title": "Acompañar un día en una veterinaria", "hypothesis": "El trabajo clínico real con animales (incluido lo desagradable) te resulta sostenible.", "type": "conversacion", "steps": ["Pedí a una veterinaria observar consultas.", "Preguntá por las situaciones más difíciles del trabajo."], "duration": "1 día", "demands": ["animales_manejo", "contacto_clinico"] }
+    ]
+  },
+  {
+    "id": "bibliotecologia", "label": "Bibliotecología y Ciencias de la Información",
+    "riasec": { "C": 0.45, "S": 0.25, "I": 0.2, "A": 0.1 },
+    "domains": { "tecnologia": 0.5, "lenguas": 0.5, "humanidades": 0.5, "organizacion": 0.6, "educacion": 0.4 },
+    "aptitudes": { "planificacion": 0.9, "interpretacion": 0.8, "sistemas": 0.6, "verbal": 0.5 },
+    "style": { "estructura": [0.85, 0.5], "datos": [0.8, 0.4], "variedad": [0.4, 0.3], "personas": [0.55, 0.2] },
+    "demands": { "normas_detalle": 0.9, "atencion_publico": 0.5, "programacion_larga": 0.3, "lectura_teorica": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.75, "autonomia_v": 0.4, "emprender": 0.25, "creatividad_v": 0.3, "crecimiento": 0.4, "reconocimiento": 0.35, "impacto": 0.6, "desafio": 0.45, "flexibilidad": 0.5, "remoto": 0.4, "movilidad": 0.4, "equilibrio": 0.75, "especializacion": 0.5, "variedad_v": 0.4, "demanda": 0.6 },
+    "study": ["Organización y representación de la información", "Catalogación y clasificación", "Gestión de unidades de información", "Tecnologías de la información", "Servicios de referencia"],
+    "tasks": ["Organizar colecciones y bases de datos", "Gestionar bibliotecas y archivos", "Orientar usuarios en la búsqueda de información", "Digitalizar y preservar documentos"],
+    "settings": ["Bibliotecas", "Archivos", "Centros de documentación", "Escuelas (profesorado)"],
+    "difficulties": ["Trabajo minucioso y normalizado"],
+    "experiences": [
+      { "id": "bib-catalogo", "title": "Catalogar una colección pequeña", "hypothesis": "Disfrutás ordenar información con criterios sistemáticos.", "type": "ejercicio", "steps": ["Elegí 30 libros o archivos.", "Diseñá un sistema de clasificación y una planilla de catálogo.", "Probá si otra persona encuentra algo con tu sistema."], "duration": "3 horas", "demands": ["normas_detalle"] }
+    ]
+  },
+  {
+    "id": "ciencias_educacion", "label": "Ciencias de la Educación",
+    "riasec": { "S": 0.5, "I": 0.25, "E": 0.15, "A": 0.1 },
+    "domains": { "educacion": 1, "sociedad": 0.8, "humanidades": 0.5 },
+    "aptitudes": { "verbal": 0.8, "critico": 0.7, "interpersonal": 0.7, "planificacion": 0.6, "interpretacion": 0.5 },
+    "style": { "personas": [0.75, 0.4], "ideas": [0.75, 0.3], "colaboracion": [0.7, 0.3] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 0.8, "frente_aula": 0.6, "vulnerabilidad": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.7, "autonomia_v": 0.45, "emprender": 0.3, "creatividad_v": 0.45, "crecimiento": 0.5, "reconocimiento": 0.45, "impacto": 0.85, "desafio": 0.6, "flexibilidad": 0.5, "remoto": 0.35, "movilidad": 0.35, "equilibrio": 0.6, "especializacion": 0.6, "variedad_v": 0.6, "demanda": 0.6 },
+    "study": ["Pedagogía y didáctica", "Psicología educacional", "Sociología e historia de la educación", "Política educativa", "Investigación educativa"],
+    "tasks": ["Asesorar instituciones educativas", "Diseñar planes y proyectos de enseñanza", "Investigar problemas educativos", "Dar clases", "Trabajar en equipos de orientación escolar"],
+    "settings": ["Escuelas e institutos", "Ministerios", "Universidades"],
+    "difficulties": ["Mucha lectura teórica"],
+    "experiences": [
+      { "id": "ce-analisis", "title": "Analizar un problema educativo real", "hypothesis": "Te interesa pensar cómo se aprende y cómo mejorar la enseñanza.", "type": "caso", "steps": ["Elegí una experiencia escolar que recuerdes como problemática.", "Leé un artículo breve sobre ese tema.", "Escribí una propuesta de mejora."], "duration": "3 horas", "demands": ["lectura_teorica"] }
+    ]
+  },
+  {
+    "id": "educacion_fisica", "label": "Educación Física",
+    "riasec": { "S": 0.45, "R": 0.35, "E": 0.15, "I": 0.05 },
+    "domains": { "deporte": 1, "educacion": 0.8, "salud": 0.4, "sociedad": 0.3 },
+    "aptitudes": { "fisico": 1, "interpersonal": 0.8, "planificacion": 0.6, "verbal": 0.3 },
+    "style": { "personas": [0.9, 0.5], "exterior": [0.8, 0.5], "practica": [0.85, 0.4], "colaboracion": [0.75, 0.3] },
+    "demands": { "actividad_fisica": 1, "frente_aula": 0.9, "lectura_teorica": 0.4, "atencion_publico": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.7, "autonomia_v": 0.5, "emprender": 0.55, "creatividad_v": 0.4, "crecimiento": 0.45, "reconocimiento": 0.45, "impacto": 0.75, "desafio": 0.4, "flexibilidad": 0.5, "remoto": 0.05, "movilidad": 0.5, "equilibrio": 0.6, "especializacion": 0.55, "variedad_v": 0.6, "demanda": 0.75 },
+    "study": ["Prácticas deportivas y gimnásticas", "Anatomía y fisiología del ejercicio", "Didáctica de la educación física", "Psicología y pedagogía", "Prácticas docentes"],
+    "tasks": ["Enseñar educación física en escuelas", "Entrenar equipos o personas", "Diseñar programas de actividad física y salud", "Gestionar actividades recreativas"],
+    "settings": ["Escuelas", "Clubes", "Gimnasios", "Programas de salud y recreación"],
+    "difficulties": ["Exigencia física en la formación"],
+    "experiences": [
+      { "id": "ef-clase", "title": "Coordinar una clase de actividad física", "hypothesis": "Disfrutás enseñar y motivar a otros a través del movimiento, no solo practicar deporte.", "type": "clase", "steps": ["Planificá una clase de 40 minutos para niños o adultos.", "Dictala a un grupo pequeño.", "Registrá qué disfrutaste y qué te costó."], "duration": "2 horas", "demands": ["frente_aula", "actividad_fisica"] }
+    ]
+  },
+  {
+    "id": "filosofia", "label": "Filosofía",
+    "riasec": { "I": 0.55, "A": 0.25, "S": 0.2 },
+    "domains": { "humanidades": 1, "lenguas": 0.5, "sociedad": 0.4, "matematica": 0.2 },
+    "aptitudes": { "critico": 1, "verbal": 1, "logico": 0.8, "aprendizaje": 0.4 },
+    "style": { "practica": [0.1, 0.6], "ejecucion": [0.15, 0.5], "ideas": [1, 0.6], "colaboracion": [0.3, 0.2] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 1, "investigacion_lenta": 0.7, "frente_aula": 0.4 },
+    "future": { "ingresos": 0.3, "estabilidad": 0.5, "autonomia_v": 0.6, "emprender": 0.2, "creatividad_v": 0.6, "crecimiento": 0.4, "reconocimiento": 0.45, "impacto": 0.5, "desafio": 1, "flexibilidad": 0.6, "remoto": 0.45, "movilidad": 0.45, "equilibrio": 0.6, "especializacion": 0.7, "variedad_v": 0.45, "demanda": 0.35 },
+    "study": ["Historia de la filosofía", "Lógica", "Ética y filosofía política", "Metafísica y teoría del conocimiento", "Estética", "Idiomas clásicos o modernos"],
+    "tasks": ["Investigar y escribir sobre problemas filosóficos", "Enseñar en escuelas y universidades", "Participar en comités de ética", "Asesorar en pensamiento crítico"],
+    "settings": ["Universidades y CONICET", "Escuelas", "Editoriales"],
+    "difficulties": ["Textos muy densos", "Mercado laboral acotado fuera de la docencia"],
+    "experiences": [
+      { "id": "fil-ensayo", "title": "Escribir un ensayo argumentativo", "hypothesis": "Disfrutás el trabajo lento de leer, discutir y argumentar ideas abstractas.", "type": "caso", "steps": ["Leé un diálogo platónico breve (por ejemplo, el Critón).", "Escribí 2 páginas evaluando el argumento principal.", "Discutilo con alguien que piense distinto."], "duration": "5 horas", "demands": ["lectura_teorica", "escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "lenguas_extranjeras", "label": "Lenguas extranjeras (licenciatura)",
+    "riasec": { "I": 0.4, "A": 0.3, "S": 0.2, "C": 0.1 },
+    "domains": { "lenguas": 1, "humanidades": 0.6, "educacion": 0.4, "comunicacion": 0.3 },
+    "aptitudes": { "idiomas": 1, "verbal": 0.9, "critico": 0.6, "patrones": 0.4, "aprendizaje": 0.5 },
+    "style": { "ideas": [0.75, 0.4], "practica": [0.3, 0.3], "colaboracion": [0.35, 0.2] },
+    "demands": { "idioma_inmersion": 1, "lectura_teorica": 0.9, "escritura_argumentativa": 0.7, "investigacion_lenta": 0.5 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.55, "autonomia_v": 0.55, "emprender": 0.35, "creatividad_v": 0.5, "crecimiento": 0.45, "reconocimiento": 0.45, "impacto": 0.45, "desafio": 0.75, "flexibilidad": 0.6, "remoto": 0.6, "movilidad": 0.8, "equilibrio": 0.6, "especializacion": 0.65, "variedad_v": 0.5, "demanda": 0.45 },
+    "study": ["Lengua extranjera (niveles avanzados)", "Fonética y gramática", "Literaturas en lengua extranjera", "Lingüística", "Cultura e historia"],
+    "tasks": ["Investigar en lingüística o literatura", "Enseñar en educación superior", "Trabajar en edición y cultura", "Asesorar en comunicación internacional"],
+    "settings": ["Universidades", "Institutos de idiomas", "Editoriales"],
+    "difficulties": ["Requiere buen nivel de idioma de entrada"],
+    "experiences": [
+      { "id": "le-texto", "title": "Leer y analizar un texto literario en el idioma", "hypothesis": "Disfrutás el estudio profundo de la lengua y su literatura, no solo hablarla.", "type": "caso", "steps": ["Elegí un cuento breve en el idioma.", "Analizá vocabulario, estructuras y estilo.", "Escribí un comentario de una página."], "duration": "3 horas", "demands": ["idioma_inmersion", "lectura_teorica"] }
+    ]
+  },
+  {
+    "id": "traductorado", "label": "Traductorado Público",
+    "riasec": { "C": 0.35, "I": 0.3, "A": 0.15, "E": 0.2 },
+    "domains": { "lenguas": 1, "derecho": 0.6, "economia": 0.2 },
+    "aptitudes": { "idiomas": 1, "verbal": 0.9, "planificacion": 0.5, "critico": 0.4, "interpretacion": 0.6 },
+    "style": { "estructura": [0.75, 0.4], "colaboracion": [0.2, 0.3], "autonomia": [0.75, 0.3], "datos": [0.6, 0.3] },
+    "demands": { "idioma_inmersion": 1, "normas_detalle": 0.8, "autogestion_clientes": 0.8, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.5, "estabilidad": 0.45, "autonomia_v": 0.8, "emprender": 0.65, "creatividad_v": 0.4, "crecimiento": 0.45, "reconocimiento": 0.45, "impacto": 0.35, "desafio": 0.6, "flexibilidad": 0.8, "remoto": 0.95, "movilidad": 0.8, "equilibrio": 0.65, "especializacion": 0.7, "variedad_v": 0.55, "demanda": 0.5 },
+    "futureNote": "Trabajo freelance y remoto frecuente; la traducción automática está transformando la profesión (más revisión y especialización).",
+    "study": ["Lengua extranjera avanzada", "Traducción general, jurídica, técnica y literaria", "Derecho aplicado a la traducción pública", "Gramática y redacción en español"],
+    "tasks": ["Traducir documentos legales y técnicos con firma pública", "Revisar traducciones automáticas", "Interpretar", "Gestionar clientes"],
+    "settings": ["Ejercicio independiente", "Agencias de traducción", "Organismos y empresas internacionales"],
+    "difficulties": ["Precisión terminológica extrema", "Competencia con herramientas automáticas"],
+    "experiences": [
+      { "id": "trad-legal", "title": "Traducir un documento formal", "hypothesis": "Disfrutás la precisión de traducir textos técnicos o legales, no solo leer en otro idioma.", "type": "ejercicio", "steps": ["Elegí un contrato o certificado modelo en el idioma.", "Traducí una página con atención a cada término.", "Comparalo con una traducción profesional o automática y analizá diferencias."], "duration": "3 horas", "demands": ["idioma_inmersion", "normas_detalle"] }
+    ]
+  },
+  {
+    "id": "geografia", "label": "Geografía",
+    "riasec": { "I": 0.45, "S": 0.25, "R": 0.15, "C": 0.15 },
+    "domains": { "tierra_ambiente": 0.9, "sociedad": 0.8, "humanidades": 0.5, "tecnologia": 0.3 },
+    "aptitudes": { "espacial": 0.8, "interpretacion": 0.8, "sistemas": 0.6, "verbal": 0.5, "critico": 0.5 },
+    "style": { "exterior": [0.55, 0.3], "ideas": [0.6, 0.3], "datos": [0.6, 0.3] },
+    "demands": { "lectura_teorica": 0.8, "campo": 0.6, "programacion_larga": 0.4, "escritura_argumentativa": 0.6 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.6, "autonomia_v": 0.5, "emprender": 0.3, "creatividad_v": 0.4, "crecimiento": 0.45, "reconocimiento": 0.4, "impacto": 0.65, "desafio": 0.6, "flexibilidad": 0.5, "remoto": 0.4, "movilidad": 0.55, "equilibrio": 0.6, "especializacion": 0.6, "variedad_v": 0.6, "demanda": 0.5 },
+    "study": ["Geografía física y humana", "Cartografía y sistemas de información geográfica", "Teoría geográfica", "Geografía regional", "Planificación territorial"],
+    "tasks": ["Analizar territorios con mapas y datos espaciales", "Participar en planificación urbana y ambiental", "Enseñar", "Investigar"],
+    "settings": ["Organismos de planificación", "Escuelas", "Consultoras", "Universidades"],
+    "difficulties": ["Combina lectura teórica con herramientas técnicas"],
+    "experiences": [
+      { "id": "geog-mapa", "title": "Hacer un mapa temático", "hypothesis": "Disfrutás analizar problemas sociales y ambientales en el espacio.", "type": "proyecto", "steps": ["Elegí un tema (arbolado, comercios, inundaciones).", "Registralo en un mapa en línea (por ejemplo, Google My Maps).", "Interpretá el patrón que aparece."], "duration": "3 horas" }
+    ]
+  },
+  {
+    "id": "historia", "label": "Historia",
+    "riasec": { "I": 0.5, "S": 0.25, "A": 0.15, "C": 0.1 },
+    "domains": { "humanidades": 1, "sociedad": 0.7, "lenguas": 0.4, "educacion": 0.3 },
+    "aptitudes": { "verbal": 0.9, "critico": 0.9, "interpretacion": 0.8, "aprendizaje": 0.5, "planificacion": 0.3 },
+    "style": { "practica": [0.2, 0.5], "ejecucion": [0.2, 0.4], "ideas": [0.85, 0.4], "paciencia": [0.8, 0.3] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 0.9, "investigacion_lenta": 0.7, "memoria_volumen": 0.5 },
+    "future": { "ingresos": 0.35, "estabilidad": 0.55, "autonomia_v": 0.55, "emprender": 0.2, "creatividad_v": 0.45, "crecimiento": 0.4, "reconocimiento": 0.45, "impacto": 0.55, "desafio": 0.8, "flexibilidad": 0.55, "remoto": 0.4, "movilidad": 0.35, "equilibrio": 0.6, "especializacion": 0.7, "variedad_v": 0.45, "demanda": 0.4 },
+    "study": ["Historia antigua, medieval, moderna y contemporánea", "Historia argentina y americana", "Teoría y metodología de la historia", "Historiografía"],
+    "tasks": ["Investigar en archivos", "Escribir artículos y libros", "Enseñar", "Trabajar en museos, archivos y gestión cultural"],
+    "settings": ["Universidades y CONICET", "Escuelas", "Archivos y museos"],
+    "difficulties": ["Gran volumen de lectura"],
+    "experiences": [
+      { "id": "his-archivo", "title": "Trabajar con una fuente primaria", "hypothesis": "Disfrutás reconstruir el pasado a partir de documentos.", "type": "caso", "steps": ["Buscá un periódico antiguo digitalizado (Hemeroteca).", "Analizá una noticia en su contexto.", "Escribí una página interpretándola."], "duration": "3 a 4 horas", "demands": ["lectura_teorica", "escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "letras", "label": "Letras",
+    "riasec": { "A": 0.4, "I": 0.35, "S": 0.2, "C": 0.05 },
+    "domains": { "lenguas": 1, "humanidades": 0.8, "comunicacion": 0.4, "educacion": 0.4 },
+    "aptitudes": { "verbal": 1, "critico": 0.8, "interpretacion": 0.7, "creatividad": 0.4 },
+    "style": { "ideas": [0.85, 0.4], "practica": [0.25, 0.4], "colaboracion": [0.3, 0.2] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 1, "investigacion_lenta": 0.5 },
+    "future": { "ingresos": 0.35, "estabilidad": 0.55, "autonomia_v": 0.55, "emprender": 0.3, "creatividad_v": 0.65, "crecimiento": 0.4, "reconocimiento": 0.45, "impacto": 0.5, "desafio": 0.75, "flexibilidad": 0.6, "remoto": 0.55, "movilidad": 0.35, "equilibrio": 0.6, "especializacion": 0.6, "variedad_v": 0.5, "demanda": 0.45 },
+    "study": ["Teoría literaria", "Literaturas argentina, latinoamericana, española y extranjeras", "Lingüística y gramática", "Lenguas clásicas"],
+    "tasks": ["Investigar sobre literatura y lenguaje", "Enseñar lengua y literatura", "Corregir y editar textos", "Escribir"],
+    "settings": ["Escuelas", "Universidades", "Editoriales", "Medios"],
+    "difficulties": ["Muchísima lectura y escritura académica"],
+    "experiences": [
+      { "id": "let-analisis", "title": "Analizar un cuento con herramientas teóricas", "hypothesis": "Disfrutás el análisis literario y no solo leer por placer.", "type": "caso", "steps": ["Leé un cuento de Borges o Cortázar.", "Leé un texto crítico sobre ese autor.", "Escribí un análisis de dos páginas."], "duration": "4 horas", "demands": ["lectura_teorica", "escritura_argumentativa"] }
+    ]
+  },
+  {
+    "id": "sociologia", "label": "Sociología",
+    "riasec": { "I": 0.5, "S": 0.3, "E": 0.1, "A": 0.1 },
+    "domains": { "sociedad": 1, "humanidades": 0.6, "matematica": 0.3, "economia": 0.3 },
+    "aptitudes": { "critico": 0.9, "verbal": 0.8, "interpretacion": 0.8, "cuantitativo": 0.4, "sistemas": 0.5 },
+    "style": { "ideas": [0.8, 0.4], "practica": [0.3, 0.3], "datos": [0.6, 0.3] },
+    "demands": { "lectura_teorica": 1, "escritura_argumentativa": 0.8, "investigacion_lenta": 0.6, "campo": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.5, "autonomia_v": 0.55, "emprender": 0.25, "creatividad_v": 0.45, "crecimiento": 0.45, "reconocimiento": 0.45, "impacto": 0.75, "desafio": 0.8, "flexibilidad": 0.55, "remoto": 0.5, "movilidad": 0.45, "equilibrio": 0.6, "especializacion": 0.65, "variedad_v": 0.6, "demanda": 0.4 },
+    "study": ["Teoría sociológica clásica y contemporánea", "Metodología cualitativa y cuantitativa", "Estadística", "Sociología de áreas específicas"],
+    "tasks": ["Diseñar y analizar encuestas", "Investigar problemas sociales", "Evaluar políticas públicas", "Enseñar"],
+    "settings": ["Organismos públicos", "Consultoras de opinión", "Universidades", "ONG"],
+    "difficulties": ["Muy teórica en los primeros años"],
+    "experiences": [
+      { "id": "soc-encuesta", "title": "Diseñar una mini encuesta", "hypothesis": "Disfrutás investigar fenómenos sociales con método.", "type": "proyecto", "steps": ["Elegí una pregunta sobre tu entorno.", "Diseñá una encuesta breve y respondela con 20 personas.", "Analizá resultados y sus límites."], "duration": "1 semana" }
+    ]
+  },
+  {
+    "id": "informatica", "label": "Informática y sistemas",
+    "riasec": { "I": 0.45, "R": 0.2, "C": 0.2, "E": 0.1, "A": 0.05 },
+    "domains": { "tecnologia": 1, "matematica": 0.6, "organizacion": 0.2 },
+    "aptitudes": { "logico": 1, "sistemas": 0.9, "problemas": 0.8, "patrones": 0.6, "cuantitativo": 0.6, "aprendizaje": 0.6 },
+    "style": { "datos": [0.8, 0.4], "paciencia": [0.75, 0.5], "colaboracion": [0.55, 0.2], "practica": [0.6, 0.3], "exterior": [0.05, 0.3] },
+    "demands": { "depurar": 1, "programacion_larga": 1, "abstraccion_formal": 0.5, "calculo_intensivo": 0.5 },
+    "future": { "ingresos": 0.85, "estabilidad": 0.7, "autonomia_v": 0.7, "emprender": 0.7, "creatividad_v": 0.55, "crecimiento": 0.85, "reconocimiento": 0.55, "impacto": 0.5, "desafio": 0.8, "flexibilidad": 0.85, "remoto": 0.95, "movilidad": 0.9, "equilibrio": 0.65, "especializacion": 0.8, "variedad_v": 0.7, "demanda": 0.9 },
+    "futureNote": "Demanda alta y sostenida, con trabajo remoto e internacional frecuente; el mercado de perfiles iniciales es más competitivo que el de perfiles con experiencia.",
+    "study": ["Programación y algoritmos", "Estructuras de datos", "Matemática discreta, análisis y álgebra", "Arquitectura de computadoras y sistemas operativos", "Bases de datos y redes", "Ingeniería de software"],
+    "tasks": ["Diseñar y programar software", "Modelar y mantener bases de datos", "Analizar requerimientos de usuarios", "Depurar errores", "Investigar en computación"],
+    "settings": ["Empresas de software", "Áreas de sistemas de cualquier organización", "Trabajo remoto para el exterior", "Investigación"],
+    "specializations": ["Desarrollo de software", "Datos e inteligencia artificial", "Seguridad informática", "Redes", "Sistemas embebidos"],
+    "difficulties": ["Matemática y programación desde el inicio", "Frustración por errores difíciles de encontrar"],
+    "experiences": [
+      { "id": "inf-curso", "title": "Hacer un curso introductorio de programación", "hypothesis": "Disfrutás programar, incluida la parte frustrante de depurar errores.", "type": "clase", "steps": ["Hacé las primeras 6 a 8 horas de un curso gratuito (por ejemplo, CS50 o un curso de Python).", "Resolvé un ejercicio que te cueste sin mirar la solución.", "Registrá cómo te sentiste mientras buscabas el error."], "duration": "1 a 2 semanas", "demands": ["depurar", "programacion_larga"] },
+      { "id": "inf-proyecto", "title": "Programar una herramienta para un problema propio", "hypothesis": "Te motiva construir sistemas que resuelvan problemas concretos.", "type": "proyecto", "steps": ["Elegí un problema chico (llevar gastos, ordenar archivos).", "Programá una solución mínima.", "Mejorala con el uso."], "duration": "2 semanas", "demands": ["programacion_larga", "depurar"] }
+    ]
+  },
+  {
+    "id": "ing_civil", "label": "Ingeniería civil, hidráulica y agrimensura",
+    "riasec": { "R": 0.4, "I": 0.35, "C": 0.15, "E": 0.1 },
+    "domains": { "ingenieria": 1, "matematica": 0.7, "fisica": 0.6, "tierra_ambiente": 0.5, "organizacion": 0.3 },
+    "aptitudes": { "cuantitativo": 0.9, "espacial": 0.8, "problemas": 0.8, "sistemas": 0.6, "logico": 0.6, "planificacion": 0.6 },
+    "style": { "practica": [0.75, 0.4], "cosas": [0.75, 0.4], "responsabilidad": [0.8, 0.4], "exterior": [0.55, 0.3], "estructura": [0.7, 0.3] },
+    "demands": { "calculo_intensivo": 1, "obra": 0.8, "dibujo_tecnico": 0.7, "campo": 0.5, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.7, "estabilidad": 0.6, "autonomia_v": 0.6, "emprender": 0.6, "creatividad_v": 0.45, "crecimiento": 0.7, "reconocimiento": 0.65, "impacto": 0.75, "desafio": 0.8, "flexibilidad": 0.45, "remoto": 0.25, "movilidad": 0.7, "equilibrio": 0.45, "especializacion": 0.75, "variedad_v": 0.65, "demanda": 0.7 },
+    "futureNote": "Demanda ligada a la obra pública y la construcción; formación sólida y bien valorada.",
+    "study": ["Análisis matemático, álgebra y física", "Estabilidad y resistencia de materiales", "Hidráulica", "Topografía y geodesia", "Hormigón, estructuras y vías de comunicación"],
+    "tasks": ["Calcular y diseñar estructuras, obras hidráulicas o viales", "Dirigir obras", "Medir y delimitar terrenos (agrimensura)", "Gestionar proyectos de infraestructura"],
+    "settings": ["Constructoras", "Organismos públicos", "Consultoras de ingeniería", "Ejercicio independiente"],
+    "specializations": ["Estructuras", "Hidráulica", "Transporte", "Geotecnia", "Catastro y geodesia"],
+    "difficulties": ["Ciclo básico de matemática y física muy exigente"],
+    "experiences": [
+      { "id": "ic-puente", "title": "Diseñar y probar una estructura simple", "hypothesis": "Disfrutás calcular y verificar que algo físico funcione.", "type": "proyecto", "steps": ["Construí un puente de palitos con un largo fijo.", "Estimá cuánto peso soportará antes de probarlo.", "Probalo, compará con tu estimación y explicá la diferencia."], "duration": "4 horas", "demands": ["calculo_intensivo"] },
+      { "id": "ic-obra", "title": "Visitar una obra con un ingeniero", "hypothesis": "El ambiente de obra y la coordinación técnica te resultan atractivos.", "type": "conversacion", "steps": ["Pedí a un ingeniero acompañarlo en una recorrida.", "Preguntá qué decisiones toma en el día."], "duration": "Una mañana", "demands": ["obra"] }
+    ]
+  },
+  {
+    "id": "ing_mecanica", "label": "Ingeniería mecánica, aeronáutica y de materiales",
+    "riasec": { "R": 0.45, "I": 0.4, "C": 0.1, "E": 0.05 },
+    "domains": { "ingenieria": 1, "fisica": 0.8, "matematica": 0.7, "tecnologia": 0.5 },
+    "aptitudes": { "cuantitativo": 0.9, "espacial": 0.8, "sistemas": 0.8, "problemas": 0.8, "logico": 0.6, "manual": 0.3 },
+    "style": { "cosas": [0.85, 0.5], "practica": [0.7, 0.4], "paciencia": [0.75, 0.3], "exterior": [0.35, 0.2] },
+    "demands": { "calculo_intensivo": 1, "obra": 0.7, "dibujo_tecnico": 0.7, "programacion_larga": 0.4, "laboratorio": 0.4 },
+    "future": { "ingresos": 0.75, "estabilidad": 0.65, "autonomia_v": 0.55, "emprender": 0.5, "creatividad_v": 0.5, "crecimiento": 0.7, "reconocimiento": 0.6, "impacto": 0.6, "desafio": 0.85, "flexibilidad": 0.4, "remoto": 0.25, "movilidad": 0.75, "equilibrio": 0.5, "especializacion": 0.8, "variedad_v": 0.6, "demanda": 0.75 },
+    "study": ["Análisis matemático, álgebra y física", "Mecánica y termodinámica", "Mecánica de fluidos", "Materiales", "Diseño de máquinas", "Aerodinámica y estructuras aeronáuticas (aeronáutica)"],
+    "tasks": ["Diseñar máquinas, vehículos o componentes", "Calcular resistencias y comportamiento térmico", "Mantener instalaciones industriales", "Desarrollar o ensayar materiales"],
+    "settings": ["Industrias", "Talleres y plantas", "Industria aeronáutica y espacial", "Energía", "Investigación y desarrollo"],
+    "difficulties": ["Ciclo básico exigente", "Mucha física aplicada"],
+    "experiences": [
+      { "id": "im-desarmar", "title": "Desarmar, entender y rearmar un mecanismo", "hypothesis": "Disfrutás comprender cómo funcionan las máquinas en detalle.", "type": "proyecto", "steps": ["Elegí un mecanismo en desuso (impresora, juguete motorizado).", "Desarmalo documentando cada pieza.", "Explicá en un esquema cómo funcionaba."], "duration": "3 horas" },
+      { "id": "im-calculo", "title": "Resolver problemas de física aplicada", "hypothesis": "Podés sostener el trabajo de cálculo que exige el ciclo básico.", "type": "problema", "steps": ["Resolvé 10 problemas de mecánica de un curso introductorio.", "Registrá cuánto te costaron y cuánto te interesaron."], "duration": "1 semana", "demands": ["calculo_intensivo"] }
+    ]
+  },
+  {
+    "id": "ing_electrica", "label": "Ingeniería eléctrica, electrónica y telecomunicaciones",
+    "riasec": { "I": 0.45, "R": 0.4, "C": 0.15 },
+    "domains": { "ingenieria": 0.9, "tecnologia": 0.9, "fisica": 0.8, "matematica": 0.8 },
+    "aptitudes": { "cuantitativo": 1, "logico": 0.8, "sistemas": 0.9, "problemas": 0.8, "espacial": 0.4, "manual": 0.3 },
+    "style": { "cosas": [0.7, 0.4], "paciencia": [0.8, 0.4], "datos": [0.6, 0.3], "ideas": [0.6, 0.3] },
+    "demands": { "calculo_intensivo": 1, "depurar": 0.7, "laboratorio": 0.5, "programacion_larga": 0.6, "abstraccion_formal": 0.5, "obra": 0.4 },
+    "future": { "ingresos": 0.8, "estabilidad": 0.7, "autonomia_v": 0.55, "emprender": 0.5, "creatividad_v": 0.5, "crecimiento": 0.75, "reconocimiento": 0.6, "impacto": 0.6, "desafio": 0.9, "flexibilidad": 0.5, "remoto": 0.45, "movilidad": 0.8, "equilibrio": 0.5, "especializacion": 0.85, "variedad_v": 0.6, "demanda": 0.8 },
+    "study": ["Análisis matemático, álgebra y física", "Circuitos eléctricos", "Electrónica analógica y digital", "Señales y sistemas", "Máquinas eléctricas / Comunicaciones / Control"],
+    "tasks": ["Diseñar circuitos y sistemas electrónicos", "Planificar redes eléctricas o de telecomunicaciones", "Programar sistemas embebidos", "Mantener instalaciones"],
+    "settings": ["Empresas de energía", "Industria electrónica", "Telecomunicaciones", "Investigación y desarrollo"],
+    "difficulties": ["Muy alta carga matemática y abstracta"],
+    "experiences": [
+      { "id": "ie-arduino", "title": "Armar un circuito con Arduino o simulador", "hypothesis": "Disfrutás combinar circuitos, programación y depuración.", "type": "proyecto", "steps": ["Usá un simulador gratuito (Tinkercad Circuits).", "Armá un circuito que encienda luces con un sensor.", "Corregí los errores hasta que funcione."], "duration": "4 horas", "demands": ["depurar"] }
+    ]
+  },
+  {
+    "id": "ing_industrial", "label": "Ingeniería Industrial",
+    "riasec": { "E": 0.3, "I": 0.3, "C": 0.2, "R": 0.2 },
+    "domains": { "ingenieria": 0.8, "economia": 0.7, "organizacion": 1, "matematica": 0.6 },
+    "aptitudes": { "sistemas": 1, "planificacion": 0.9, "cuantitativo": 0.8, "problemas": 0.8, "interpersonal": 0.5, "logico": 0.5 },
+    "style": { "personas": [0.6, 0.3], "responsabilidad": [0.8, 0.4], "practica": [0.75, 0.4], "colaboracion": [0.7, 0.3] },
+    "demands": { "calculo_intensivo": 0.9, "obra": 0.6, "incertidumbre_decisiones": 0.7, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.8, "estabilidad": 0.7, "autonomia_v": 0.55, "emprender": 0.65, "creatividad_v": 0.45, "crecimiento": 0.85, "reconocimiento": 0.65, "impacto": 0.55, "desafio": 0.75, "flexibilidad": 0.5, "remoto": 0.4, "movilidad": 0.75, "equilibrio": 0.5, "especializacion": 0.7, "variedad_v": 0.75, "demanda": 0.8 },
+    "study": ["Análisis matemático, álgebra y física", "Investigación operativa", "Procesos industriales", "Economía y costos", "Gestión de la calidad", "Logística"],
+    "tasks": ["Optimizar procesos productivos", "Gestionar la producción y la logística", "Evaluar proyectos de inversión", "Liderar equipos"],
+    "settings": ["Industrias", "Empresas de servicios y logística", "Consultoras"],
+    "difficulties": ["Ciclo básico exigente"],
+    "experiences": [
+      { "id": "ii-proceso", "title": "Optimizar un proceso cotidiano", "hypothesis": "Disfrutás analizar y mejorar sistemas con criterios medibles.", "type": "problema", "steps": ["Elegí un proceso (preparar pedidos de un comercio, una fila).", "Medí tiempos y cuellos de botella.", "Proponé una mejora y estimá su impacto."], "duration": "3 horas" }
+    ]
+  },
+  {
+    "id": "ing_quimica", "label": "Ingeniería Química",
+    "riasec": { "I": 0.45, "R": 0.35, "C": 0.15, "E": 0.05 },
+    "domains": { "quimica_bio": 0.9, "ingenieria": 0.9, "matematica": 0.7, "fisica": 0.6 },
+    "aptitudes": { "cuantitativo": 1, "sistemas": 0.8, "problemas": 0.8, "logico": 0.6 },
+    "style": { "cosas": [0.6, 0.3], "practica": [0.7, 0.3], "responsabilidad": [0.75, 0.3] },
+    "demands": { "calculo_intensivo": 1, "laboratorio": 0.6, "obra": 0.7, "programacion_larga": 0.3 },
+    "future": { "ingresos": 0.8, "estabilidad": 0.7, "autonomia_v": 0.5, "emprender": 0.4, "creatividad_v": 0.4, "crecimiento": 0.75, "reconocimiento": 0.6, "impacto": 0.6, "desafio": 0.85, "flexibilidad": 0.4, "remoto": 0.2, "movilidad": 0.75, "equilibrio": 0.5, "especializacion": 0.75, "variedad_v": 0.55, "demanda": 0.75 },
+    "study": ["Análisis matemático, álgebra y física", "Química general, orgánica y fisicoquímica", "Fenómenos de transporte", "Operaciones unitarias", "Diseño de reactores y plantas"],
+    "tasks": ["Diseñar y operar procesos químicos industriales", "Controlar calidad y seguridad de plantas", "Optimizar consumo de energía", "Gestionar efluentes"],
+    "settings": ["Industria petroquímica, alimentaria, farmacéutica", "Plantas de tratamiento", "Consultoras"],
+    "difficulties": ["Ciclo básico exigente"],
+    "experiences": [
+      { "id": "iq-planta", "title": "Investigar cómo funciona una planta industrial", "hypothesis": "Te interesa escalar procesos químicos a nivel industrial.", "type": "caso", "steps": ["Buscá un video de una planta (cervecera, refinería, láctea).", "Dibujá el diagrama del proceso.", "Identificá dónde intervendría un ingeniero químico."], "duration": "2 horas" }
+    ]
+  },
+  {
+    "id": "comunicacion", "label": "Comunicación social",
+    "riasec": { "A": 0.3, "S": 0.3, "E": 0.25, "I": 0.15 },
+    "domains": { "comunicacion": 1, "sociedad": 0.7, "lenguas": 0.5, "artes_visuales": 0.3 },
+    "aptitudes": { "verbal": 1, "critico": 0.7, "creatividad": 0.6, "interpersonal": 0.6, "interpretacion": 0.5 },
+    "style": { "variedad": [0.8, 0.4], "personas": [0.7, 0.4], "colaboracion": [0.65, 0.3], "incertidumbre": [0.65, 0.3] },
+    "demands": { "escritura_argumentativa": 0.8, "produccion_creativa_sostenida": 0.7, "lectura_teorica": 0.7, "exposicion_publica": 0.6, "autogestion_clientes": 0.5 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.4, "autonomia_v": 0.55, "emprender": 0.6, "creatividad_v": 0.75, "crecimiento": 0.5, "reconocimiento": 0.6, "impacto": 0.7, "desafio": 0.55, "flexibilidad": 0.55, "remoto": 0.65, "movilidad": 0.45, "equilibrio": 0.45, "especializacion": 0.55, "variedad_v": 0.8, "demanda": 0.5 },
+    "futureNote": "Medios tradicionales en crisis; más oportunidades en comunicación institucional, digital y gestión de contenidos.",
+    "study": ["Teorías de la comunicación", "Redacción y producción periodística", "Producción radial, gráfica y audiovisual", "Planificación de la comunicación", "Ciencias sociales"],
+    "tasks": ["Investigar y producir noticias", "Gestionar la comunicación de organizaciones", "Producir contenidos para medios y redes", "Planificar campañas"],
+    "settings": ["Medios", "Áreas de prensa y comunicación", "Agencias", "Organismos públicos y ONG"],
+    "specializations": ["Periodismo", "Producción de contenidos y gestión de medios", "Planificación y gestión de la comunicación en organizaciones"],
+    "difficulties": ["Mercado de medios competitivo"],
+    "experiences": [
+      { "id": "com-nota", "title": "Producir una nota periodística completa", "hypothesis": "Disfrutás investigar, entrevistar y escribir contra reloj.", "type": "proyecto", "steps": ["Elegí un tema de tu barrio.", "Entrevistá a dos personas y chequeá datos.", "Escribí una nota de 600 palabras en 48 horas."], "duration": "2 días", "demands": ["escritura_argumentativa", "produccion_creativa_sostenida"] },
+      { "id": "com-plan", "title": "Diseñar un plan de comunicación", "hypothesis": "Te atrae la comunicación estratégica para organizaciones.", "type": "caso", "steps": ["Elegí una organización (club, ONG).", "Analizá cómo comunica hoy.", "Proponé tres acciones concretas con objetivos medibles."], "duration": "3 horas" }
+    ]
+  },
+  {
+    "id": "psicologia", "label": "Psicología",
+    "riasec": { "S": 0.5, "I": 0.35, "A": 0.1, "E": 0.05 },
+    "domains": { "sociedad": 1, "salud": 0.7, "educacion": 0.4, "humanidades": 0.4 },
+    "aptitudes": { "interpersonal": 1, "verbal": 0.8, "critico": 0.6, "interpretacion": 0.7 },
+    "style": { "personas": [0.9, 0.5], "paciencia": [0.85, 0.5], "ideas": [0.7, 0.3], "colaboracion": [0.4, 0.2] },
+    "demands": { "escucha_prolongada": 1, "lectura_teorica": 0.9, "vulnerabilidad": 0.7, "escritura_argumentativa": 0.5, "atencion_publico": 0.6 },
+    "future": { "ingresos": 0.45, "estabilidad": 0.5, "autonomia_v": 0.75, "emprender": 0.6, "creatividad_v": 0.4, "crecimiento": 0.5, "reconocimiento": 0.55, "impacto": 0.85, "desafio": 0.7, "flexibilidad": 0.7, "remoto": 0.55, "movilidad": 0.35, "equilibrio": 0.6, "especializacion": 0.8, "variedad_v": 0.55, "demanda": 0.55 },
+    "futureNote": "Muchos graduados en La Plata; ejercicio clínico mayoritariamente independiente. Otras áreas: educacional, laboral, jurídica, social.",
+    "study": ["Psicología general y del desarrollo", "Teorías psicoanalíticas y otros enfoques", "Neurofisiología", "Psicopatología", "Psicología clínica, educacional, laboral, jurídica", "Prácticas profesionales"],
+    "tasks": ["Atender pacientes en psicoterapia", "Evaluar y orientar en instituciones educativas", "Trabajar en selección y desarrollo de personas", "Intervenir en salud pública y comunidades", "Peritajes"],
+    "settings": ["Consultorio", "Hospitales", "Escuelas", "Empresas", "Poder Judicial"],
+    "difficulties": ["Formación muy teórica", "Carga emocional del trabajo clínico"],
+    "experiences": [
+      { "id": "psi-escucha", "title": "Practicar escucha activa sostenida", "hypothesis": "Disfrutás escuchar en profundidad sin intervenir con soluciones.", "type": "ejercicio", "steps": ["Pedí a alguien que te cuente una experiencia importante durante 30 minutos.", "Escuchá sin aconsejar, solo con preguntas abiertas.", "Anotá qué te pasó y qué te costó."], "duration": "1 hora", "demands": ["escucha_prolongada"] },
+      { "id": "psi-texto", "title": "Leer un texto clásico de psicología", "hypothesis": "Te atrae la teoría psicológica, no solo la ayuda a otros.", "type": "caso", "steps": ["Leé un capítulo de Freud o Piaget.", "Resumilo y relacionalo con una experiencia propia."], "duration": "3 horas", "demands": ["lectura_teorica"] }
+    ]
+  },
+  {
+    "id": "trabajo_social", "label": "Trabajo Social",
+    "riasec": { "S": 0.6, "E": 0.15, "I": 0.15, "C": 0.1 },
+    "domains": { "sociedad": 1, "derecho": 0.3, "educacion": 0.4, "salud": 0.3, "organizacion": 0.4 },
+    "aptitudes": { "interpersonal": 1, "planificacion": 0.7, "critico": 0.6, "verbal": 0.6, "problemas": 0.5 },
+    "style": { "personas": [0.95, 0.6], "exterior": [0.6, 0.3], "colaboracion": [0.8, 0.4], "incertidumbre": [0.65, 0.3], "responsabilidad": [0.75, 0.3] },
+    "demands": { "vulnerabilidad": 1, "lectura_teorica": 0.7, "campo": 0.5, "atencion_publico": 0.7, "conflicto": 0.5, "normas_detalle": 0.4 },
+    "future": { "ingresos": 0.4, "estabilidad": 0.65, "autonomia_v": 0.45, "emprender": 0.2, "creatividad_v": 0.35, "crecimiento": 0.45, "reconocimiento": 0.4, "impacto": 0.95, "desafio": 0.6, "flexibilidad": 0.4, "remoto": 0.1, "movilidad": 0.45, "equilibrio": 0.45, "especializacion": 0.55, "variedad_v": 0.65, "demanda": 0.65 },
+    "study": ["Fundamentos del trabajo social", "Teoría social y política social", "Metodología de intervención", "Derechos y políticas públicas", "Prácticas de formación profesional en territorio"],
+    "tasks": ["Acompañar familias y comunidades", "Gestionar recursos y políticas sociales", "Trabajar en equipos de salud, educación y justicia", "Coordinar proyectos comunitarios"],
+    "settings": ["Organismos públicos", "Hospitales", "Escuelas", "Poder Judicial", "ONG y organizaciones sociales"],
+    "difficulties": ["Exposición a situaciones de alta vulnerabilidad"],
+    "experiences": [
+      { "id": "ts-voluntariado", "title": "Participar en una organización comunitaria", "hypothesis": "El trabajo territorial con situaciones de vulnerabilidad te motiva de forma sostenida.", "type": "conversacion", "steps": ["Sumate a un comedor, apoyo escolar o centro comunitario durante un mes.", "Registrá qué situaciones te movilizaron.", "Conversá con una trabajadora social sobre su tarea."], "duration": "1 mes", "demands": ["vulnerabilidad", "campo"] }
+    ]
+  }
+]

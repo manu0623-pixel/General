@@ -1,0 +1,34 @@
+{
+  "profesorado": {
+    "label": "Profesorado",
+    "set": {
+      "domains": { "educacion": 1 },
+      "demands": { "frente_aula": 1 },
+      "aptitudes": { "interpersonal": 0.8, "planificacion": 0.6 },
+      "style": { "personas": [0.85, 0.5] },
+      "future": { "estabilidad": 0.75, "impacto": 0.8, "equilibrio": 0.6, "remoto": 0.15, "movilidad": 0.35, "emprender": 0.25, "ingresos": 0.4, "autonomia_v": 0.45 }
+    },
+    "shift": { "riasec": { "S": 0.3 }, "demands": { "investigacion_lenta": -0.3 } },
+    "extraTasks": ["Enseñar en escuelas secundarias, institutos y/o universidades", "Planificar clases, evaluar y acompañar trayectorias de estudiantes"],
+    "extraStudy": ["Formación pedagógica y didáctica específica", "Prácticas docentes en escuelas"],
+    "experiences": [
+      { "id": "prof-clase", "title": "Dar una clase de prueba", "hypothesis": "Disfrutás enseñar el contenido de la disciplina a otros, no solo aprenderlo.", "type": "clase", "steps": ["Prepará una explicación de 20 minutos sobre un tema de la disciplina.", "Dictala a 3 o más personas (compañeros, familiares) y respondé preguntas.", "Registrá qué parte disfrutaste y qué te incomodó."], "duration": "3 horas", "demands": ["frente_aula"] }
+    ]
+  },
+  "lic_y_prof": {
+    "label": "Licenciatura y Profesorado",
+    "set": { "domains": { "educacion": 0.6 }, "demands": { "frente_aula": 0.5 } },
+    "shift": { "riasec": { "S": 0.1 }, "future": { "estabilidad": 0.1, "demanda": 0.05 } },
+    "extraTasks": ["Docencia en la disciplina (con el título de profesorado)"],
+    "extraStudy": ["Trayecto pedagógico para el profesorado"]
+  },
+  "tecnicatura": {
+    "label": "Tecnicatura (formación corta y aplicada)",
+    "set": { "style": { "practica": [0.85, 0.5], "ejecucion": [0.85, 0.4] } },
+    "shift": {
+      "demands": { "investigacion_lenta": -0.6, "abstraccion_formal": -0.4, "calculo_intensivo": -0.3, "lectura_teorica": -0.3, "carrera_larga": -1 },
+      "future": { "ingresos": -0.1, "especializacion": -0.15, "desafio": -0.1, "crecimiento": -0.1 }
+    },
+    "extraTasks": ["Tareas técnicas y operativas con inserción laboral más rápida"]
+  }
+}
