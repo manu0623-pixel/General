@@ -1,7 +1,8 @@
-# Brújula Vocacional UNLP
+# Brújula Vocacional
 
-Aplicación web de orientación vocacional **profunda, adaptativa y personalizada** para elegir entre las carreras
-de la Universidad Nacional de La Plata provistas en la lista original.
+Aplicación web de orientación vocacional **profunda, adaptativa y personalizada** para elegir entre carreras de la
+**Universidad Nacional de La Plata (UNLP)** y la **Universidad de Buenos Aires (UBA)**. El informe indica, para cada
+carrera, en qué universidad, ciudad y facultad se puede estudiar.
 
 - Evaluación en 9 etapas que se adapta a cada respuesta (intereses, aptitudes con ejercicios, estilo de trabajo,
   valores con elecciones forzadas, evidencia concreta, exigencias reales de cada carrera, profundización y
@@ -24,6 +25,19 @@ npm install
 npm run dev        # http://localhost:5173
 npm run build      # versión estática en dist/
 ```
+
+## Publicar en Vercel
+
+El proyecto ya incluye `vercel.json` (Vite, salida en `dist/`). Una sola vez:
+
+1. Entrá a <https://vercel.com/new> e iniciá sesión con GitHub.
+2. Importá el repositorio `manu0623-pixel/General`.
+3. Tocá **Deploy** sin cambiar ninguna opción. Vercel publica la rama principal (`main`) en
+   `https://<nombre>.vercel.app`; por eso, antes, fusioná esta rama (`claude/great-turing-wiwudw`) en `main`.
+   Las demás ramas reciben enlaces de vista previa automáticos.
+4. Desde ahí, cada `git push` a `main` vuelve a publicar la página.
+
+Alternativa por línea de comandos: `npx vercel --prod` (pide iniciar sesión la primera vez).
 
 ## Pruebas
 

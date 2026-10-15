@@ -70,6 +70,9 @@ test('una evaluación finalizada muestra el informe, la comparación y las exper
   await expect(page.getByRole('heading', { name: 'Tu informe vocacional' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Finalistas', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Recomendación' })).toBeVisible();
+  // Cada finalista indica dónde estudiarla (universidad y facultad)
+  await expect(page.getByRole('heading', { name: /Dónde estudiarla/ }).first()).toBeVisible();
+  await expect(page.locator('.where-row').first()).toContainText('Facultad');
   await page.screenshot({ path: 'test-results/informe.png', fullPage: true });
   await page.getByRole('button', { name: 'Ir a las experiencias prácticas' }).click();
   await page.getByRole('button', { name: 'Registrar cómo me fue' }).first().click();
@@ -78,16 +81,15 @@ test('una evaluación finalizada muestra el informe, la comparación y las exper
   await expect(page.getByText(/Último cambio/)).toBeVisible();
 });
 
-test('modo oscuro y vista móvil sin desplazamiento horizontal', async ({ page }) => {
+test('vista móvil sin desplazamiento horizontal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 840 });
-  await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/');
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await page.screenshot({ path: 'test-results/inicio-movil-oscuro.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/inicio-movil.png', fullPage: true });
   await page.getByRole('button', { name: 'Comenzar la evaluación' }).click();
   for (let i = 0; i < 3; i++) await answerCurrent(page);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
-  await page.screenshot({ path: 'test-results/pregunta-movil-oscuro.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/pregunta-movil.png', fullPage: true });
 });

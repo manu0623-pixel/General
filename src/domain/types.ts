@@ -130,13 +130,35 @@ export type Restriction =
   | 'carga_horaria_alta'
   | 'verificar_oferta';
 
+/** Dónde se puede estudiar una carrera (institución, ciudad y facultad). */
+export interface Offering {
+  institution: string;
+  facultad: string;
+  /** Nombre del título en esa institución, si difiere. */
+  title?: string;
+  city?: string;
+  note?: string;
+}
+
+export interface InstitutionInfo {
+  id: string;
+  name: string;
+  city: string;
+  note?: string;
+  url?: string;
+}
+
 export interface CareerEntry {
   id: string;
   name: string;
   /** Nombre tal como figura en la lista provista por la persona usuaria. */
   originalName?: string;
+  /** Institución principal (por defecto, UNLP). */
+  institution?: string;
   facultad: string;
   facultadStatus?: DataStatus;
+  /** Otras instituciones/facultades donde se dicta una carrera igual o muy similar. */
+  alsoAt?: Offering[];
   family: string;
   level: 'licenciatura' | 'profesorado' | 'lic_y_prof' | 'tecnicatura' | 'ingenieria' | 'titulo_profesional' | 'ciclo_complementacion';
   modifiers?: string[];
@@ -168,6 +190,8 @@ export interface ResolvedCareer extends Omit<CareerEntry, 'overrides'> {
   specializations: string[];
   difficulties: string[];
   experiences: ExperienceTemplate[];
+  /** Todas las ofertas (institución, ciudad, facultad): la principal primero. */
+  offerings: (Offering & { city: string })[];
 }
 
 export type ProfileMaps = Pick<FamilyProfile, 'riasec' | 'domains' | 'aptitudes' | 'style' | 'demands' | 'future'>;
@@ -196,4 +220,5 @@ export interface CareerCatalog {
   families: FamilyProfile[];
   modifiers: Record<string, ModifierDef>;
   demands: DemandDef[];
+  institutions?: InstitutionInfo[];
 }

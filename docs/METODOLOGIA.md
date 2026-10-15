@@ -153,7 +153,16 @@ Social). No se pudo confirmar la oferta vigente de la Tecnicatura Superior Unive
 No se encontró un informe oficial argentino reciente con inserción e ingresos por carrera; fuentes recomendadas para
 verificar: planes de estudio de cada facultad, EPH (INDEC) y observatorios/encuestas de graduados universitarios.
 
-## 8. Límites
+## 8. Carreras de la UBA
+
+La lista de la UBA se integró sin duplicar opciones: cuando una carrera es igual o muy similar a una de la UNLP
+(por ejemplo, Diseño Gráfico ≈ Diseño en Comunicación Visual, Ciencias de la Computación ≈ Licenciatura en
+Informática), se agregó la UBA como otro lugar donde estudiarla (`alsoAt`), con su facultad y el nombre del título.
+Las carreras nuevas (44) se cargaron como opciones propias con `institution: "UBA"`. Las facultades surgen de la
+lista provista; los perfiles, duraciones y perspectivas son estimaciones a verificar. La correspondencia completa
+está en `src/data/ubaList.ts` y se verifica en las pruebas.
+
+## 9. Límites
 
 - Pocos ejercicios, breves: aportan indicios, no mediciones.
 - Las ponderaciones son decisiones metodológicas explícitas, no parámetros validados empíricamente.

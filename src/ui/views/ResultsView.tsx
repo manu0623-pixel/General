@@ -4,6 +4,8 @@ import { band, pct } from '../../engine/scoring';
 import type { ViewId } from '../App';
 import { DimBars, DimLegend, RankingChart, RiasecChart, ValuesChart } from '../components/Charts';
 import type { AppApi } from '../useApp';
+import { WhereToStudy } from '../components/WhereToStudy';
+import type { CareerCatalog } from '../../domain/types';
 
 const VIAB: Record<string, { cls: string; label: string }> = {
   sin_restricciones: { cls: 'good', label: '✓ Sin restricciones detectadas' },
@@ -35,7 +37,8 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
     <div className="stack-lg" style={{ gap: 36 }}>
       <header className="stack">
         <p className="eyebrow">{provisional ? 'Panorama provisional' : 'Informe vocacional'}</p>
-        <h1 style={{ fontSize: 'var(--step-4)' }}>{provisional ? 'Lo que se ve hasta ahora' : 'Tu informe vocacional'}</h1>
+        <div className="page-icon" aria-hidden="true">📊</div>
+        <h1>{provisional ? 'Lo que se ve hasta ahora' : 'Tu informe vocacional'}</h1>
         {provisional ? (
           <div className="callout warn stack">
             <strong>Este no es un ranking definitivo.</strong>
@@ -101,6 +104,26 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
           Los valores se redondean a múltiplos de 5 % para no sugerir una precisión que no existe.
         </p>
         <div className="panel"><RankingChart entries={ranking} /></div>
+        <div className="panel" style={{ padding: 0 }}>
+          <div className="table-wrap">
+            <table className="table">
+              <thead><tr><th>#</th><th>Carrera</th><th>Dónde estudiarla</th><th className="num">Compatibilidad</th></tr></thead>
+              <tbody>
+                {ranking.map((e) => {
+                  const c = ctx.careers.find((x) => x.id === e.id)!;
+                  return (
+                    <tr key={e.id}>
+                      <td className="num muted">{e.rank}</td>
+                      <td style={{ minWidth: 200 }}><strong>{e.name}</strong>{e.viability.level !== 'sin_restricciones' && <div><span className={`chip ${VIAB[e.viability.level].cls}`}>{VIAB[e.viability.level].label}</span></div>}</td>
+                      <td style={{ minWidth: 220 }}><WhereToStudy career={c} catalog={app.catalog} compact /></td>
+                      <td className="num" style={{ whiteSpace: 'nowrap' }}>≈ {pct(e.overall)} %</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="row"><button type="button" className="btn btn-sm" onClick={() => setShowAll((x) => !x)}>{showAll ? 'Mostrar menos' : 'Mostrar más carreras'}</button></div>
       </section>
 
@@ -110,7 +133,7 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
             <h2>Finalistas</h2>
             <DimLegend />
             <div className="stack">
-              {report.finalists.map((f) => <CareerCard key={f.entry.id} r={f} />)}
+              {report.finalists.map((f) => <CareerCard key={f.entry.id} r={f} catalog={app.catalog} />)}
             </div>
           </section>
 
@@ -126,6 +149,7 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
                       {report.comparison.differences.map((d) => (
                         <tr key={d.aspect}><td>{d.aspect}</td>{d.values.map((v) => <td key={v.name}>{v.value}</td>)}</tr>
                       ))}
+                      <tr><td>Dónde se dicta</td>{report.finalists.map((f) => <td key={f.entry.id} className="small">{f.career.offerings.map((o) => `${o.institution} · ${o.facultad}`).join(' / ')}</td>)}</tr>
                       <tr><td>Tareas típicas</td>{report.finalists.map((f) => <td key={f.entry.id} className="small">{f.career.tasks.slice(0, 3).join('; ')}</td>)}</tr>
                       <tr><td>Exigencias de la formación</td>{report.finalists.map((f) => <td key={f.entry.id} className="small">{f.career.study.slice(0, 3).join('; ')}</td>)}</tr>
                     </tbody>
@@ -145,7 +169,7 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
               <h3>Alternativas menos compatibles</h3>
               <ul className="list">
                 {report.lower.slice(0, 8).map((l) => (
-                  <li key={l.id}><strong>{l.name}</strong> <span className="muted small">#{l.rank}</span><div className="small muted">{l.reasons.map((r) => r.text).join(' ')}</div></li>
+                  <li key={l.id}><strong>{l.name}</strong> <span className="muted small">#{l.rank} · {ctx.careers.find((c) => c.id === l.id)?.offerings.map((o) => o.institution).join(' y ')}</span><div className="small muted">{l.reasons.map((r) => r.text).join(' ')}</div></li>
                 ))}
               </ul>
               <p className="small muted">Ninguna se descarta solo por falta de experiencia previa.</p>
@@ -184,7 +208,7 @@ export function ResultsView({ app, go }: { app: AppApi; go: (v: ViewId) => void 
   );
 }
 
-function CareerCard({ r }: { r: CareerReport }) {
+function CareerCard({ r, catalog }: { r: CareerReport; catalog: CareerCatalog }) {
   const e = r.entry;
   const v = VIAB[e.viability.level];
   return (
@@ -197,8 +221,11 @@ function CareerCard({ r }: { r: CareerReport }) {
       <div className="row">
         <span className={`chip ${CONF[e.confidence]}`}>Confianza {e.confidence}</span>
         <span className={`chip ${v.cls}`}><span className="ico">{v.label}</span></span>
-        <span className="chip">{r.career.facultad}</span>
         {r.preferredVariant && <span className="chip accent">Orientación sugerida: {r.preferredVariant}</span>}
+      </div>
+      <div className="stack" style={{ gap: 6 }}>
+        <h4>📍 Dónde estudiarla</h4>
+        <WhereToStudy career={r.career} catalog={catalog} />
       </div>
       <DimBars entry={e} />
       <dl className="kv">

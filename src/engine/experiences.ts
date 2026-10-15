@@ -20,7 +20,7 @@ export function genericExperiences(c: ResolvedCareer): ExperienceTemplate[] {
       title: 'Revisar el plan de estudios oficial',
       hypothesis: 'Las materias de los primeros años te resultan aceptables o atractivas (no solo el título final).',
       steps: [
-        `Buscá el plan de estudios vigente de «${c.name}» en el sitio de la ${c.facultad}.`,
+        `Buscá el plan de estudios vigente de «${c.name}» en el sitio de ${c.offerings.map((o) => `${o.facultad} (${o.institution})`).join(' o de ')}.`,
         'Marcá en verde las materias que te entusiasman, en amarillo las que tolerarías y en rojo las que te preocupan.',
         'Contá cuántas hay de cada color en los dos primeros años.',
       ],

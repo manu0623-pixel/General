@@ -248,7 +248,9 @@ export function computeViability(c: ResolvedCareer, constraints: Set<string>, ma
   if (r.has('verificar_oferta')) issues.push({ severity: 'condicion', text: 'No se pudo confirmar la oferta vigente ni su facultad: verificar antes de decidir.' });
   if (maxYears != null && c.durationYears != null && c.durationYears > maxYears) issues.push({ severity: 'condicion', text: `Duración estimada de ${c.durationYears} años (${c.durationStatus === 'verificado' ? 'verificada' : 'a verificar'}); indicaste hasta ${maxYears}.` });
   if (constraints.has('corta') && c.level !== 'tecnicatura' && (c.durationYears ?? 5) > 3) issues.push({ severity: 'info', text: 'Indicaste preferir carreras cortas; esta es una carrera de grado extensa.' });
-  if (constraints.has('no_laplata')) issues.push({ severity: 'condicion', text: 'Se dicta en La Plata en modalidad presencial (verificar opciones a distancia); indicaste no poder trasladarte.' });
+  const insts = new Set((c.offerings ?? []).map((o) => o.institution));
+  if ((constraints.has('solo_caba') || constraints.has('no_laplata')) && !insts.has('UBA')) issues.push({ severity: 'condicion', text: 'Solo se dicta en La Plata (UNLP); indicaste que solo podés estudiar en la Ciudad de Buenos Aires.' });
+  if (constraints.has('solo_laplata') && !insts.has('UNLP')) issues.push({ severity: 'condicion', text: 'Solo se dicta en la Ciudad de Buenos Aires (UBA); indicaste que solo podés estudiar en La Plata.' });
   if (c.durationStatus === 'insuficiente' && !r.has('verificar_oferta')) issues.push({ severity: 'info', text: 'No hay datos confiables de duración.' });
   const level: Viability['level'] = issues.some((i) => i.severity === 'bloqueante')
     ? 'restriccion_importante'

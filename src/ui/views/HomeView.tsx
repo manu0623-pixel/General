@@ -19,10 +19,11 @@ function Welcome({ app, go }: { app: AppApi; go: (v: ViewId) => void }) {
     <div className="stack-lg" style={{ gap: 40 }}>
       <section className="hero">
         <div className="stack-lg">
-          <p className="eyebrow">Orientación vocacional · Universidad Nacional de La Plata</p>
+          <div className="page-icon" aria-hidden="true">🧭</div>
+          <p className="eyebrow">Orientación vocacional · UNLP y UBA</p>
           <h1>¿Qué carrera combina mejor lo que podés, lo que te gusta y lo que buscás?</h1>
           <p className="lede">
-            Una evaluación profunda y adaptativa sobre las {n} carreras de tu lista. Las preguntas cambian según tus respuestas, combinan
+            Una evaluación profunda y adaptativa sobre {n} carreras de la Universidad Nacional de La Plata y la Universidad de Buenos Aires. Las preguntas cambian según tus respuestas, combinan
             escenarios, ejercicios breves y experiencias concretas, y el resultado muestra la evidencia que lo sostiene y lo que todavía es incierto.
           </p>
           <div className="row">
@@ -36,7 +37,7 @@ function Welcome({ app, go }: { app: AppApi; go: (v: ViewId) => void }) {
               }} />
           </div>
           {err && <p className="callout crit">{err}</p>}
-          <p className="small muted">Lleva entre 60 y 120 preguntas según tu perfil. Se guarda sola en este dispositivo: podés pausar y volver cuando quieras.</p>
+          <p className="small muted">Lleva entre 60 y 120 preguntas según tu perfil. Se guarda sola en este dispositivo: podés pausar y volver cuando quieras. Al final vas a ver en qué universidad y facultad podés estudiar cada carrera recomendada.</p>
         </div>
         <div className="panel stack">
           <p className="eyebrow">Tres dimensiones, en equilibrio</p>
@@ -63,7 +64,7 @@ function Welcome({ app, go }: { app: AppApi; go: (v: ViewId) => void }) {
         </div>
         <div className="panel stack">
           <h4>Privacidad</h4>
-          <p className="small">Tus respuestas se guardan solo en este navegador. No se envían a ningún servidor ni a servicios de inteligencia artificial. Podés exportar una copia en Ajustes.</p>
+          <p className="small">Tus respuestas se guardan solo en este navegador. No se envían a ningún servidor ni a servicios de inteligencia artificial. Podés descargar una copia en Ajustes.</p>
         </div>
       </section>
     </div>
@@ -83,7 +84,8 @@ function Resume({ app, go }: { app: AppApi; go: (v: ViewId) => void }) {
     <div className="stack-lg">
       <div className="stack">
         <p className="eyebrow">{done ? 'Evaluación finalizada' : 'Evaluación en curso'}</p>
-        <h1 style={{ fontSize: 'var(--step-4)' }}>{done ? 'Tu informe está listo' : 'Bienvenido/a de vuelta'}</h1>
+        <div className="page-icon" aria-hidden="true">🧭</div>
+        <h1>{done ? 'Tu informe está listo' : 'Bienvenido/a de vuelta'}</h1>
         <p className="lede">
           {done
             ? `Finalizaste el ${fmtDate(state.finalizedAt)}. Podés revisar el informe, registrar experiencias prácticas o corregir respuestas: el análisis se actualiza solo.`

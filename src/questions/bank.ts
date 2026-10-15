@@ -104,7 +104,8 @@ const EXPECT: OptMap = {
 
 const CONSTRAINTS: Record<string, string> = {
   trabaja: 'Necesito trabajar mientras estudio',
-  no_laplata: 'No puedo vivir en La Plata ni viajar con frecuencia',
+  solo_caba: 'Solo puedo estudiar en la Ciudad de Buenos Aires (no en La Plata)',
+  solo_laplata: 'Solo puedo estudiar en La Plata (no en la Ciudad de Buenos Aires)',
   presupuesto: 'Tengo un presupuesto ajustado para materiales o instrumental',
   corta: 'Prefiero una carrera corta (hasta 3 años)',
   nodocente: 'Soy trabajador/a nodocente de la UNLP',

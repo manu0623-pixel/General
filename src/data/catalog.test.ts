@@ -1,6 +1,7 @@
 import { defaultCatalog, resolveAll, validateCatalog } from '../domain/careerModel';
 
 import { ORIGINAL_LIST } from './originalList';
+import { UBA_LIST } from './ubaList';
 
 describe('catálogo de carreras', () => {
   const catalog = defaultCatalog();
@@ -31,7 +32,7 @@ describe('catálogo de carreras', () => {
   });
 
   it('cubre la lista provista (con las normalizaciones documentadas)', () => {
-    const mapped = new Set(ORIGINAL_LIST.flatMap(([, ids]) => ids));
+    const mapped = new Set([...ORIGINAL_LIST.flatMap(([, ids]) => ids), ...UBA_LIST.map(([, id]) => id)]);
     const catalogIds = new Set(catalog.careers.map((c) => c.id));
     // Todo lo de la lista está en el catálogo…
     for (const id of mapped) expect(catalogIds.has(id), id).toBe(true);
@@ -42,5 +43,24 @@ describe('catálogo de carreras', () => {
       expect(names).toContain(must);
     }
     expect(names).not.toContain('facultad de ciencias veterinarias');
+  });
+
+  it('integra la lista de la UBA sin duplicar carreras iguales o similares', () => {
+    const resolved = resolveAll(catalog);
+    for (const [name, id] of UBA_LIST) {
+      const c = resolved.find((x) => x.id === id);
+      expect(c, name).toBeDefined();
+      // Cada carrera de la UBA aparece como lugar donde estudiarla, con su facultad
+      expect(c!.offerings.some((o) => o.institution === 'UBA' && o.facultad.length > 5), name).toBe(true);
+    }
+    const names = catalog.careers.map((c) => c.name.toLowerCase());
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it('cada carrera informa institución, ciudad y facultad', () => {
+    for (const c of resolveAll(catalog)) {
+      expect(c.offerings.length).toBeGreaterThan(0);
+      for (const o of c.offerings) { expect(o.facultad).toBeTruthy(); expect(o.city).toBeTruthy(); }
+    }
   });
 });

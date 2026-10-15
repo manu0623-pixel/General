@@ -32,8 +32,8 @@ export function useApp() {
   });
 
   useEffect(() => {
-    const el = document.documentElement;
-    if (theme === 'system') delete el.dataset.theme; else el.dataset.theme = theme;
+    // La interfaz usa solo el tema claro.
+    document.documentElement.dataset.theme = 'light';
     try { storage.setItem(THEME_KEY, theme); } catch { /* sin almacenamiento */ }
   }, [theme, storage]);
 

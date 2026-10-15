@@ -4,12 +4,13 @@ import modifiersFile from '../data/modifiers.json';
 import demandsFile from '../data/demands.json';
 import { APTITUDE_KEYS, DOMAIN_KEYS, RIASEC_KEYS, STYLE_KEYS, VALUE_KEYS } from './dimensions';
 import type {
-  CareerCatalog, CareerEntry, CareerVariant, DemandDef, FamilyProfile, ModifierDef, ProfileMaps, ResolvedCareer,
+  CareerCatalog, CareerEntry, CareerVariant, DemandDef, FamilyProfile, InstitutionInfo, ModifierDef, ProfileMaps, ResolvedCareer,
 } from './types';
 
 export interface CatalogFile {
   version: string;
   institution?: string;
+  institutions?: InstitutionInfo[];
   normalization?: { original: string; action: string; note: string }[];
   careers: CareerEntry[];
 }
@@ -21,6 +22,7 @@ export function defaultCatalog(): CareerCatalog & { institution?: string; normal
     institution: file.institution,
     normalization: file.normalization,
     careers: file.careers,
+    institutions: file.institutions,
     families: familiesFile as unknown as FamilyProfile[],
     modifiers: modifiersFile as unknown as Record<string, ModifierDef>,
     demands: demandsFile as DemandDef[],
@@ -97,8 +99,16 @@ export function resolveCareer(entry: CareerEntry, catalog: CareerCatalog): Resol
 
   const { overrides: _omit, ...rest } = entry;
   void _omit;
+  const inst = (id: string) => catalog.institutions?.find((i) => i.id === id);
+  const mainInst = entry.institution ?? 'UNLP';
+  const offerings = [
+    { institution: mainInst, facultad: entry.facultad, title: entry.name, city: inst(mainInst)?.city ?? '' },
+    ...(entry.alsoAt ?? []).map((o) => ({ ...o, city: o.city ?? inst(o.institution)?.city ?? '' })),
+  ];
   return {
     ...rest,
+    institution: mainInst,
+    offerings,
     familyLabel: family.label,
     ...maps,
     futureNote: o.futureNote ?? family.futureNote,
@@ -169,6 +179,14 @@ export function validateCatalog(catalog: CareerCatalog): string[] {
     if (c.overrides) checkMaps(`carrera ${c.id}`, c.overrides);
     for (const v of c.variants ?? []) if (v.overrides) checkMaps(`carrera ${c.id} variante ${v.id}`, v.overrides);
     if (!['verificado', 'estimado', 'insuficiente'].includes(c.dataStatus)) errors.push(`carrera ${c.id}: dataStatus inválido`);
+    const instIds = new Set((catalog.institutions ?? []).map((i) => i.id));
+    if (instIds.size) {
+      if (c.institution && !instIds.has(c.institution)) errors.push(`carrera ${c.id}: institución desconocida ${c.institution}`);
+      for (const o of c.alsoAt ?? []) {
+        if (!instIds.has(o.institution)) errors.push(`carrera ${c.id}: institución desconocida ${o.institution}`);
+        if (!o.facultad) errors.push(`carrera ${c.id}: oferta sin facultad`);
+      }
+    }
   }
   return errors;
 }

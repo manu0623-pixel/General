@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { exportSession } from '../../storage/persistence';
 import type { ViewId } from '../App';
-import { downloadText, type AppApi, type Theme } from '../useApp';
+import { downloadText, type AppApi } from '../useApp';
 
 export function SettingsView({ app, go }: { app: AppApi; go: (v: ViewId) => void }) {
   const [confirmReset, setConfirmReset] = useState(false);
@@ -14,15 +14,7 @@ export function SettingsView({ app, go }: { app: AppApi; go: (v: ViewId) => void
   };
   return (
     <div className="stack-lg">
-      <div className="stack"><p className="eyebrow">Ajustes</p><h2>Datos, apariencia y privacidad</h2></div>
-      <section className="panel stack">
-        <h4>Apariencia</h4>
-        <div className="segmented" role="radiogroup" aria-label="Tema">
-          {([['system', 'Según el sistema'], ['light', 'Claro'], ['dark', 'Oscuro']] as [Theme, string][]).map(([k, l]) => (
-            <label key={k} data-checked={app.theme === k}><input type="radio" name="theme" id={`theme-${k}`} checked={app.theme === k} onChange={() => app.setTheme(k)} />{l}</label>
-          ))}
-        </div>
-      </section>
+      <div className="stack"><p className="eyebrow">Ajustes</p><h1>Datos y privacidad</h1></div>
       <section className="panel stack">
         <h4>Tus datos</h4>
         <p className="small">
