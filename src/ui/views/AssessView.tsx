@@ -91,7 +91,7 @@ export function AssessView({ app, go }: { app: AppApi; go: (v: ViewId) => void }
           </div>
         )}
         {revisit && <p className="callout warn">Volvemos sobre una dimensión anterior porque apareció una contradicción.</p>}
-        <div>
+        <div className="panel">
           <QuestionForm
             key={q.id}
             question={q}
