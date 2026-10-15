@@ -40,8 +40,7 @@ test('comenzar, responder, recargar y retomar en la misma pregunta', async ({ pa
   await page.getByRole('button', { name: 'Continuar donde lo dejaste' }).click();
   await expect(page.locator('.q-title')).toHaveText(title!);
   // Las respuestas siguen ahí
-  await page.getByRole('button', { name: 'Más' }).click();
-  await page.getByRole('button', { name: 'Mis respuestas' }).click();
+  await page.getByRole('button', { name: 'Respuestas' }).click();
   await expect(page.locator('table.table tbody tr')).toHaveCount(6);
 });
 
@@ -55,8 +54,7 @@ test('volver atrás y corregir una respuesta', async ({ page }) => {
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Trabajo y quiero empezar o retomar estudios').check();
   await dialog.getByRole('button', { name: 'Guardar corrección' }).click();
-  await page.getByRole('button', { name: 'Más' }).click();
-  await page.getByRole('button', { name: 'Mis respuestas' }).click();
+  await page.getByRole('button', { name: 'Respuestas' }).click();
   await expect(page.getByText('Trabajo y quiero empezar o retomar estudios')).toBeVisible();
   await expect(page.getByText('corregida ×1')).toBeVisible();
 });
