@@ -4,6 +4,7 @@ import type { CareerCatalog } from '../domain/types';
 import { addExperienceLog, finalize, removeExperienceLog, snapshotAfterEdit } from '../engine/actions';
 import { nextStep } from '../engine/adaptive';
 import { newSession, recordAnswer, type ExperienceLog, type SessionState } from '../engine/session';
+import { connectCloud, offerDownload, type CloudStatus, type CloudSync } from '../storage/cloud';
 import {
   clearSession, importSession, loadCustomCatalog, loadSession, safeStorage, saveCustomCatalog, saveSession,
 } from '../storage/persistence';
@@ -51,6 +52,33 @@ export function useApp() {
     setState((s) => (s ? { ...s, visits: [...s.visits, new Date().toISOString()].slice(-50) } : s));
   }, [state]);
 
+  // Sincronización con el almacenamiento privado de la cuenta (solo dentro de claude.ai).
+  const cloudRef = useRef<CloudSync | null>(null);
+  const cloudReady = useRef(false);
+  const [cloud, setCloud] = useState<'local' | 'conectando' | CloudStatus>('conectando');
+  useEffect(() => {
+    let alive = true;
+    void connectCloud().then(async (c) => {
+      if (!alive) return;
+      if (!c) { setCloud('local'); return; }
+      cloudRef.current = c;
+      c.onStatus((st) => alive && setCloud(st));
+      const remote = await c.load();
+      if (!alive) return;
+      cloudReady.current = true;
+      setCloud('sincronizado');
+      setState((cur) => {
+        const pick = remote && (!cur || remote.updatedAt > cur.updatedAt) ? remote : cur;
+        if (pick && pick !== remote) c.save(pick);
+        return pick;
+      });
+    });
+    return () => { alive = false; };
+  }, []);
+  useEffect(() => {
+    if (cloudRef.current && cloudReady.current && state) cloudRef.current.save(state);
+  }, [state]);
+
   const step = useMemo(() => (state ? nextStep(state, catalog) : null), [state, catalog]);
   useEffect(() => {
     if (step && state && step.state !== state) setState(step.state);
@@ -88,7 +116,7 @@ export function useApp() {
   const removeExperience = useCallback((id: string) => setState((s) => (s ? removeExperienceLog(s, id, catalog) : s)), [catalog]);
   const setExcluded = useCallback((ids: string[]) => setState((s) => (s ? { ...s, settings: { ...s.settings, excludedCareers: ids } } : s)), []);
 
-  const reset = useCallback(() => { clearSession(storage); setState(null); }, [storage]);
+  const reset = useCallback(() => { clearSession(storage); cloudRef.current?.save(null); setState(null); }, [storage]);
   const importText = useCallback((text: string) => { const st = importSession(text); setState(st); }, []);
   const setCatalogFile = useCallback((file: CatalogFile | null): string[] => {
     if (file) {
@@ -101,7 +129,7 @@ export function useApp() {
   }, [storage]);
 
   return {
-    state, step, catalog, customCatalog: custom, saved, theme, lastVisit,
+    state, step, catalog, customCatalog: custom, saved, theme, lastVisit, cloud,
     recoveredFromBackup: initial.recoveredFromBackup, corrupted: initial.corrupted,
     setTheme: setThemeState, start, answer, editAnswer, finalize: doFinalize, addExperience, removeExperience,
     setExcluded, reset, importText, setCatalogFile,
@@ -110,14 +138,6 @@ export function useApp() {
 
 export type AppApi = ReturnType<typeof useApp>;
 
-export function downloadText(filename: string, text: string, mime = 'application/json') {
-  try {
-    const blob = new Blob([text], { type: mime });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = filename;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    return true;
-  } catch { return false; }
+export function downloadText(filename: string, text: string): Promise<boolean> {
+  return offerDownload(filename, text);
 }

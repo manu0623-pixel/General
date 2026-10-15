@@ -64,7 +64,11 @@ export function App() {
           <span className="spacer" />
           {app.state && (
             <span className="save-state" role="status" aria-live="polite" title={app.saved?.error ?? ''}>
-              {app.saved?.ok === false ? '⚠ No se pudo guardar' : app.saved ? `Guardado ${fmtDate(app.saved.at).split(',').pop()}` : 'Guardado local'}
+              {app.saved?.ok === false ? '⚠ No se pudo guardar'
+                : app.cloud === 'sincronizado' ? 'Guardado en tu cuenta'
+                : app.cloud === 'guardando' ? 'Guardando…'
+                : app.cloud === 'error' ? 'Guardado solo en este navegador'
+                : app.saved ? `Guardado ${fmtDate(app.saved.at).split(',').pop()}` : 'Guardado local'}
             </span>
           )}
         </div>

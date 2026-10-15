@@ -25,7 +25,11 @@ export function SettingsView({ app, go }: { app: AppApi; go: (v: ViewId) => void
       </section>
       <section className="panel stack">
         <h4>Tus datos</h4>
-        <p className="small">Todo se guarda automáticamente en este navegador después de cada respuesta. Si borrás los datos del navegador o cambiás de dispositivo, se pierden: descargá una copia de respaldo de vez en cuando.</p>
+        <p className="small">
+          {app.cloud === 'sincronizado' || app.cloud === 'guardando'
+            ? 'Todo se guarda automáticamente después de cada respuesta, en este navegador y en un espacio privado de tu cuenta de Claude que solo vos podés leer (ni siquiera quien publicó la página). Podés continuar desde otro dispositivo con la misma cuenta.'
+            : 'Todo se guarda automáticamente en este navegador después de cada respuesta. Si borrás los datos del navegador o cambiás de dispositivo, se pierden: descargá una copia de respaldo de vez en cuando.'}
+        </p>
         <div className="row">
           <button type="button" className="btn" disabled={!app.state} onClick={() => app.state && downloadText(`evaluacion-vocacional-${new Date().toISOString().slice(0, 10)}.json`, exportSession(app.state))}>Descargar copia</button>
           <button type="button" className="btn" disabled={!app.state} onClick={copy}>Copiar copia</button>
@@ -54,7 +58,7 @@ export function SettingsView({ app, go }: { app: AppApi; go: (v: ViewId) => void
       </section>
       <section className="panel stack">
         <h4>Privacidad y uso de inteligencia artificial</h4>
-        <p className="small">La aplicación no transmite datos a ningún servicio externo. La metodología funciona con reglas explícitas, sin APIs de inteligencia artificial: las respuestas abiertas se analizan con un diccionario de palabras clave cuyo resultado se marca como «señal automática de baja confianza» en el registro. Ningún modelo asigna puntuaciones ni modifica el ranking.</p>
+        <p className="small">La aplicación no envía tus respuestas a servicios externos ni a terceros{app.cloud === 'local' ? '' : ' (solo a tu espacio privado de la cuenta, para no perderlas)'}. La metodología funciona con reglas explícitas, sin APIs de inteligencia artificial: las respuestas abiertas se analizan con un diccionario de palabras clave cuyo resultado se marca como «señal automática de baja confianza» en el registro. Ningún modelo asigna puntuaciones ni modifica el ranking.</p>
       </section>
     </div>
   );
