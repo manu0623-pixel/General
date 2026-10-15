@@ -9,6 +9,14 @@ export const RIASEC: Record<RiasecKey, { label: string; desc: string }> = {
   C: { label: 'Convencional', desc: 'Ordenar, registrar, controlar, seguir procedimientos y trabajar con precisión y detalle.' },
 };
 export const RIASEC_KEYS = Object.keys(RIASEC) as RiasecKey[];
+export const RIASEC_SHORT: Record<RiasecKey, string> = {
+  R: 'trabajar con objetos, herramientas y el entorno físico',
+  I: 'analizar y comprender cómo funcionan las cosas',
+  A: 'crear y expresar ideas propias',
+  S: 'enseñar, ayudar y acompañar a otras personas',
+  E: 'liderar, persuadir y emprender',
+  C: 'organizar y controlar con precisión',
+};
 
 export const DOMAINS: Record<DomainKey, string> = {
   tecnologia: 'Tecnología, software y sistemas',

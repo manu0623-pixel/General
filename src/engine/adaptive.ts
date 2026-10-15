@@ -404,7 +404,7 @@ export function nextStep(input: SessionState, catalog: CareerCatalog): StepResul
       if (c) return pend(state, ctx, { id: c.id, internalReason: `Contradicción detectada: ${c.description}` }, 8);
     }
   }
-  return { state: { ...state, pending: null }, ctx, pending: null, question: null, done: true };
+  return { state: state.pending ? { ...state, pending: null } : state, ctx, pending: null, question: null, done: true };
 }
 
 function pend(state: SessionState, ctx: EngineContext, cand: Candidate, stage: number): StepResult {

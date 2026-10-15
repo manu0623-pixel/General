@@ -272,8 +272,12 @@ export function rankCareers(scores: CareerScore[]): RankingEntry[] {
   const valid = scores.filter((s) => !s.insufficientData).sort((a, b) => b.overall - a.overall || a.name.localeCompare(b.name));
   const out: RankingEntry[] = [];
   let group = 0;
+  let leader: CareerScore | null = null;
   valid.forEach((s, i) => {
-    if (i > 0 && !indistinguishable(valid[i - 1], s)) group += 1;
+    // Un grupo de empate se forma con las carreras indistinguibles de la primera del grupo
+    // (no por encadenamiento, que uniría opciones claramente distintas).
+    if (!leader) leader = s;
+    else if (!indistinguishable(leader, s)) { group += 1; leader = s; }
     out.push({ ...s, rank: i + 1, tieGroup: group });
   });
   return out;

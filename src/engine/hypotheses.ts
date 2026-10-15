@@ -1,4 +1,4 @@
-import { APTITUDES, DOMAINS, RIASEC, RIASEC_KEYS, STYLES, VALUES } from '../domain/dimensions';
+import { APTITUDES, DOMAINS, RIASEC, RIASEC_KEYS, RIASEC_SHORT, STYLES, VALUES } from '../domain/dimensions';
 import { demandLabel } from '../domain/careerModel';
 import type { EvidenceSource } from '../domain/types';
 import type { HypothesisItem } from '../questions/generators';
@@ -28,7 +28,7 @@ export function generateHypotheses(ctx: EngineContext): HypothesisItem[] {
     const top = r.slice(0, r[1].e.est >= 0.58 ? 2 : 1);
     out.push({
       id: 'h:riasec_top',
-      text: `Tus intereses se orientan sobre todo a actividades de tipo ${list(top.map((x) => `${RIASEC[x.k].label.toLowerCase()} (${RIASEC[x.k].desc.charAt(0).toLowerCase()}${RIASEC[x.k].desc.slice(1, 60)}…)`))}.`,
+      text: `Tus intereses se orientan sobre todo a actividades de tipo ${list(top.map((x) => `${RIASEC[x.k].label.toLowerCase()} (${RIASEC_SHORT[x.k]})`))}.`,
       basis: top.map((x) => basis(x.e)).join(' '),
       targets: top.map((x) => ({ kind: 'riasec', key: x.k, value: x.e.est })),
     });
