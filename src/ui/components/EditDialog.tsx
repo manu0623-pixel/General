@@ -17,7 +17,7 @@ export function EditDialog({ app, questionId, onClose }: { app: AppApi; question
   if (!rec || !q) return null;
   return (
     <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="modal panel" role="dialog" aria-modal="true" aria-label="Corregir respuesta" ref={ref}>
+      <div className="modal" role="dialog" aria-modal="true" aria-label="Corregir respuesta" ref={ref}>
         <p className="eyebrow" style={{ marginBottom: 12 }}>Corregir respuesta · las conclusiones se recalculan</p>
         <QuestionForm
           key={questionId}
